@@ -15,6 +15,7 @@ import html
 import json
 import pickle
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -23,7 +24,12 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
-from flavoraudit.pairing import ns_recipe
+try:  # installed (pip install -e .) or on PYTHONPATH (the Hugging Face Space image)
+    import flavoraudit  # noqa: F401
+except ImportError:  # a plain clone, e.g. Streamlit Community Cloud: use the repository's src/ layout
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from flavoraudit.pairing import ns_recipe  # noqa: E402
 
 ART = Path(__file__).resolve().parent / "artifacts"
 EXAMPLES = {
