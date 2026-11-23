@@ -1,0 +1,18 @@
+{% set R = F.replication %}{% set E = F.equal_n %}{% set ds = F.dataset %}
+# What is new compared with existing work
+
+**Replication comes first.** Before analysing any LLM recipe we reproduced Singh & Bagler 2018: {{ R.random.sign_agreement }}/{{ R.random.n }} Fig. 4 signs, Spearman ρ = {{ f(R.random.spearman) }} with the published Z, and the published top contributors (Korea: {{ R.korea_top1 }}). This was a pre-registered gate.
+
+**What we reuse (baselines and methods, not contributions):**
+- Ns, Z, the four null models and χ (Ahn et al. 2011; Jain, Rakhi & Bagler 2015; Singh & Bagler 2018).
+- Category fingerprints (Jain, Rakhi & Bagler 2015), relative prevalence (Jain & Bagler 2018).
+- The **copy-mutate model** (Kinouchi et al. 2008; Jain & Bagler 2018; Tuwani et al. 2019, Algorithm 1 with ranked fitness), which is also our Assignment 3. It is a **baseline**: it tells us what a simple cultural-evolution model reproduces from a region's own ingredients and their popularity.
+
+**What is new:**
+1. **LLMCuisine-22**: {{ n0(ds.total_recipes) }} LLM recipes for all {{ F.regions.n }} CulinaryDB regions from {{ ds.n_models }} LLMs ({{ ds.n_proprietary }} proprietary, {{ ds.n_open_families }} open-weight families), every call logged, mapped with CulinaryDB's own aliasing protocol ({{ pct(F.aliasing.acc_lines) }} / {{ pct(F.aliasing.acc_rows) }} agreement with the expert mapping on held-out lines).
+2. **The first audit of LLM recipes against flavor-compound pairing and culinary fingerprints**, on every layer: pairing sign, drivers, category fingerprints, stereotypes and co-occurrence networks. Earlier LLM-recipe audits are textual (e.g. Carichon et al. 2026).
+3. **Equal-size calibration**: the own-pool null is sample-size dependent; we quantified it ({{ pct(E.fpr) }} false-positive rate of the naive sign rule; {{ join_and(E.uniform_flipped) }} flip at equal size while all contrasting cuisines hold) and compare every LLM cuisine with genuine samples of the same size.
+4. **Fingerprint-guided steering**: a fidelity scorer built from the fingerprint layers, used for best-of-N and critique-and-revise, judged only on held-out metrics.
+5. **FlavorAudit** (library, pip name `flavoraudit`) and **FlavorPrint** (app) make the audit reusable.
+
+**Differentiators to state if asked about other groups:** all {{ F.regions.n }} regions (not a subset), {{ ds.n_models }}+ LLMs across families, the equal-size calibration and the fingerprint-guided steering. We deliberately did not do an Indian-regional focus, same-dish LLM/human pairs or an LLM-vs-human detector. (Our library is FlavorAudit; "CuisineKit" was only our proposal-time placeholder and is another group's library.)

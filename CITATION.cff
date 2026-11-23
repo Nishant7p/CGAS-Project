@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: "If you use FlavorAudit or LLMCuisine-22, please cite this work, CulinaryDB and FlavorDB."
+title: "Do AI Chefs Respect Culinary Fingerprints? Auditing and Steering LLM-Generated Recipes across 22 World Cuisines (FlavorAudit and LLMCuisine-22)"
+type: software
+authors:
+  - name: "Group 44, BIO544 Computational Gastronomy, IIIT-Delhi"
+version: 0.1.0.dev0
+date-released: "2026-11-22"
+license: MIT
+keywords:
+  - computational gastronomy
+  - food pairing
+  - culinary fingerprint
+  - large language models
+  - recipes
+references:
+  - type: conference-paper
+    authors:
+      - family-names: Singh
+        given-names: Navjot
+      - family-names: Bagler
+        given-names: Ganesh
+    title: "Data-driven investigations of culinary patterns in traditional recipes across the world"
+    collection-title: "IEEE 34th International Conference on Data Engineering Workshops (ICDEW)"
+    year: 2018
+  - type: article
+    authors:
+      - family-names: Garg
+        given-names: Neelansh
+      - name: "et al."
+    title: "FlavorDB: a database of flavor molecules"
+    journal: "Nucleic Acids Research"
+    volume: 46
+    year: 2018
+  - type: article
+    authors:
+      - family-names: Jain
+        given-names: Anupam
+      - family-names: Rakhi
+        given-names: N. K.
+      - family-names: Bagler
+        given-names: Ganesh
+    title: "Analysis of food pairing in regional cuisines of India"
+    journal: "PLoS ONE"
+    year: 2015
+  - type: article
+    authors:
+      - family-names: Ahn
+        given-names: Yong-Yeol
+      - name: "et al."
+    title: "Flavor network and the principles of food pairing"
+    journal: "Scientific Reports"
+    volume: 1
+    year: 2011

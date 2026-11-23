@@ -1,0 +1,12 @@
+Here is a recipe that is meant to be a traditional {phrase} dish:
+
+{recipe}
+
+Feedback from an analysis of real {label} home cooking:
+{feedback}
+
+Revise the recipe so that it is more typical of traditional {label} home cooking while keeping the same dish: keep its title idea and its main ingredients, and change only what the feedback points to.
+
+Reply with JSON only (no other text and no markdown), in exactly this structure:
+{{"recipes": [{{"title": "<dish name>", "ingredients": ["<ingredient line>", "..."], "instructions": ["<step>", "..."]}}]}}
+The "recipes" list must contain exactly 1 recipe. Write every ingredient line the way it would appear in a recipe, with its quantity. Write the instructions as short steps in cooking order. Use English.

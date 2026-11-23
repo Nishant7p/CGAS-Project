@@ -1,0 +1,79 @@
+{% if demo %}{% set G = demo.scenarios.genuine %}{% set O = demo.scenarios.off_cuisine %}{% set S = demo.scenarios.stereotype %}{% endif %}
+# FlavorPrint live demo: 3-minute script
+
+Generated {{ F.build_date }} by `presentation/build.py`. The expected on-screen values below were computed by running
+the app's own audit function on its built-in examples (`presentation/demo_probe.py`, artifacts in `app/artifacts/`).
+If the artifacts are rebuilt, re-run the build and these values update.
+
+## Before the talk (5 minutes, not on the clock)
+
+1. In a terminal at the repo root: `.venv/bin/streamlit run app/streamlit_app.py` (opens http://localhost:8501).
+2. Wait for "Loading the flavor network and models…" to finish once, so the demo starts warm.
+3. Zoom the browser to about 125% so the metrics are readable from the back. Keep the slides in another window.
+4. Leave the **Audit a recipe** tab open with the **Korea** example selected (the default).
+
+{% if demo %}
+## The script
+
+**0:00–0:20 · Frame it.** "FlavorPrint takes any recipe and a claimed cuisine and asks: does this recipe look like that
+cuisine in this lab's terms? It uses the same aliaser, flavor network and fidelity scorer as our study."
+
+**0:20–1:05 · A genuine Korean recipe.** Example: *{{ G.title }}*, claimed cuisine {{ G.claimed }}.
+- Point at the four metrics: **Fidelity percentile {{ "%.0f"|format(G.fidelity_pct) }}** (compared with held-out
+  genuine {{ G.claimed }} recipes), **Flavor sharing Ns {{ "%.1f"|format(G.ns) }}** (percentile {{ "%.0f"|format(G.ns_pct) }}),
+  **Most likely cuisine {{ G.top5[0][0] }} ({{ "%.0f"|format(100 * G.top5[0][1]) }}%)**, **Ingredients matched {{ G.matched }}/{{ G.n_lines }}**.
+{% if G.unmatched %}
+- Open the **Ingredients** tab: "{{ G.unmatched|join('", "') }}" is not matched. "This is exactly the curation step:
+  CulinaryDB has no entity for it yet, so a human adds the alias."
+{% endif %}
+- Open **Flavor sharing**: the histogram is real {{ G.claimed }} recipes, the line is this recipe; below is its flavor
+  network. "Real {{ G.claimed }} cuisine has Z = {{ "%.0f"|format(G.z_real) }} against the random null:
+  {{ "contrasting" if G.z_real < 0 else "uniform" }} food pairing, as in Singh & Bagler 2018."
+
+**1:05–1:55 · The same app, an off-cuisine recipe claimed as Korean.** Select the **{{ O.example }}** example
+(*{{ O.title }}*), then change **Claimed cuisine** to **{{ O.claimed }}**.
+- **Fidelity percentile drops to {{ "%.0f"|format(O.fidelity_pct) }}**; most likely cuisine **{{ O.top5[0][0] }}
+  ({{ "%.0f"|format(100 * O.top5[0][1]) }}%)**.
+- **Suggestions** tab: unusual for {{ O.claimed }}: **{{ O.atypical|join(", ") if O.atypical else "none" }}**; flavor sharing
+  is **{{ O.ns_verdict }}** relative to real {{ O.claimed }} recipes (Ns {{ "%.1f"|format(O.ns) }}, percentile
+  {{ "%.0f"|format(O.ns_pct) }}). The score-component bars are all below zero.
+- Say: "This is the check we apply to every LLM recipe, and the feedback is what our critique-and-revise steering
+  sends back to the model."
+
+**1:55–2:30 · The stereotype flag.** Select the **{{ S.example }}** example (*{{ S.title }}*, claimed {{ S.claimed }}).
+- It uses **{{ S.signature_used|length }} of the cuisine's top-10 signature ingredients**; only
+  {{ "%.0f"|format(S.signature_share_at_most) }}% of real recipes use this many or fewer, so the
+  **stereotype flag {{ "appears" if S.stereotype_flag else "does not appear" }}**{% if demo.stereotype_cut_percent %} (cut-off: {{ demo.stereotype_cut_percent }}%){% endif %}.
+- Say: "A recipe can be perfectly 'Indian' and still be a caricature: this is what our Stereotype Amplification Index
+  measures at the level of a whole cuisine."
+
+**2:30–2:50 · Dashboard tab.** Model × region food-pairing Z (same data as F3) and the scorecard medians.
+
+**2:50–3:00 · Close.** "Everything you saw is in the FlavorAudit library: the same audit runs on a CSV of recipes with
+`flavoraudit audit recipes.csv --cuisine-col cuisine --out out/`." Switch back to the slides.
+{% else %}
+## The script
+
+{{ pending("demo values: app artifacts could not be loaded at build time; run app/build_artifacts.py and rebuild") }}
+{% endif %}
+
+## If the live demo fails
+
+| Symptom | Fix (≤ 20 s) |
+|---|---|
+| "Artifacts missing" in red | Rebuilding needs `.venv/bin/python app/build_artifacts.py`; do not do it live, go to the fallback. |
+| Port 8501 busy | `.venv/bin/streamlit run app/streamlit_app.py --server.port 8502` |
+| Page blank or spinning | Reload once; if still blank, go to the fallback. |
+| No laptop or projector issue | Fallback only. |
+
+**Fallback (no live app):** show the backup slide **"Demo fallback: what FlavorPrint shows"** in `slides.pptx`
+(it is generated from the same values as this script) and narrate the three cases:
+{% if demo %}
+genuine *{{ G.title }}* (fidelity percentile {{ "%.0f"|format(G.fidelity_pct) }}, {{ G.top5[0][0] }} {{ "%.0f"|format(100 * G.top5[0][1]) }}%),
+*{{ O.title }}* claimed as {{ O.claimed }} (fidelity percentile {{ "%.0f"|format(O.fidelity_pct) }}, predicted {{ O.top5[0][0] }}),
+and *{{ S.title }}* (stereotype flag: {{ "yes" if S.stereotype_flag else "no" }}).
+{% else %}
+{{ pending("demo values") }}.
+{% endif %}
+If a terminal is open, show the library CLI: `.venv/bin/python -m flavoraudit.cli --help` (the `flavoraudit` console
+script itself appears in `.venv/bin` after the next `uv sync`).

@@ -1,0 +1,22 @@
+{% set R = F.replication %}{% set E = F.equal_n %}{% set V = F.verdicts %}{% set rs = F.ranges %}{% set ds = F.dataset %}{% set N = F.networks or {} %}{% set nt = N.npmi_top100 or {} %}
+# One-page project overview
+
+**Do AI Chefs Respect Culinary Fingerprints? Auditing and Steering LLM-Generated Recipes across 22 World Cuisines**
+Group 44 (roll nos. 2023355, 2023477) · BIO544 Computational Gastronomy, IIIT-Delhi, Monsoon 2026 · Instructor: Prof. Ganesh Bagler.
+Numbers from `results/summary.json` ({{ F.generated_date }}).
+
+**The question.** When a large language model writes a "traditional" recipe for a cuisine, does the recipe carry that cuisine's measurable culinary fingerprint, as defined by this lab's framework (Ahn et al. 2011; Jain, Rakhi & Bagler 2015; Singh & Bagler 2018)? And can the fingerprint be used to steer the model?
+
+**Data.** CulinaryDB ({{ n0(F.extras.counts.recipes) if F.extras.counts else "n/a" }} recipes) and FlavorDB ({{ n0(F.extras.counts.fdb_entities) if F.extras.counts else "n/a" }} ingredients with flavor profiles) are the ground truth. We generated {{ n0(ds.total_recipes) }} recipes with {{ ds.n_models }} LLMs ({{ join_and(F.analysed_names) }}) for all {{ F.regions.n }} CulinaryDB regions, with a plain prompt and a home-cook persona ({{ F.design.recipes_per_region }} recipes per model and region), and mapped every ingredient line with our reconstruction of CulinaryDB's aliasing protocol ({{ pct(F.aliasing.acc_lines) }} agreement with CulinaryDB's expert mapping on held-out lines).
+
+**Method.** The lab's definitions, unchanged: flavor sharing Ns, Z against four null models, χ% flavor drivers, category fingerprints (ΔNs per category), signature ingredients and the Stereotype Amplification Index (SAI), plus co-occurrence networks (NPMI). Every cuisine — real, LLM, copy-mutate — goes through the same scoring function. Before analysing any LLM recipe we reproduced Singh & Bagler's Fig. 4 ({{ R.random.sign_agreement }}/{{ R.random.n }} signs, Spearman ρ = {{ f(R.random.spearman) }}). Because the food-pairing sign turned out to depend on sample size, every LLM cuisine is compared with {{ n0(E.n_genuine_per_region) }} genuine real samples of the same size.
+
+**Headline results.**
+- No general drift toward uniform pairing (H1 supported for {{ V.h1eq_supported }}/{{ V.n }} models); errors are model- and region-specific.
+- No stereotype amplification (median SAI {{ rng(rs.median_sai) }}), but narrower cuisines ({{ pctr(rs.median_diversity_ratio) }} of the ingredient variety of genuine samples).
+- Weaker fingerprints: category fingerprint ρ {{ rng(rs.median_fingerprint_spearman) }} vs {{ f(E.ref.fingerprint_spearman) }} genuine; top-100 co-occurrence pairs overlap {% if nt %}{% set vals = [] %}{% for k in F.analysed if k in nt %}{% set _ = vals.append(nt[k].median) %}{% endfor %}{{ rng_text(vals|min, vals|max) }} vs {{ f(nt['real@160'].median) }}{% else %}n/a{% endif %}.
+- Steering: critique-and-revise moves recipes toward the cuisine while keeping the dish; best-of-N trades diversity for recognisability.
+
+**Deliverables.** D1 LLMCuisine-22 (dataset) · D2 the audit · D3 fingerprint-guided steering · D4 FlavorAudit (Python library, pip name `flavoraudit`) · D5 FlavorPrint (Streamlit app).
+
+**Status (stated as status, not predicted).** {% for p in F.pending %}{{ p.item }}: {{ p.detail }}{{ "; " if not loop.last else "." }}{% endfor %}

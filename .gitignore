@@ -1,0 +1,62 @@
+# Secrets: never commit
+.env
+*.key
+
+# Python / tooling
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.ipynb_checkpoints/
+.uv_sync.log
+*.log
+
+# Docs build
+site/
+
+# Data: raw downloads are third-party (CC BY-NC-SA / CC BY) and rebuildable via scripts/
+data/raw/
+data/interim/
+data/generated/raw/
+data/generated/batches/
+# Rebuildable from the raw logs (generation/parse_outputs.py, generation/alias_lines.py); D1 ships in data/release/
+data/generated/parsed/
+data/generated/aliased/
+# app/artifacts/ IS committed (CC BY-NC-SA 4.0, see DATA_LICENSE.md) so the app runs from a clone;
+# app/space/ is the local Hugging Face Space copy
+app/space/
+# Local tool caches
+.impeccable/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Generated per-model Kaggle push folders (rebuilt by generation/kaggle/push.py)
+generation/kaggle/push/
+app/space/
+
+# Superseded drafts and build intermediates (the talk deck is presentation/story_deck.py; final files are in
+# deliverables/, refreshed by scripts/export_final.py)
+presentation/slides.pptx
+presentation/slides.pdf
+presentation/_build/
+presentation/prep/
+presentation/demo_script.md
+presentation/findings_summary.md
+presentation/qa_prep.md
+presentation/story/_img/
+presentation/story/*.pptx
+presentation/story/*.pdf
+presentation/guide/
+presentation/poster.pdf
+report/main.pdf
+generation/kaggle/push/

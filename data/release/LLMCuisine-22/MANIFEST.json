@@ -1,0 +1,29 @@
+{
+ "dataset": "LLMCuisine-22",
+ "license": "CC BY-NC-SA 4.0",
+ "prompt_set": {
+  "version": "v1",
+  "sha256": "468c7d7f4c79c146484117f4b74647cbf00a38cdca1caf9e7b3ce9f515490526"
+ },
+ "counts": {
+  "calls": 2368,
+  "logged_calls": 2368,
+  "recipes": 11656,
+  "ingredient_lines": 114917,
+  "by_model": {
+   "gemini-3.5-flash-lite": 1259,
+   "llama-3.1-8b": 3403,
+   "openai-gpt-6-luna": 3517,
+   "qwen3.5-9b": 3477
+  }
+ },
+ "files": {
+  "01_Recipe_Details.csv": "53a3e444a89bdad244f40fb29a4efc263aad89b093e6e889a740d91fcf9ac5f1",
+  "04_Recipe-Ingredients_Aliases.csv": "618ea099908ac04d27f2475ff679eba2d891043433fdc166be28a669de2d1c14",
+  "DATASHEET.md": "ff5b0374e270ab578f74da2b6e1b31f7bb3f997ee6fe6f23de68e3b0290adbce",
+  "calls.csv": "30610fff110e4eb0794246281d8d9cfc42d280083bd728440e0f1b57e8757002",
+  "coverage.csv": "398b78a3eb25dfcc986ea68f1a52007c6ee8726536d65778c57c7fb2103ddeb7",
+  "generation_log.jsonl.gz": "66e80db2d2c5b5da2e2e119d64b9caec2a0df0c128b88d95e6d292fc66335cd8",
+  "recipes_full.jsonl": "2ea6e1e1f1cbe9d2c0ae0033fede24ff8c7243d61f4b74386bfbe560ede39b61"
+ }
+}

@@ -1,0 +1,191 @@
+<# A0 portrait research poster. Rendered by presentation/build.py with Jinja delimiters << >> and <% %>. #>
+<% set R = F.replication %><% set E = F.equal_n %><% set V = F.verdicts %><% set L = F.llm %><% set rs = F.ranges %>
+<% set cm = F.cm.ranked_n %><% set SC = F.scorer %><% set B = F.bon %><% set RV = F.revise %><% set D = F.design %>
+<% set ds = F.dataset %><% set prov = F.llm_pending %>
+\documentclass[20pt, a0paper, portrait, margin=0mm, innermargin=14mm, blockverticalspace=9mm, colspace=12mm, subcolspace=6mm]{tikzposter}
+\usepackage{fontspec}
+\setmainfont{Arial}
+\setsansfont{Arial}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\definecolor{ink}{HTML}{1B2430}
+\definecolor{accent}{HTML}{D55E00}
+\definecolor{okblue}{HTML}{0072B2}
+\definecolor{okgreen}{HTML}{009E73}
+\definecolor{amber}{HTML}{9A5B00}
+\definecolor{panel}{HTML}{F2F4F7}
+\definecolor{muted}{HTML}{5A6472}
+\newcommand{\pend}[1]{\textcolor{muted}{\textit{#1}}}
+\newcommand{\bignum}[2]{\begin{minipage}[t]{\linewidth}\centering{\color{#1}\fontsize{52}{58}\selectfont\textbf{#2}}\end{minipage}}
+\setlist[itemize]{leftmargin=1.1em, itemsep=0.25em, topsep=0.3em, label=\textcolor{accent}{\textbullet}}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=0.35em, topsep=0.3em}
+\definecolorstyle{cgas}{
+  \definecolor{colorOne}{HTML}{1B2430}
+  \definecolor{colorTwo}{HTML}{D55E00}
+  \definecolor{colorThree}{HTML}{F2F4F7}
+}{
+  \colorlet{backgroundcolor}{white}
+  \colorlet{framecolor}{white}
+  \colorlet{titlefgcolor}{white}
+  \colorlet{titlebgcolor}{colorOne}
+  \colorlet{blocktitlebgcolor}{colorOne}
+  \colorlet{blocktitlefgcolor}{white}
+  \colorlet{blockbodybgcolor}{white}
+  \colorlet{blockbodyfgcolor}{black}
+  \colorlet{innerblocktitlebgcolor}{colorThree}
+  \colorlet{innerblocktitlefgcolor}{black}
+  \colorlet{innerblockbodybgcolor}{colorThree}
+  \colorlet{innerblockbodyfgcolor}{black}
+  \colorlet{notefgcolor}{black}
+  \colorlet{notebgcolor}{colorThree}
+  \colorlet{notefrcolor}{colorThree}
+}
+\usetheme{Simple}
+\usecolorstyle{cgas}
+\usetitlestyle{Filled}
+\useblockstyle[roundedcorners=0, linewidth=0pt, titleinnersep=5mm, bodyinnersep=6mm]{Default}
+\makeatletter
+\settitle{%
+  \centering\vbox{%
+    {\color{titlefgcolor}\fontsize{96}{104}\selectfont\textbf{\@title}\par}\vspace*{0.6em}
+    {\color{titlefgcolor}\fontsize{50}{58}\selectfont Auditing and steering LLM-generated recipes across << F.regions.n >> world cuisines\par}\vspace*{0.8em}
+    {\color{titlefgcolor}\LARGE \@author\par}\vspace*{0.3em}
+    {\color{titlefgcolor}\Large \@institute\par}}}
+\makeatother
+\title{Do AI Chefs Respect Culinary Fingerprints?}
+\author{Group 44 \enspace·\enspace Roll nos.\ 2023355 and 2023477}
+\institute{BIO544 Computational Gastronomy \enspace·\enspace IIIT-Delhi \enspace·\enspace Monsoon 2026 \enspace·\enspace Instructor: Prof.\ Ganesh Bagler}
+\begin{document}
+\maketitle[width=0.94\paperwidth, roundedcorners=0, innersep=16mm]
+
+\block{Key numbers}{%
+<% set N = F.networks or {} %><% set nt = N.npmi_top100 or {} %><% set nv = [] %><% for k in F.analysed if k in nt %><% set _ = nv.append(nt[k].median) %><% endfor %>
+\begin{tabular}{@{}p{0.155\linewidth}p{0.155\linewidth}p{0.155\linewidth}p{0.155\linewidth}p{0.155\linewidth}p{0.155\linewidth}@{}}
+\bignum{ink}{<< R.random.sign_agreement >>/<< R.random.n >>} &
+\bignum{accent}{<< pct(E.fpr)|tex >>} &
+\bignum{okblue}{<< rng(rs.median_diversity_ratio)|tex >>} &
+\bignum{accent}{<< rng(rs.median_fingerprint_spearman)|tex >>} &
+\bignum{ink}{<% if nv %><< rng_text(nv|min, nv|max)|tex >><% else %>--<% endif %>} &
+\bignum{okgreen}{<% if RV %><% set r = RV.rows[RV.order[0]] %><< f(r.first.indep_classifier_acc) >> → << f(r.last.indep_classifier_acc) >><% else %>--<% endif %>} \\[0.3em]
+\centering Fig.\,4 signs reproduced; Spearman $\rho$ = << f(R.random.spearman) >> with the published Z &
+\centering of genuine << E.n_sub >>-recipe samples fail the naive sign rule \(\Rightarrow\) equal-size reference &
+\centering diversity ratio of LLM cuisines (1 = as diverse as genuine samples) &
+\centering fingerprint $\rho$ of LLM cuisines vs << f(E.ref.fingerprint_spearman) >> for genuine samples &
+\centering top-100 ingredient-pair overlap with the real cuisine vs <% if nt %><< f(nt['real@160'].median) >><% endif %> for genuine samples &
+\centering <% if RV %>independent-classifier share after critique-and-revise (<< RV.rows[RV.order[0]].name|tex >>)<% else %>--<% endif %> \\
+\end{tabular}}
+
+\begin{columns}
+%% ------------------------------------------------------------------------------------------------ column 1
+\column{0.33}
+\block{Why audit LLM recipes with flavor chemistry?}{
+LLMs write recipes for millions of people and call them ``traditional''. Existing audits are textual; this lab's framework (Ahn et al.\ 2011; Jain, Rakhi \& Bagler 2015; Singh \& Bagler 2018) makes a cuisine's \textbf{culinary fingerprint} measurable and falsifiable. We score LLM cuisines with it, on all << F.regions.n >> CulinaryDB regions.
+\begin{itemize}
+\item \textbf{RQ1} Same food-pairing sign and strength? \textit{H1: pushed toward uniform pairing.}
+\item \textbf{RQ2} Same composition and category fingerprint? \textit{H2b: SAI > 1; H2c: weaker fingerprint.}
+\item \textbf{RQ3} Can fingerprint feedback steer generation without copying?
+\item \textbf{RQ4} Do persona prompts, vendor or scale matter?
+\end{itemize}
+{\small\color{muted} Hypotheses and tests were pre-registered in the plan; one amendment (equal-size comparison) was logged before the analysis.}}
+
+\block{LLMCuisine-22 (D1): what did we ask?}{
+<< D.n_conditions >> frozen prompts, plain (``<< D.prompt_plain.replace("{phrase}", F.regions.phrase_korea)|tex >>'') and a home-cook persona; << F.regions.n >> regions $\times$ << D.n_conditions >> prompts $\times$ << D.calls_per_cell >> calls $\times$ << D.recipes_per_call >> recipes = << n0(D.recipes_per_model) >> recipes per model. Every call logged; lines aliased with CulinaryDB's protocol (<< pct(F.aliasing.acc_lines)|tex >> of held-out lines match the expert mapping).
+
+\begin{center}\small
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Model & Type & Recipes & Regions\\
+\midrule
+<% for k in F.model_order if F.models[k].data %><% set mi = F.models[k] %>
+<< mi.name|tex >> & << "API" if mi.proprietary else "open weights" >> & << n0(mi.data.recipes) >> & << mi.data.regions >>\\
+<% endfor %>
+\midrule
+Total & & << n0(ds.total_recipes) >> & << F.regions.n >>\\
+\bottomrule
+\end{tabular}\end{center}}
+
+\block{Method: the lab's definitions, unchanged}{
+\[ N_s(R)=\frac{2}{n(n-1)}\sum_{i<j\in R}|C_i\cap C_j| \]
+\[ Z=\sqrt{N_{rand}}\,\frac{\bar N_s^{\,cuisine}-\bar N_s^{\,rand}}{\sigma_{rand}}=\sqrt{N_{rand}}\;d \]
+<% if "F1" in figs %>\begin{center}\includegraphics[width=\linewidth]{<< figs.F1 >>}\end{center}<% endif %>
+\begin{itemize}
+\item Four nulls keep the cuisine's ingredients and recipe sizes: random, frequency, category, frequency\,+\,category. $N_{rand}$ = << n0(F.method.n_rand) >>, so Z = << f(F.method.sqrt_n_rand, 0) >>\,$\times$\,d.
+\item Baselines: << n0(E.n_genuine_per_region) >> genuine << E.n_sub >>-recipe samples per region (noise floor) and the copy-mutate model (Tuwani 2019, ranked fitness).
+\end{itemize}}
+
+\block{Replication gate: does our pipeline reproduce Fig.\,4?}{
+\begin{center}\includegraphics[width=0.6\linewidth]{<< figs.F2b >>}\end{center}
+\textbf{Yes:} << R.random.sign_agreement >>/<< R.random.n >> signs; Spearman $\rho$ with the published Z: <% for n in R.nulls %><< n.name|lower|tex >> << f(n.rho, 3) >><< "; " if not loop.last else "." >><% endfor %> Korea's top contributor is << R.korea_top1|tex >>, as published. Contrasting cuisines come out more contrasting with today's FlavorDB (Korea Z << f(R.korea_z, 1)|tex >> vs << R.korea_z_published|tex >>).}
+
+%% ------------------------------------------------------------------------------------------------ column 2
+\column{0.34}
+\block{Does the food-pairing sign depend on sample size?}{
+\begin{center}\includegraphics[width=0.76\linewidth]{<< figs.F2c >>}\end{center}
+\textbf{Yes.} A small sample loses rare, low-sharing ingredients, so its own-pool null scores higher (USA at << E.n_sub >> recipes: $\Delta N_s$ = << f(E.usa.delta_ns_own_pool_n160)|tex >> vs << f(E.usa.delta_ns_full_pool_n160)|tex >> against the full pool). Cut to << E.matched_n >> recipes, all << E.contrasting_robust >> contrasting cuisines stay contrasting; << E.uniform_robust >>/<< F.regions.n_uniform >> uniform ones stay positive; << join_and(E.uniform_flipped)|tex >> flip. The naive sign rule fires on << pct(E.fpr)|tex >> of genuine samples, so \textbf{LLM cuisines are compared with genuine samples of the same size}.}
+
+\block{Do LLM cuisines keep each region's pairing sign?}{
+\begin{center}\includegraphics[width=0.5\linewidth]{<< figs.F3 >>}\end{center}
+\begin{center}\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Equal-size verdict & Typical & Too uniform & Too contr. & Sign agr.\\
+\midrule
+<% for k, p in L.items() %>
+<< p.name|tex >> (<< p.regions >>) & << p.equal_n_typical >> & << p.equal_n_too_uniform >> & << p.equal_n_too_contrasting >> & << f(p.sign_agreement) >>\\
+<% endfor %>
+Genuine << E.n_sub >>-recipe samples & & & & << f(E.genuine_sign_agreement) >>\\
+\bottomrule
+\end{tabular}\end{center}
+\textbf{No common drift to uniform pairing} (H1 supported for << V.h1eq_supported >>/<< V.n >> models); errors are model-specific. Same verdict in every model with data: <% for c in F.consensus %><< c.region|tex >> << c.verdict >><< ", " if not loop.last else "." >><% endfor %>}
+
+\block{Do LLMs reproduce which ingredients go together?}{
+<% set be = N.backbone_edges or {} %><% set bo = N.backbone_overlap or {} %>
+<% if "F11" in figs %>\begin{center}\includegraphics[width=0.7\linewidth]{<< figs.F11 >>}\end{center}<% endif %>
+<% if nt %>Top-100 NPMI ingredient pairs shared with the real cuisine (Jaccard): <% for k in F.analysed if k in nt %><< F.models[k].name|tex >> << f(nt[k].median) >> (<< nt[k].below_reference_fdr05 >>/<< nt[k].regions >> regions below the genuine range)<< "; " if not loop.last else "" >><% endfor %>, vs << f(nt['real@160'].median) >> for genuine samples. Backbones are sparser (<% for k in F.analysed if k in be %><< f(be[k].median, 0) >><< ", " if not loop.last >><% endfor %> vs << f(be['real@160'].median, 0) >> edges) but mostly real edges. \textbf{A generic skeleton of strong pairings, without each cuisine's distinctive ones.}<% endif %>}
+
+\block{Tools anyone can use (D4, D5)}{
+\textbf{FlavorAudit}: a pip-installable, MIT-licensed library with << F.library.n_modules >> modules and << F.library.n_tests >> tests (incl.\ a regression that reproduces the Fig.\,4 signs); data downloaded on first use.\\[0.3em]
+\textbf{FlavorPrint}: paste a recipe and a claimed cuisine; it maps the ingredients, places the recipe's $N_s$ among real recipes, and reports a fidelity percentile, the most likely cuisines, unusual and missing ingredients and a stereotype flag.}
+
+%% ------------------------------------------------------------------------------------------------ column 3
+\column{0.33}
+\block{Do LLMs amplify stereotypes, or narrow cuisines?}{
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & Median SAI & Diversity ratio & Prevalence JSD\\
+\midrule
+<% for k, p in L.items() %>
+<< p.name|tex >> & << f(p.median_sai) >> & << f(p.median_diversity_ratio) >> & << f(p.median_prevalence_jsd, 3) >>\\
+<% endfor %>
+Genuine samples & << f(E.ref.sai) >> & 1 & << f(E.ref.prevalence_jsd, 3) >>\\
+\bottomrule
+\end{tabular}\end{center}
+Signature ingredients are used about as often as in real recipes (H2b: SAI > 1 supported for << V.h2b_sai_supported >>/<< V.n >>), but LLMs use only << pctr(rs.median_diversity_ratio)|tex >> of the distinct ingredients of an equal-size genuine sample (<< V.h2b_div_supported >>/<< V.n >> significant). \textbf{They narrow cuisines rather than caricature them.} <% set DR = F.drivers %><% if DR %>Flavor drivers (RQ2a): top-5 $\chi$\% overlap with the real cuisine << rng_text(DR.jac_min, DR.jac_max)|tex >> vs << f(DR.real.median_jaccard5) >> for genuine samples.<% endif %>}
+
+\block{Category fingerprints and the copy-mutate baseline}{
+\begin{center}\includegraphics[width=0.8\linewidth]{<< figs.F6 if "F6" in figs else figs.F13 >>}\end{center}
+Category fingerprints are weakened in << V.h2c_supported >>/<< V.n >> models ($\rho$ << rng(rs.median_fingerprint_spearman)|tex >> vs << f(E.ref.fingerprint_spearman) >>). Copy-mutate (a baseline: Tuwani 2019, ranked fitness) reproduces popularity (MAE << f(cm.freq_rank_mae, 3) >>) but not composition (JSD << f(cm.prevalence_jsd) >>) or signatures (SAI << f(cm.sai) >>). LLMs beat it on composition and fingerprints (<< V.cm_better.prevalence_jsd >>/<< V.n >>, << V.cm_better.fingerprint_spearman >>/<< V.n >>), but on pairing strength only << V.cm_better.abs_d_gap >>/<< V.n >>.}
+
+\block{Steering with the fingerprints (D3)}{
+\begin{center}\includegraphics[width=0.88\linewidth]{<< figs.F15c if "F15c" in figs else figs.F15 >>}\end{center}
+Fidelity scorer = << SC.classifier_name|tex >> classifier + co-occurrence PMI + $N_s$ consistency (test AUC vs other cuisines / copy-mutate / null recipes: << f(SC.auc_test.other_cuisines.composite) >> / << f(SC.auc_test.copy_mutate.composite) >> / << f(SC.auc_test.random_null.composite) >>). <% if RV %>\textbf{Critique-and-revise} raises the independent classifier's share (<% for k in RV.order %><% set r = RV.rows[k] %><< r.name|tex >> << f(r.first.indep_classifier_acc) >>\,$\rightarrow$\,<< f(r.last.indep_classifier_acc) >><< "; " if not loop.last >><% endfor %>) and lowers JSD in << RV.improved.prevalence_jsd >>/<< RV.n_models >> models, keeping << rng_text(RV.kept_min, RV.kept_max)|tex >> Jaccard overlap with the original dish. <% endif %><% if B %>\textbf{Best-of-N} raises recognisability but lowers diversity. <% endif %>Near-copies are never selected; evaluation uses held-out metrics only.}
+
+\block{Conclusions}{
+\begin{enumerate}
+\item The lab's framework replicates; pairing signs must be compared at equal size.
+\item No general drift toward uniform pairing; errors are model- and region-specific.
+\item Signature ingredients are kept; variety, distinctive pairings and category fingerprints are weakened.
+\item Feedback (critique-and-revise) steers better than selection (best-of-N).
+\end{enumerate}
+{\small\color{muted} Scope: << D.recipes_per_region >> recipes per model and region; <% for k in F.model_order if F.models[k].data and not F.models[k].complete %><< F.models[k].name|tex >>: << F.models[k].data.regions >> regions.<% endfor %>}\\[0.2em]
+\textbf{Next steps:} a scale study with Qwen3.5-4B, more model families, and human taste tests.}
+
+
+\block{Data, licences, references}{\small
+CulinaryDB, FlavorDB (CoSyLab, IIIT-Delhi; CC BY-NC-SA 3.0); Ahn et al.\ 2011 (CC BY 4.0). Derived data CC BY-NC-SA 4.0; code MIT. Ahn et al.\ 2011 · Jain, Rakhi \& Bagler 2015 · Singh \& Bagler 2018 · Jain \& Bagler 2018 · Tuwani et al.\ 2019 · Madaan et al.\ 2023. Numbers: \texttt{results/summary.json} (<< F.generated_date|tex >>); built with an AI coding assistant under the team's direction.}
+\end{columns}
+\end{document}

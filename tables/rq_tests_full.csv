@@ -1,0 +1,71 @@
+hypothesis,model,test,statistic,p,effect,n,note,p_adj
+H1,real@160,sign-error rule false-positive rate,,,0.08640909090909091,22000,genuine samples,
+H1,gemini-3.5-flash-lite,"Fisher exact, errors contrasting > uniform",0.0,1.0,0/3 vs 3/5,8,,1.0
+H1,gemini-3.5-flash-lite,"sign errors, size-aware p with BH across regions",,,3,8,count of FDR-significant opposite-sign regions,
+H1-exploratory,gemini-3.5-flash-lite,Wilcoxon d_LLM - d_real > 0 (push toward positive pairing),6.0,0.9609375,-0.4268058544926884,8,exploratory,0.9999790191650391
+H1,llama-3.1-8b,"Fisher exact, errors contrasting > uniform",0.0,1.0,0/6 vs 2/16,22,,1.0
+H1,llama-3.1-8b,"sign errors, size-aware p with BH across regions",,,2,22,count of FDR-significant opposite-sign regions,
+H1-exploratory,llama-3.1-8b,Wilcoxon d_LLM - d_real > 0 (push toward positive pairing),90.0,0.8826189041137695,-0.10125136783927813,22,exploratory,0.9999790191650391
+H1,openai-gpt-6-luna,"Fisher exact, errors contrasting > uniform",0.2571428571428571,0.9597523219814241,1/6 vs 7/16,22,,1.0
+H1,openai-gpt-6-luna,"sign errors, size-aware p with BH across regions",,,8,22,count of FDR-significant opposite-sign regions,
+H1-exploratory,openai-gpt-6-luna,Wilcoxon d_LLM - d_real > 0 (push toward positive pairing),14.0,0.9999790191650391,-0.4928428228034265,22,exploratory,0.9999790191650391
+H1,qwen3.5-9b,"Fisher exact, errors contrasting > uniform",0.0,1.0,0/6 vs 3/16,22,,1.0
+H1,qwen3.5-9b,"sign errors, size-aware p with BH across regions",,,2,22,count of FDR-significant opposite-sign regions,
+H1-exploratory,qwen3.5-9b,Wilcoxon d_LLM - d_real > 0 (push toward positive pairing),37.0,0.9989025592803955,-0.2636782209568994,22,exploratory,0.9999790191650391
+H1-equalN,gemini-3.5-flash-lite,Wilcoxon d_LLM - median d_genuine(same N) > 0,15.0,0.6796875,-0.053700100786228236,8,"3 too uniform, 3 too contrasting (BH)",0.90625
+H1-equalN,gemini-3.5-flash-lite,"Fisher: shift toward uniform, contrasting vs uniform regions",inf,0.017857142857142856,3/3 vs 0/5,8,,0.07142857142857142
+H1-equalN,llama-3.1-8b,Wilcoxon d_LLM - median d_genuine(same N) > 0,174.0,0.06444001197814941,0.11421512418684576,22,"9 too uniform, 2 too contrasting (BH)",0.25776004791259766
+H1-equalN,llama-3.1-8b,"Fisher: shift toward uniform, contrasting vs uniform regions",5.0,0.17823971693940732,5/6 vs 8/16,22,,0.22910216718266255
+H1-equalN,openai-gpt-6-luna,Wilcoxon d_LLM - median d_genuine(same N) > 0,55.0,0.9913995265960693,-0.28708020103476095,22,"2 too uniform, 11 too contrasting (BH)",0.9913995265960693
+H1-equalN,openai-gpt-6-luna,"Fisher: shift toward uniform, contrasting vs uniform regions",7.0,0.10047846889952154,3/6 vs 2/16,22,,0.20095693779904308
+H1-equalN,qwen3.5-9b,Wilcoxon d_LLM - median d_genuine(same N) > 0,128.0,0.48731088638305664,-0.01173882056124844,22,"3 too uniform, 3 too contrasting (BH)",0.90625
+H1-equalN,qwen3.5-9b,"Fisher: shift toward uniform, contrasting vs uniform regions",3.3333333333333335,0.22910216718266255,4/6 vs 6/16,22,,0.22910216718266255
+H2b,gemini-3.5-flash-lite,Wilcoxon log SAI > 0,10.0,0.875,0.9842487866222019,8,,0.875
+H2b-diversity,gemini-3.5-flash-lite,Wilcoxon log diversity ratio < 0,0.0,0.00390625,0.5323839965328396,8,,0.00390625
+H2b,llama-3.1-8b,Wilcoxon log SAI > 0,115.0,0.6488075256347656,1.0091061036346827,22,,0.875
+H2b-diversity,llama-3.1-8b,Wilcoxon log diversity ratio < 0,0.0,2.384185791015625e-07,0.4774475017485412,22,,3.178914388020833e-07
+H2b,openai-gpt-6-luna,Wilcoxon log SAI > 0,158.0,0.16044163703918457,1.0420903920125535,22,,0.6417665481567383
+H2b-diversity,openai-gpt-6-luna,Wilcoxon log diversity ratio < 0,0.0,2.384185791015625e-07,0.45904706014437213,22,,3.178914388020833e-07
+H2b,qwen3.5-9b,Wilcoxon log SAI > 0,102.0,0.7877557277679443,0.9748242968442958,22,,0.875
+H2b-diversity,qwen3.5-9b,Wilcoxon log diversity ratio < 0,0.0,2.384185791015625e-07,0.5972517586025923,22,,3.178914388020833e-07
+H2b,real@160,median SAI of genuine samples (expected 1),,,0.9998874714567776,22000,,
+H2c,gemini-3.5-flash-lite,Wilcoxon rho_LLM - median rho_real@160 < 0,0.0,0.00390625,-0.32802432990126473,8,4 regions below the resampling distribution (BH),0.00390625
+H2c,llama-3.1-8b,Wilcoxon rho_LLM - median rho_real@160 < 0,0.0,2.384185791015625e-07,-0.48036033883557094,22,19 regions below the resampling distribution (BH),4.76837158203125e-07
+H2c,openai-gpt-6-luna,Wilcoxon rho_LLM - median rho_real@160 < 0,4.0,1.6689300537109375e-06,-0.4160714285714286,22,14 regions below the resampling distribution (BH),2.225240071614583e-06
+H2c,qwen3.5-9b,Wilcoxon rho_LLM - median rho_real@160 < 0,0.0,2.384185791015625e-07,-0.3838268607037958,22,20 regions below the resampling distribution (BH),4.76837158203125e-07
+H4-persona,gemini-3.5-flash-lite,Wilcoxon persona - plain: abs_d_gap,11.0,0.3828125,-0.06482032361610522,8,,0.3828125
+H4-persona,gemini-3.5-flash-lite,Wilcoxon persona - plain: prevalence_jsd,1.0,0.015625,-0.09183213769468469,8,,0.015625
+H4-persona,gemini-3.5-flash-lite,Wilcoxon persona - plain: fingerprint_spearman,9.0,0.25,0.5038961038961038,8,,0.3333333333333333
+H4-persona,gemini-3.5-flash-lite,Wilcoxon persona - plain: abs_log_sai,17.0,0.9453125,0.001675043442641036,8,,0.9453125
+H4-persona,llama-3.1-8b,Wilcoxon persona - plain: abs_d_gap,87.0,0.20992755889892578,-0.08151328790772384,22,,0.2799034118652344
+H4-persona,llama-3.1-8b,Wilcoxon persona - plain: prevalence_jsd,15.0,6.532669067382812e-05,-0.033719683226187624,22,,8.710225423177083e-05
+H4-persona,llama-3.1-8b,Wilcoxon persona - plain: fingerprint_spearman,115.0,0.7088659586765118,0.006060606060606127,22,,0.7088659586765118
+H4-persona,llama-3.1-8b,Wilcoxon persona - plain: abs_log_sai,63.0,0.03907346725463867,-0.048223145115334654,22,,0.1475515365600586
+H4-persona,openai-gpt-6-luna,Wilcoxon persona - plain: abs_d_gap,74.0,0.09173250198364258,-0.15066976158081224,22,,0.18346500396728516
+H4-persona,openai-gpt-6-luna,Wilcoxon persona - plain: prevalence_jsd,0.0,4.76837158203125e-07,-0.07552694998482307,22,,1.9073486328125e-06
+H4-persona,openai-gpt-6-luna,Wilcoxon persona - plain: fingerprint_spearman,88.0,0.2221074104309082,0.10357142857142863,22,,0.3333333333333333
+H4-persona,openai-gpt-6-luna,Wilcoxon persona - plain: abs_log_sai,86.0,0.19821882247924805,-0.0806105710514369,22,,0.26429176330566406
+H4-persona,qwen3.5-9b,Wilcoxon persona - plain: abs_d_gap,69.0,0.06341934204101562,-0.16226083766961236,22,,0.18346500396728516
+H4-persona,qwen3.5-9b,Wilcoxon persona - plain: prevalence_jsd,3.0,2.384185791015625e-06,-0.040580592897422274,22,,4.76837158203125e-06
+H4-persona,qwen3.5-9b,Wilcoxon persona - plain: fingerprint_spearman,32.0,0.0012617111206054688,0.11428571428571431,22,,0.005046844482421875
+H4-persona,qwen3.5-9b,Wilcoxon persona - plain: abs_log_sai,71.0,0.0737757682800293,-0.06389565258746328,22,,0.1475515365600586
+H4-proprietary,gemini-3.5-flash-lite+openai-gpt-6-luna,Wilcoxon proprietary - open: abs_d_gap,71.0,0.0737757682800293,0.09508263390989681,22,,0.0737757682800293
+H4-proprietary,gemini-3.5-flash-lite+openai-gpt-6-luna,Wilcoxon proprietary - open: prevalence_jsd,45.0,0.006649494171142578,0.01552344343347406,22,,0.006649494171142578
+H4-proprietary,gemini-3.5-flash-lite+openai-gpt-6-luna,Wilcoxon proprietary - open: fingerprint_spearman,105.0,0.5028400421142578,0.035918248418248394,22,,0.5028400421142578
+H4-proprietary,gemini-3.5-flash-lite+openai-gpt-6-luna,Wilcoxon proprietary - open: abs_log_sai,119.0,0.8237285614013672,0.020447340455314447,22,,0.8237285614013672
+CM,gemini-3.5-flash-lite,Wilcoxon LLM - CM-R/ranked: abs_d_gap,12.0,0.4609375,-0.02095202053942924,8,,0.46277761459350586
+CM,llama-3.1-8b,Wilcoxon LLM - CM-R/ranked: abs_d_gap,37.0,0.0025048255920410156,-0.16491537727146088,22,,0.005009651184082031
+CM,openai-gpt-6-luna,Wilcoxon LLM - CM-R/ranked: abs_d_gap,103.0,0.46277761459350586,-0.08182705530516463,22,,0.46277761459350586
+CM,qwen3.5-9b,Wilcoxon LLM - CM-R/ranked: abs_d_gap,32.0,0.0012617111206054688,-0.1476388001132575,22,,0.005009651184082031
+CM,gemini-3.5-flash-lite,Wilcoxon LLM - CM-R/ranked: prevalence_jsd,0.0,0.0078125,-0.44415707716731534,8,,0.0078125
+CM,llama-3.1-8b,Wilcoxon LLM - CM-R/ranked: prevalence_jsd,0.0,4.76837158203125e-07,-0.4321515333291368,22,,6.357828776041666e-07
+CM,openai-gpt-6-luna,Wilcoxon LLM - CM-R/ranked: prevalence_jsd,0.0,4.76837158203125e-07,-0.44133420773297244,22,,6.357828776041666e-07
+CM,qwen3.5-9b,Wilcoxon LLM - CM-R/ranked: prevalence_jsd,0.0,4.76837158203125e-07,-0.4516234868729393,22,,6.357828776041666e-07
+CM,gemini-3.5-flash-lite,Wilcoxon LLM - CM-R/ranked: fingerprint_spearman,3.0,0.0390625,0.4229267791032497,8,,0.0390625
+CM,llama-3.1-8b,Wilcoxon LLM - CM-R/ranked: fingerprint_spearman,26.0,0.0005044937133789062,0.2288295038295038,22,,0.0010089874267578125
+CM,openai-gpt-6-luna,Wilcoxon LLM - CM-R/ranked: fingerprint_spearman,18.0,0.00012063980102539062,0.26163196839280434,22,,0.0004825592041015625
+CM,qwen3.5-9b,Wilcoxon LLM - CM-R/ranked: fingerprint_spearman,30.0,0.0009412765502929688,0.29996175393234215,22,,0.001255035400390625
+CM,gemini-3.5-flash-lite,Wilcoxon LLM - CM-R/ranked: abs_log_sai,0.0,0.0078125,-1.9219208937649657,8,,0.0078125
+CM,llama-3.1-8b,Wilcoxon LLM - CM-R/ranked: abs_log_sai,0.0,4.76837158203125e-07,-1.7781130487745218,22,,6.357828776041666e-07
+CM,openai-gpt-6-luna,Wilcoxon LLM - CM-R/ranked: abs_log_sai,0.0,4.76837158203125e-07,-1.8396315764957052,22,,6.357828776041666e-07
+CM,qwen3.5-9b,Wilcoxon LLM - CM-R/ranked: abs_log_sai,0.0,4.76837158203125e-07,-1.859846376235736,22,,6.357828776041666e-07

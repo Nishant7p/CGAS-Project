@@ -1,0 +1,74 @@
+{
+  "_about": "Validation targets for replicating Singh & Bagler (2018) on CulinaryDB. Values were read by eye from the CulinaryDB website figures (data/raw/culinarydb_site/figures/2FP-R0..R3.png, X-Positive/Negative-Food-Pairing-Statistics.png) on 2026-11-22. Reading error: about +-3 for random/category Z, +-0.7 for frequency and frequency+category Z, +-0.1 for contributions. Use them for sign agreement, rank correlation and tolerance checks, not exact equality.",
+  "_z_definition": "Z = sqrt(N_rand) * (mean_Ns_cuisine - mean_Ns_rand) / sigma_rand, with N_rand = 100000 random recipes and sigma_rand the SD of recipe-level Ns in the random cuisine (Jain, Rakhi & Bagler 2015, eq. 3; Singh & Bagler 2018). Each panel compares the REAL cuisine with one null model built from that cuisine's own ingredients and recipe-size distribution.",
+  "_contribution_definition": "Percentage change in the food-pairing score (Z) when the ingredient is removed from the cuisine, oriented so that a positive value means the ingredient pushes the cuisine toward its observed sign (Singh & Bagler 2018, Sec. IV-C). Exact removal procedure must be calibrated against these values.",
+  "region_codes": {
+    "AFR": "Africa", "ANZ": "Australia & NZ", "BRI": "British Isles", "CAN": "Canada", "CBN": "Caribbean",
+    "CHN": "China", "DACH": "DACH Countries", "EE": "Eastern Europe", "FRA": "France", "GRC": "Greece",
+    "INSC": "Indian Subcontinent", "ITA": "Italy", "JPN": "Japan", "KOR": "Korea", "MEX": "Mexico",
+    "ME": "Middle East", "SCND": "Scandinavia", "SAM": "South America", "SEA": "South East Asia",
+    "ESP": "Spain", "THA": "Thailand", "USA": "USA"
+  },
+  "table1_counts": {
+    "AFR": [651, 303], "ANZ": [494, 294], "BRI": [1075, 340], "CAN": [1112, 368], "CBN": [1103, 340],
+    "CHN": [941, 302], "DACH": [487, 260], "EE": [565, 255], "FRA": [2703, 424], "GRC": [934, 280],
+    "INSC": [4058, 378], "ITA": [7504, 452], "JPN": [580, 283], "KOR": [301, 198], "MEX": [3138, 376],
+    "ME": [993, 313], "SCND": [404, 245], "SAM": [310, 221], "SEA": [611, 266], "ESP": [816, 312],
+    "THA": [667, 265], "USA": [16118, 612]
+  },
+  "expected_sign": {
+    "uniform_positive": ["ITA", "AFR", "CBN", "GRC", "ESP", "USA", "INSC", "ME", "MEX", "ANZ", "SAM", "FRA", "THA", "CHN", "SEA", "CAN"],
+    "contrasting_negative": ["EE", "KOR", "BRI", "DACH", "JPN", "SCND"]
+  },
+  "z_vs_null": {
+    "random": {
+      "ITA": 263, "AFR": 262, "CBN": 250, "GRC": 241, "ESP": 229, "USA": 198, "INSC": 172, "ME": 160,
+      "MEX": 140, "ANZ": 110, "SAM": 96, "FRA": 92, "THA": 74, "CHN": 59, "SEA": 48, "CAN": 45,
+      "EE": -31, "KOR": -32, "BRI": -48, "DACH": -55, "JPN": -111, "SCND": -148
+    },
+    "frequency": {
+      "ITA": 10.0, "ESP": 9.4, "GRC": 9.2, "MEX": -1.5, "ANZ": -10.3, "INSC": -12.8, "CAN": -13.9,
+      "THA": -15.7, "CBN": -16.1, "USA": -16.9, "BRI": -20.2, "EE": -25.8, "AFR": -26.6, "KOR": -31.8,
+      "ME": -32.2, "CHN": -34.3, "FRA": -37.6, "DACH": -38.9, "SAM": -41.0, "SEA": -58.8, "SCND": -59.6,
+      "JPN": -62.1
+    },
+    "category": {
+      "GRC": 243, "ITA": 235, "ANZ": 200, "CBN": 166, "FRA": 164, "USA": 164, "ESP": 157, "EE": 154,
+      "ME": 146, "CAN": 142, "AFR": 124, "DACH": 122, "SAM": 120, "BRI": 117, "SEA": 114, "CHN": 101,
+      "MEX": 95, "THA": 85, "SCND": 53, "JPN": 22, "INSC": 6, "KOR": -18
+    },
+    "frequency_category": {
+      "GRC": 29.3, "BRI": 17.4, "ITA": 14.4, "ESP": 12.2, "CAN": 12.0, "ANZ": 10.0, "USA": 8.8, "CBN": 7.3,
+      "FRA": 6.0, "THA": 5.1, "EE": 4.6, "DACH": 2.6, "ME": 1.8, "AFR": 1.5, "SCND": 0.3, "CHN": -0.1,
+      "SAM": -0.2, "MEX": -7.6, "SEA": -7.8, "KOR": -10.7, "JPN": -13.0, "INSC": -19.8
+    }
+  },
+  "top3_contribution_percent": {
+    "positive": {
+      "ITA": {"Olive": 1.05, "Pepper": 0.93, "Tomato": 0.70},
+      "AFR": {"Pepper": 0.84, "Olive": 0.76, "Coriander": 0.53},
+      "CBN": {"Pepper": 0.68, "Lime": 0.52, "Garlic": 0.40},
+      "GRC": {"Olive": 1.28, "Pepper": 1.04, "Tomato": 0.77},
+      "ESP": {"Olive": 1.28, "Pepper": 0.86, "Capsicum": 0.84},
+      "USA": {"Pepper": 0.98, "Onion": 0.45, "Olive": 0.45},
+      "INSC": {"Sunflower": 0.86, "Coriander": 0.42, "Capsicum": 0.42},
+      "ME": {"Olive": 1.52, "Pepper": 1.52, "Garlic": 1.24},
+      "MEX": {"Tomato": 1.70, "Onion": 1.56, "Coriander": 1.40},
+      "ANZ": {"Pepper": 1.92, "Olive": 1.25, "Onion": 1.22},
+      "SAM": {"Pepper": 2.00, "Olive": 1.70, "Garlic": 1.58},
+      "FRA": {"Pepper": 1.49, "Olive": 1.12, "Flour": 0.80},
+      "THA": {"Coriander": 2.38, "Lime": 2.00, "Ginger": 1.59},
+      "CHN": {"Ginger": 5.29, "Garlic": 3.23, "Sesame": 2.95},
+      "SEA": {"Garlic": 4.76, "Pepper": 3.47, "Ginger": 3.08},
+      "CAN": {"Pepper": 3.18, "Onion": 2.06, "Flour": 1.72}
+    },
+    "negative": {
+      "EE": {"Cream": 7.3, "Egg": 6.7, "Beef": 3.15},
+      "KOR": {"Soybean Sauce": 16.85, "Beef": 7.7, "Vinegar": 6.15},
+      "BRI": {"Cream": 3.75, "Beef": 3.3, "Egg": 2.6},
+      "DACH": {"Egg": 3.9, "Cream": 1.85, "Vinegar": 1.75},
+      "JPN": {"Soybean Sauce": 4.05, "Vinegar": 1.7, "Egg": 1.1},
+      "SCND": {"Cream": 1.35, "Egg": 0.8, "Lemon Juice": 0.45}
+    }
+  }
+}

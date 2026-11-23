@@ -1,0 +1,149 @@
+term,llm_unmatched_lines,proposal,entity_id,entity_name,culinarydb_support,culinarydb_precision,examples
+cup,36,NEEDS_MANUAL,,,119764,0.09,1/4 cup berbere spice blend | 1/4 cup panko breadcrumbs | 1 cup fresh breadcrumbs
+tablespoon,18,NEEDS_MANUAL,,,71974,0.12,"2 tablespoons chutney | 1 tablespoon Sichuan peppercorns, ground | 1 tablespoon Sichuan peppercorns"
+g,18,NEEDS_MANUAL,,,693,0.09,"150 g thin noodles | 200g guanciale, diced | 80g parmigiano reggiano, freshly grated"
+tbsp,15,NEEDS_MANUAL,,,543,0.13,2 tbsp sofrito | 1 tbsp biryani masala | 2 tbsp biryani masala
+mirin,14,EVIDENCE,32.0,Wine,28,0.68,1 tablespoon mirin | 2 tablespoons mirin | 1 tablespoon mirin
+breadcrumb,11,EVIDENCE,2.0,Bread,76,0.68,1/4 cup panko breadcrumbs | 1 cup fresh breadcrumbs | 1 cup German breadcrumbs or panko
+grated,11,NEEDS_MANUAL,,,8063,0.33,"80g parmigiano reggiano, freshly grated | 100g parmigiano reggiano, grated | 150g Parmigiano-Reggiano, freshly grated"
+reggiano,10,EVIDENCE,62.0,Cheese,186,0.73,"80g parmigiano reggiano, freshly grated | 100g parmigiano reggiano, grated | 150g Parmigiano-Reggiano, freshly grated"
+parmigiano reggiano,10,EVIDENCE,62.0,Cheese,177,0.75,"80g parmigiano reggiano, freshly grated | 100g parmigiano reggiano, grated | 150g Parmigiano-Reggiano, freshly grated"
+parmigiano,10,EVIDENCE,62.0,Cheese,215,0.71,"80g parmigiano reggiano, freshly grated | 100g parmigiano reggiano, grated | 150g Parmigiano-Reggiano, freshly grated"
+dashi,10,NEEDS_MANUAL,,,24,0.42,4 cups dashi stock | 3/4 cup dashi stock | 2 cups dashi stock
+noodle,9,NEEDS_MANUAL,,,709,0.26,150 g thin noodles | 4 servings fresh thin ramen noodles | 4 servings udon noodles
+g parmigiano,9,NEEDS_MANUAL,,,1,1.0,"80g parmigiano reggiano, freshly grated | 100g parmigiano reggiano, grated | 150g Parmigiano-Reggiano, freshly grated"
+sofrito,8,NEEDS_MANUAL,,,3,1.0,1/4 cup sofrito | 1/4 cup sofrito | 2 tbsp sofrito
+dashi stock,8,NEEDS_MANUAL,,,1,1.0,4 cups dashi stock | 3/4 cup dashi stock | 2 cups dashi stock
+stock,8,EVIDENCE,272.0,Chicken,2509,0.66,4 cups dashi stock | 3/4 cup dashi stock | 2 cups dashi stock
+chili,8,NEEDS_MANUAL,,,841,0.39,"1 tbsp gochugaru (Korean chili flakes) | 1/4 teaspoon chili flakes | 3 Thai bird’s eye chilies, lightly crushed"
+cup sofrito,7,NEEDS_MANUAL,,,2,1.0,1/4 cup sofrito | 1/4 cup sofrito | 1/2 cup sofrito
+cup dashi,7,NEEDS_MANUAL,,,4,0.5,4 cups dashi stock | 3/4 cup dashi stock | 2 cups dashi stock
+teaspoon,7,NEEDS_MANUAL,,,66930,0.2,1 teaspoon mirin | 1 teaspoon Vegemite | ½ teaspoon bicarbonate of soda
+cut,6,NEEDS_MANUAL,,,13246,0.08,"2 lbs chuck roast, cut into 1.5-inch cubes | 1 kg kumara, peeled and cut into chunks | 1.5 kg kangaroo tail, cut into pieces"
+tbsp mirin,6,NEEDS_MANUAL,,,0,0.0,2 tbsp mirin | 2 tbsp mirin | 2 tbsp mirin
+gochugaru,6,EVIDENCE,339.0,Pepper,27,0.67,1 tbsp gochugaru (Korean chili flakes) | 1 teaspoon gochugaru | 1 teaspoon gochugaru
+finely,6,NEEDS_MANUAL,,,10611,0.17,"150 g glass noodles (dangmyeon), boiled and finely chopped | 25 g Parmigiano-Reggiano, finely grated | 60 g Parmigiano-Reggiano, finely grated"
+bird eye,6,NEEDS_MANUAL,,,5,0.4,"3 Thai bird’s eye chilies, lightly crushed | 2 Thai bird’s eye chilies, sliced | 2 Thai bird’s eye chilies"
+eye chili,6,NEEDS_MANUAL,,,0,0.0,"3 Thai bird’s eye chilies, lightly crushed | 2 Thai bird’s eye chilies, sliced | 2 Thai bird’s eye chilies"
+thai,6,NEEDS_MANUAL,,,522,0.23,"3 Thai bird’s eye chilies, lightly crushed | 2 Thai bird’s eye chilies, sliced | 2 Thai bird’s eye chilies"
+thai bird,6,NEEDS_MANUAL,,,11,0.55,"3 Thai bird’s eye chilies, lightly crushed | 2 Thai bird’s eye chilies, sliced | 2 Thai bird’s eye chilies"
+eye,6,EVIDENCE,270.0,Beef,145,0.78,"3 Thai bird’s eye chilies, lightly crushed | 2 Thai bird’s eye chilies, sliced | 2 Thai bird’s eye chilies"
+bird,6,NEEDS_MANUAL,,,22,0.32,"3 Thai bird’s eye chilies, lightly crushed | 2 Thai bird’s eye chilies, sliced | 2 Thai bird’s eye chilies"
+peppercorn,5,NEEDS_MANUAL,,,43,0.23,"1 tablespoon Sichuan peppercorns, ground | 1 tablespoon Sichuan peppercorns | 1 tsp ground Sichuan peppercorns"
+tablespoon mirin,5,EVIDENCE,32.0,Wine,10,0.9,1 tablespoon mirin | 2 tablespoons mirin | 1 tablespoon mirin
+sheet,5,NEEDS_MANUAL,,,445,0.37,"250 g dried lasagne sheets | 2 sheets nori, cut into strips | 4 sheets nori"
+chile,5,EVIDENCE,992.0,Cayenne,2482,0.66,"1 serrano chile, minced | 2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded"
+queso,5,NEEDS_MANUAL,,,83,0.34,1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco
+crumbled,5,NEEDS_MANUAL,,,1797,0.3,1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco
+queso fresco,5,NEEDS_MANUAL,,,60,0.37,1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco
+fresco,5,NEEDS_MANUAL,,,61,0.38,1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco
+tsp,4,NEEDS_MANUAL,,,533,0.16,1/2 tsp bicarb soda | 1 tsp bicarbonate of soda | 1 tsp mirin
+soda,4,EVIDENCE,996.0,Baking Powder,1507,0.92,1/2 tsp bicarb soda | 1 tsp bicarbonate of soda | ½ teaspoon bicarbonate of soda
+fresh,4,NEEDS_MANUAL,,,26969,0.13,1 cup fresh breadcrumbs | 4 servings fresh thin ramen noodles | 4 portions fresh ramen noodles
+n,4,NEEDS_MANUAL,,,44,0.41,1 packet sazón with culantro and achiote | 1 packet (1.4 oz) sazón seasoning with achiote | 1 packet sazón with achiote
+saz,4,NEEDS_MANUAL,,,0,0.0,1 packet sazón with culantro and achiote | 1 packet (1.4 oz) sazón seasoning with achiote | 1 packet sazón with achiote
+saz n,4,NEEDS_MANUAL,,,0,0.0,1 packet sazón with culantro and achiote | 1 packet (1.4 oz) sazón seasoning with achiote | 1 packet sazón with achiote
+achiote,4,EVIDENCE,2064.0,Tomato Paste,22,0.73,1 packet sazón with culantro and achiote | 1 packet (1.4 oz) sazón seasoning with achiote | 1 packet sazón with achiote
+packet,4,NEEDS_MANUAL,,,133,0.17,1 packet sazón with culantro and achiote | 1 packet (1.4 oz) sazón seasoning with achiote | 1 packet sazón with achiote
+sichuan peppercorn,4,NEEDS_MANUAL,,,3,0.67,"1 tablespoon Sichuan peppercorns, ground | 1 tablespoon Sichuan peppercorns | 1 tsp ground Sichuan peppercorns"
+sichuan,4,NEEDS_MANUAL,,,11,0.55,"1 tablespoon Sichuan peppercorns, ground | 1 tablespoon Sichuan peppercorns | 1 tsp ground Sichuan peppercorns"
+crushed,4,NEEDS_MANUAL,,,3612,0.29,"10 German gingersnaps, crushed | 2 tablespoons crushed gingersnaps | 3 Thai bird’s eye chilies, lightly crushed"
+cup breadcrumb,4,NEEDS_MANUAL,,,2,0.5,1/4 cup breadcrumbs | 1 cup breadcrumbs | ½ cup breadcrumbs
+thin,4,NEEDS_MANUAL,,,1833,0.07,150 g thin noodles | 4 servings fresh thin ramen noodles | 1 cup thin noodles
+ml,4,NEEDS_MANUAL,,,455,0.13,"300ml strong espresso, cooled | 150ml Alchermes liqueur | 300 ml strong espresso, cooled"
+tbsp gochugaru,4,NEEDS_MANUAL,,,0,0.0,1 tbsp gochugaru (Korean chili flakes) | 2 tbsp gochugaru | 2 tbsp gochugaru
+reggiano finely,4,NEEDS_MANUAL,,,0,0.0,"25 g Parmigiano-Reggiano, finely grated | 60 g Parmigiano-Reggiano, finely grated | 150 g Parmigiano-Reggiano, finely grated"
+finely grated,4,NEEDS_MANUAL,,,1114,0.34,"25 g Parmigiano-Reggiano, finely grated | 60 g Parmigiano-Reggiano, finely grated | 150 g Parmigiano-Reggiano, finely grated"
+dried,4,NEEDS_MANUAL,,,9057,0.21,"250 g dried lasagne sheets | 2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded"
+seeded,4,NEEDS_MANUAL,,,3194,0.24,"1 jalapeño, seeded and minced | 2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded"
+crumbled queso,4,NEEDS_MANUAL,,,33,0.48,1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco
+cup crumbled,4,NEEDS_MANUAL,,,495,0.57,1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco | 1/2 cup crumbled queso fresco
+freshly,3,EVIDENCE,339.0,Pepper,10512,0.73,"4 live or freshly thawed South West marron, split in half and cleaned | 80g parmigiano reggiano, freshly grated | 150g Parmigiano-Reggiano, freshly grated"
+bicarbonate soda,3,NEEDS_MANUAL,,,3,1.0,1 tsp bicarbonate of soda | ½ teaspoon bicarbonate of soda | 1 teaspoon bicarbonate of soda
+bicarbonate,3,NEEDS_MANUAL,,,3,1.0,1 tsp bicarbonate of soda | ½ teaspoon bicarbonate of soda | 1 teaspoon bicarbonate of soda
+packet saz,3,NEEDS_MANUAL,,,0,0.0,1 packet sazón with culantro and achiote | 1 packet sazón with achiote | 1 packet sazón with achiote
+tablespoon sichuan,3,NEEDS_MANUAL,,,0,0.0,"1 tablespoon Sichuan peppercorns, ground | 1 tablespoon Sichuan peppercorns | 1 tablespoon Sichuan peppercorns"
+dry,3,NEEDS_MANUAL,,,4910,0.26,1.5 cups dry breadcrumbs | 1 cup fine dry breadcrumbs | 1 cup dry breadcrumbs
+dry breadcrumb,3,NEEDS_MANUAL,,,0,0.0,1.5 cups dry breadcrumbs | 1 cup fine dry breadcrumbs | 1 cup dry breadcrumbs
+fine,3,NEEDS_MANUAL,,,1209,0.4,"4 tablespoons fine cornmeal | 1 cup fine dry breadcrumbs | 1/2 cup fine breadcrumbs, plus 1/2 cup for coating"
+reggiano grated,3,NEEDS_MANUAL,,,0,0.0,"100g parmigiano reggiano, grated | 100g Parmigiano-Reggiano, grated | 100 g Parmigiano-Reggiano, grated"
+serving,3,NEEDS_MANUAL,,,1362,0.07,4 servings fresh thin ramen noodles | 4 servings udon noodles | 4 servings udon noodles
+chopped,3,NEEDS_MANUAL,,,42318,0.18,"150 g glass noodles (dangmyeon), boiled and finely chopped | 100 g mortadella, finely chopped | 2–4 Thai bird’s eye chilies, roughly chopped"
+sheet nori,3,NEEDS_MANUAL,,,0,0.0,"2 sheets nori, cut into strips | 4 sheets nori | 1 sheet nori, cut into thin strips"
+nori,3,NEEDS_MANUAL,,,9,0.56,"2 sheets nori, cut into strips | 4 sheets nori | 1 sheet nori, cut into thin strips"
+sliced,3,NEEDS_MANUAL,,,14637,0.15,"1 sheet aburaage, blanched and thinly sliced | 150 g Chinese lap cheong, thinly sliced | 2 Thai bird’s eye chilies, sliced"
+ounce,3,NEEDS_MANUAL,,,31358,0.09,"7 ounces fideo noodles | 2 cans (25 ounces each) hominy, drained and rinsed | 8 ounces queso fresco, crumbled"
+chile stemmed,3,NEEDS_MANUAL,,,29,0.48,"2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded | 2 dried ancho chiles, stemmed and seeded"
+stemmed,3,NEEDS_MANUAL,,,523,0.17,"2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded | 2 dried ancho chiles, stemmed and seeded"
+stemmed seeded,3,NEEDS_MANUAL,,,112,0.37,"2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded | 2 dried ancho chiles, stemmed and seeded"
+galangal,3,EVIDENCE,333.0,Ginger,11,1.0,"4 cm galangal, peeled | 5 slices galangal | 5 slices galangal"
+berbere,2,NEEDS_MANUAL,,,1,1.0,1/4 cup berbere spice blend | 2 tablespoons berbere spice
+berbere spice,2,NEEDS_MANUAL,,,0,0.0,1/4 cup berbere spice blend | 2 tablespoons berbere spice
+spice,2,NEEDS_MANUAL,,,380,0.24,1/4 cup berbere spice blend | 2 tablespoons berbere spice
+panko,2,EVIDENCE,2.0,Bread,122,0.93,1/4 cup panko breadcrumbs | 1 cup German breadcrumbs or panko
+inch,2,NEEDS_MANUAL,,,12302,0.05,"2 lbs chuck roast, cut into 1.5-inch cubes | 2 cups fernbrake (gosari), soaked and cut into 2-inch lengths"
+cut inch,2,NEEDS_MANUAL,,,5502,0.07,"2 lbs chuck roast, cut into 1.5-inch cubes | 2 cups fernbrake (gosari), soaked and cut into 2-inch lengths"
+oz,2,NEEDS_MANUAL,,,1500,0.06,1 bottle (11.2 oz) Guinness stout | 1 packet (1.4 oz) sazón seasoning with achiote
+ground,2,NEEDS_MANUAL,,,25666,0.47,"1 tablespoon Sichuan peppercorns, ground | 1 tsp ground Sichuan peppercorns"
+german,2,NEEDS_MANUAL,,,19,0.37,"1 cup German breadcrumbs or panko | 10 German gingersnaps, crushed"
+gingersnap,2,NEEDS_MANUAL,,,1,1.0,"10 German gingersnaps, crushed | 2 tablespoons crushed gingersnaps"
+cup dry,2,NEEDS_MANUAL,,,2027,0.56,1.5 cups dry breadcrumbs | 1 cup dry breadcrumbs
+piece,2,NEEDS_MANUAL,,,6369,0.11,"1 piece marrow bone | 1.5 kg kangaroo tail, cut into pieces"
+thin noodle,2,NEEDS_MANUAL,,,1,1.0,150 g thin noodles | 1 cup thin noodles
+biryani masala,2,NEEDS_MANUAL,,,0,0.0,1 tbsp biryani masala | 2 tbsp biryani masala
+masala,2,EVIDENCE,2000.0,Garam Masala,831,0.83,1 tbsp biryani masala | 2 tbsp biryani masala
+biryani,2,NEEDS_MANUAL,,,1,1.0,1 tbsp biryani masala | 2 tbsp biryani masala
+tbsp biryani,2,NEEDS_MANUAL,,,0,0.0,1 tbsp biryani masala | 2 tbsp biryani masala
+diced,2,NEEDS_MANUAL,,,9421,0.2,"200g guanciale, diced | 150 g guanciale, diced"
+guanciale,2,NEEDS_MANUAL,,,21,0.57,"200g guanciale, diced | 150 g guanciale, diced"
+guanciale diced,2,NEEDS_MANUAL,,,0,0.0,"200g guanciale, diced | 150 g guanciale, diced"
+g guanciale,2,NEEDS_MANUAL,,,0,0.0,"200g guanciale, diced | 150 g guanciale, diced"
+reggiano freshly,2,NEEDS_MANUAL,,,0,0.0,"80g parmigiano reggiano, freshly grated | 150g Parmigiano-Reggiano, freshly grated"
+freshly grated,2,NEEDS_MANUAL,,,1440,0.46,"80g parmigiano reggiano, freshly grated | 150g Parmigiano-Reggiano, freshly grated"
+espresso,2,EVIDENCE,46.0,Coffee,123,0.71,"300ml strong espresso, cooled | 300 ml strong espresso, cooled"
+cooled,2,NEEDS_MANUAL,,,383,0.43,"300ml strong espresso, cooled | 300 ml strong espresso, cooled"
+espresso cooled,2,NEEDS_MANUAL,,,2,1.0,"300ml strong espresso, cooled | 300 ml strong espresso, cooled"
+ml strong,2,NEEDS_MANUAL,,,0,0.0,"300ml strong espresso, cooled | 300 ml strong espresso, cooled"
+strong espresso,2,NEEDS_MANUAL,,,3,1.0,"300ml strong espresso, cooled | 300 ml strong espresso, cooled"
+strong,2,EVIDENCE,46.0,Coffee,107,0.79,"300ml strong espresso, cooled | 300 ml strong espresso, cooled"
+mortadella,2,NEEDS_MANUAL,,,7,0.29,"100g mortadella di Bologna | 100 g mortadella, finely chopped"
+g mortadella,2,NEEDS_MANUAL,,,0,0.0,"100g mortadella di Bologna | 100 g mortadella, finely chopped"
+liqueur,2,NEEDS_MANUAL,,,530,0.38,150ml Alchermes liqueur | 150 ml Alchermes liqueur
+ml alcherme,2,NEEDS_MANUAL,,,0,0.0,150ml Alchermes liqueur | 150 ml Alchermes liqueur
+alcherme,2,NEEDS_MANUAL,,,0,0.0,150ml Alchermes liqueur | 150 ml Alchermes liqueur
+alcherme liqueur,2,NEEDS_MANUAL,,,0,0.0,150ml Alchermes liqueur | 150 ml Alchermes liqueur
+tablespoon dashi,2,NEEDS_MANUAL,,,1,1.0,1 tablespoon dashi stock | 1 tablespoon dashi stock
+raman,2,NEEDS_MANUAL,,,13,0.46,4 servings fresh thin ramen noodles | 4 portions fresh ramen noodles
+raman noodle,2,NEEDS_MANUAL,,,10,0.5,4 servings fresh thin ramen noodles | 4 portions fresh ramen noodles
+serving udon,2,NEEDS_MANUAL,,,0,0.0,4 servings udon noodles | 4 servings udon noodles
+udon noodle,2,NEEDS_MANUAL,,,5,0.4,4 servings udon noodles | 4 servings udon noodles
+udon,2,NEEDS_MANUAL,,,8,0.38,4 servings udon noodles | 4 servings udon noodles
+flake,2,EVIDENCE,339.0,Pepper,2022,0.82,1 tbsp gochugaru (Korean chili flakes) | 1/4 teaspoon chili flakes
+chili flake,2,EVIDENCE,992.0,Cayenne,67,0.91,1 tbsp gochugaru (Korean chili flakes) | 1/4 teaspoon chili flakes
+finely chopped,2,NEEDS_MANUAL,,,7696,0.2,"150 g glass noodles (dangmyeon), boiled and finely chopped | 100 g mortadella, finely chopped"
+teaspoon bicarbonate,2,NEEDS_MANUAL,,,1,1.0,½ teaspoon bicarbonate of soda | 1 teaspoon bicarbonate of soda
+kg,2,NEEDS_MANUAL,,,48,0.19,"1 kg kumara, peeled and cut into chunks | 1.5 kg kangaroo tail, cut into pieces"
+peeled,2,NEEDS_MANUAL,,,10249,0.12,"1 kg kumara, peeled and cut into chunks | 4 cm galangal, peeled"
+n achiote,2,NEEDS_MANUAL,,,0,0.0,1 packet sazón with achiote | 1 packet sazón with achiote
+cup fine,2,NEEDS_MANUAL,,,160,0.56,"1 cup fine dry breadcrumbs | 1/2 cup fine breadcrumbs, plus 1/2 cup for coating"
+tablespoon kirsch,2,EVIDENCE,224.0,Cherry,12,0.83,1 tablespoon kirsch | 1 tablespoon kirsch
+kirsch,2,EVIDENCE,224.0,Cherry,31,0.68,1 tablespoon kirsch | 1 tablespoon kirsch
+strip,2,NEEDS_MANUAL,,,1923,0.19,"2 sheets nori, cut into strips | 1 sheet nori, cut into thin strips"
+nori cut,2,NEEDS_MANUAL,,,0,0.0,"2 sheets nori, cut into strips | 1 sheet nori, cut into thin strips"
+portion,2,NEEDS_MANUAL,,,70,0.16,4 portions fresh ramen noodles | 2 portions champon noodles
+thinly sliced,2,NEEDS_MANUAL,,,5467,0.2,"1 sheet aburaage, blanched and thinly sliced | 150 g Chinese lap cheong, thinly sliced"
+thinly,2,NEEDS_MANUAL,,,5671,0.19,"1 sheet aburaage, blanched and thinly sliced | 150 g Chinese lap cheong, thinly sliced"
+teaspoon gochugaru,2,NEEDS_MANUAL,,,4,1.0,1 teaspoon gochugaru | 1 teaspoon gochugaru
+flatbread,2,NEEDS_MANUAL,,,28,0.32,2 medium shrak or markook flatbreads | 4 taboon or flatbreads
+serrano chile,2,EVIDENCE,339.0,Pepper,87,0.8,"1 serrano chile, minced | 2 serrano chiles"
+serrano,2,NEEDS_MANUAL,,,278,0.54,"1 serrano chile, minced | 2 serrano chiles"
+minced,2,NEEDS_MANUAL,,,11837,0.56,"1 serrano chile, minced | 1 jalapeño, seeded and minced"
+guajillo,2,NEEDS_MANUAL,,,18,0.39,"2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded"
+guajillo chile,2,NEEDS_MANUAL,,,13,0.46,"2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded"
+dried guajillo,2,NEEDS_MANUAL,,,2,1.0,"2 dried guajillo chiles, stemmed and seeded | 4 dried guajillo chiles, stemmed and seeded"
+rinsed,2,NEEDS_MANUAL,,,2003,0.29,"2 cans (25 ounces each) hominy, drained and rinsed | 1 pound tomatillos, husked and rinsed"
+slice,2,NEEDS_MANUAL,,,4947,0.17,5 slices galangal | 5 slices galangal
+slice galangal,2,NEEDS_MANUAL,,,1,1.0,5 slices galangal | 5 slices galangal
+lightly crushed,2,NEEDS_MANUAL,,,96,0.48,"3 Thai bird’s eye chilies, lightly crushed | 2–3 Thai bird’s eye chilies, lightly crushed"
+chili lightly,2,NEEDS_MANUAL,,,0,0.0,"3 Thai bird’s eye chilies, lightly crushed | 2–3 Thai bird’s eye chilies, lightly crushed"
+lightly,2,NEEDS_MANUAL,,,1285,0.53,"3 Thai bird’s eye chilies, lightly crushed | 2–3 Thai bird’s eye chilies, lightly crushed"

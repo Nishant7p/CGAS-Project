@@ -1,0 +1,43 @@
+site_name: FlavorAudit
+site_description: Audit any recipe collection against the flavor-pairing fingerprints of world cuisines.
+docs_dir: docs/site
+site_dir: site
+repo_name: ai-chefs-fingerprints
+nav:
+  - Home: index.md
+  - Quick start: quickstart.md
+  - Replicate Singh & Bagler in 10 lines: replicate.md
+  - Audit your own recipes: audit.md
+  - Example notebooks: notebooks.md
+  - Methods and definitions: methods.md
+  - API reference: api.md
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.sections
+  palette:
+    - scheme: default
+      toggle: {icon: material/brightness-7, name: Dark mode}
+    - scheme: slate
+      toggle: {icon: material/brightness-4, name: Light mode}
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: false
+            docstring_style: google
+            members_order: source
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.arithmatex: {generic: true}
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js
+extra_css:
+  - stylesheets/extra.css

@@ -1,0 +1,4 @@
+{% set V = F.verdicts %}{% set rs = F.ranges %}{% set E = F.equal_n %}
+# Closing conclusion (about 30 seconds)
+
+"So, do AI chefs respect culinary fingerprints? Partly. They use a cuisine's signature ingredients about as often as real cooks do — median SAI {{ rng(rs.median_sai) }} — but they cook a narrower version of it, about {{ pctr(rs.median_diversity_ratio) }} of the ingredient variety, they miss its distinctive ingredient pairings, and they weaken its category fingerprint, which correlates {{ rng(rs.median_fingerprint_spearman) }} with the real one against {{ f(E.ref.fingerprint_spearman) }} for genuine samples. Their food-pairing errors are model-specific rather than a general drift toward uniform pairing. And the fingerprint is useful beyond auditing: feedback built from it moves recipes back toward the cuisine while keeping the dish. Everything is reproducible from our dataset, the FlavorAudit library and the FlavorPrint app. Thank you."

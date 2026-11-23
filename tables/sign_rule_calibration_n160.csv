@@ -1,0 +1,23 @@
+region,sign_match_at_160,sign_rule_false_positive
+Africa,1.0,0.0
+Australia & NZ,0.995,0.0
+British Isles,1.0,0.0
+Canada,0.031,0.547
+Caribbean,1.0,0.0
+China,0.053,0.613
+DACH Countries,1.0,0.0
+Eastern Europe,0.992,0.0
+France,0.142,0.408
+Greece,1.0,0.0
+Indian Subcontinent,0.644,0.06
+Italy,0.998,0.0
+Japan,1.0,0.0
+Korea,0.996,0.0
+Mexico,0.72,0.028
+Middle East,0.968,0.001
+Scandinavia,1.0,0.0
+South America,0.941,0.0
+South East Asia,0.313,0.173
+Spain,1.0,0.0
+Thailand,0.874,0.011
+USA,0.515,0.06

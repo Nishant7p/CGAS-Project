@@ -1,0 +1,111 @@
+[project]
+name = "flavoraudit"
+version = "0.1.0.dev0"
+description = "Audit any recipe collection, human- or AI-written, against the flavor-pairing fingerprints of world cuisines (CulinaryDB + FlavorDB)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Group 44, CGAS BIO544 Computational Gastronomy, IIIT-Delhi" }]
+keywords = ["computational gastronomy", "food pairing", "flavor network", "culinary fingerprint", "recipes", "LLM evaluation"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+# Core library dependencies only. Everything research-, LLM- or app-specific lives in dependency groups below.
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "networkx>=3.2",
+    "matplotlib>=3.8",
+    "inflect>=7.0",
+]
+
+[project.optional-dependencies]
+ml = ["scikit-learn>=1.4"]
+
+[project.scripts]
+flavoraudit = "flavoraudit.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "hypothesis>=6.100",
+    "ruff>=0.6",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+    "build>=1.2",
+    "twine>=5",
+]
+research = [
+    "jupyterlab>=4.2",
+    "ipykernel>=6.29",
+    "scikit-learn>=1.4",
+    "statsmodels>=0.14",
+    "seaborn>=0.13",
+    "plotly>=5.22",
+    "pyarrow>=16",
+    "tqdm>=4.66",
+    "rapidfuzz>=3.9",
+]
+llm = [
+    "google-genai>=1.0",
+    "groq>=0.11",
+    "openai>=1.40",
+    "pydantic>=2.7",
+    "tenacity>=8.3",
+    "python-dotenv>=1.0",
+    "kaggle>=1.6",
+    "huggingface_hub>=0.24",
+]
+app = [
+    "streamlit>=1.37",
+    "plotly>=5.22",
+]
+docs = [
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.25",
+    "python-pptx>=1.0",  # presentation/build.py (slides.pptx)
+]
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/flavoraudit"]
+
+# The sdist must carry only the MIT library: never the CC BY-NC-SA data (data/release), app artifacts or research code.
+[tool.hatch.build.targets.sdist]
+only-include = ["src/flavoraudit", "README.md", "LICENSE", "DATA_LICENSE.md", "CHANGELOG.md", "CITATION.cff"]
+
+[tool.uv]
+default-groups = ["dev", "research"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+# Generated notebooks embed a base64 prompt set on one line; they are build artefacts, linted via their builder.
+extend-exclude = ["generation/kaggle/*.ipynb", "generation/kaggle/push"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "NPY"]
+
+[tool.ruff.lint.per-file-ignores]
+# Notebook cell sources live in long template strings; their content is checked by ast.parse in the build test.
+"generation/kaggle/build_notebook.py" = ["E501"]
+# Analysis, steering and app scripts print long f-strings and UI text; the library (src/) stays strict.
+"analysis/**" = ["E501"]
+"steering/**" = ["E501"]
+"app/**" = ["E501"]
+"scripts/**" = ["E501"]
+"report/**" = ["E501"]
+"presentation/**" = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q -m 'not slow'"
+markers = ["slow: long-running regression tests on real data (run with: pytest -m slow)"]

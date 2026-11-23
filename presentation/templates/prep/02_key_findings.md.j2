@@ -1,0 +1,29 @@
+{% set R = F.replication %}{% set E = F.equal_n %}{% set V = F.verdicts %}{% set rs = F.ranges %}{% set L = F.llm %}{% set N = F.networks or {} %}{% set nt = N.npmi_top100 or {} %}{% set DR = F.drivers %}{% set RV = F.revise %}{% set B = F.bon %}
+# The five most important findings
+
+Say each in one sentence first, then give the numbers if asked. All numbers from `results/summary.json` ({{ F.generated_date }}).
+
+## 1. The framework replicates, and a cuisine's pairing sign depends on how many recipes you sample
+- Singh & Bagler's Fig. 4 is reproduced: {{ R.random.sign_agreement }}/{{ R.random.n }} signs against the random null, Spearman ρ = {{ f(R.random.spearman, 3) }}; Korea's top driver is {{ R.korea_top1 }}, as published.
+- The own-pool null drifts with N: USA at {{ E.n_sub }} recipes has ΔNs = {{ f(E.usa.delta_ns_own_pool_n160) }} against its own {{ n0(E.usa.pool_n160) }}-ingredient pool but {{ f(E.usa.delta_ns_full_pool_n160) }} against the full pool.
+- At equal size ({{ E.matched_n }} recipes), all {{ E.contrasting_robust }} contrasting cuisines stay contrasting; {{ join_and(E.uniform_flipped) }} flip. The naive sign rule fires on {{ pct(E.fpr) }} of genuine samples. Hence: every LLM cuisine is judged against genuine samples of its own size.
+
+## 2. LLMs do not drift toward uniform food pairing; their errors are model-specific
+- H1 (shift toward uniform) supported for {{ V.h1eq_supported }}/{{ V.n }} models; the pre-registered Fisher test for {{ V.h1_fisher_supported }}/{{ V.n }}.
+- {% for k, p in L.items() %}{{ p.name }}: {{ p.equal_n_typical }}/{{ p.regions }} typical, {{ p.equal_n_too_uniform }} too uniform, {{ p.equal_n_too_contrasting }} too contrasting{{ "; " if not loop.last else "." }}{% endfor %}
+- Same verdict in every model with data: {% for c in F.consensus %}{{ c.region }} {{ c.verdict }} ({{ c.k }}/{{ c.k }}){{ ", " if not loop.last else "." }}{% endfor %}
+
+## 3. LLMs narrow cuisines rather than caricature them
+- Signature ingredients are used about as often as in real recipes: median SAI {{ rng(rs.median_sai) }} (genuine 95% range {{ f(E.sai_band[0], 3) }}–{{ f(E.sai_band[1], 3) }}); H2b supported for {{ V.h2b_sai_supported }}/{{ V.n }}.
+- But variety shrinks: diversity ratio {{ rng(rs.median_diversity_ratio) }} (significant in {{ V.h2b_div_supported }}/{{ V.n }}); prevalence JSD {{ rng(rs.median_prevalence_jsd, 3) }} vs {{ f(E.ref.prevalence_jsd, 3) }} for genuine samples.
+
+## 4. The finer fingerprint layers are weakened
+- Category fingerprints: ρ {{ rng(rs.median_fingerprint_spearman) }} vs {{ f(E.ref.fingerprint_spearman) }} for genuine samples (H2c supported for {{ V.h2c_supported }}/{{ V.n }}).
+{% if DR %}- Flavor drivers: top-5 χ% overlap (Jaccard@5) {% for k in DR.order %}{{ DR.models[k].name }} {{ f(DR.models[k].median_jaccard5) }}{{ ", " if not loop.last }}{% endfor %} vs {{ f(DR.real.median_jaccard5) }} genuine; for Korea {{ join_and(DR.korea_match) }} put {{ DR.korea_real_top5[0] }} first{% if DR.korea_miss %}, {{ join_and(DR.korea_miss) }} not{% endif %}.
+{% endif %}{% if nt %}- Co-occurrence: top-100 NPMI pairs overlap the real ones {% for k in F.analysed if k in nt %}{{ F.models[k].name }} {{ f(nt[k].median) }}{{ ", " if not loop.last }}{% endfor %} vs {{ f(nt['real@160'].median) }} genuine; below the genuine range in {% for k in F.analysed if k in nt %}{{ nt[k].below_reference_fdr05 }}/{{ nt[k].regions }}{{ ", " if not loop.last }}{% endfor %} regions. The models keep a generic skeleton of strong pairings but miss each cuisine's distinctive ones.
+{% endif %}
+
+## 5. Feedback steers better than selection
+{% if RV %}- Critique-and-revise raises the independent classifier's share of recipes assigned to the claimed cuisine ({% for k in RV.order %}{% set r = RV.rows[k] %}{{ r.name }} {{ f(r.first.indep_classifier_acc) }} → {{ f(r.last.indep_classifier_acc) }} in {{ r.rounds }} round{{ "s" if r.rounds > 1 }}{{ "; " if not loop.last }}{% endfor %}), lowers prevalence JSD in {{ RV.improved.prevalence_jsd }}/{{ RV.n_models }} models and keeps a Jaccard overlap of {{ rng_text(RV.kept_min, RV.kept_max) }} with the original dish. No CIs yet.
+{% endif %}{% if B %}- Best-of-N also raises the classifier share ({% for k in B.order %}{% set r = B.rows[k] %}{{ r.name }} {{ f(r.first.indep_classifier_acc) }} → {{ f(r.last.indep_classifier_acc) }}{{ "; " if not loop.last }}{% endfor %}) but lowers diversity ({% for k in B.order %}{% set r = B.rows[k] %}{{ f(r.first.diversity_ratio) }} → {{ f(r.last.diversity_ratio) }}{{ ", " if not loop.last }}{% endfor %}) and does not consistently improve cuisine-level pairing or fingerprints at {{ B.meta.selected_max }} recipes per region.
+{% endif %}

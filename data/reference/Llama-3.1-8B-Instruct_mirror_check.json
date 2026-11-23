@@ -1,0 +1,23 @@
+{
+  "official": "meta-llama/Llama-3.1-8B-Instruct",
+  "official_commit": "0e9e39f249a16976918f6564b8830bc894c89659",
+  "mirror": "RedHatAI/Llama-3.1-8B-Instruct",
+  "mirror_commit": "83c927477af31b2c66de4c0210ae5fa04b28289b",
+  "checked_utc": "2026-11-22T11:30:20+00:00",
+  "byte_identical": true,
+  "files": {
+    "config.json": "identical",
+    "generation_config.json": "identical",
+    "model-00001-of-00004.safetensors": "identical",
+    "model-00002-of-00004.safetensors": "identical",
+    "model-00003-of-00004.safetensors": "identical",
+    "model-00004-of-00004.safetensors": "identical",
+    "model.safetensors.index.json": "identical",
+    "special_tokens_map.json": "identical",
+    "tokenizer.json": "identical",
+    "tokenizer_config.json": "identical"
+  },
+  "extra_files_in_mirror": [
+    "NOTICE"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+ "rule": "GPT-6-Luna round-1 revisions that raised the composite fidelity score; the one at the median gain",
+ "model": "openai-gpt-6-luna",
+ "region": "Spain",
+ "context": {
+  "revisions_scored": 440,
+  "share_score_raised": 0.598,
+  "median_gain_all": 0.076,
+  "median_percentile_before": 64.6,
+  "median_percentile_after": 75.6
+ },
+ "before": {
+  "title": "Cochinillo Asado (Roast Suckling Pig)",
+  "ingredients": [
+   "1 suckling pig, about 8 pounds, split lengthwise",
+   "2 tablespoons lard, softened",
+   "2 teaspoons coarse salt",
+   "1 cup water"
+  ],
+  "fidelity_percentile": 17.2,
+  "components_z": {
+   "classifier": -0.56,
+   "cooccurrence": -0.08,
+   "ns_consistency": -0.77
+  },
+  "independent_classifier": "USA"
+ },
+ "feedback_given": {
+  "atypical": [],
+  "missing": [
+   "Garlic",
+   "Parsley",
+   "Pepper"
+  ],
+  "ns_percentile": 0.112,
+  "ns_verdict": "low",
+  "score_components": {
+   "classifier": -3.1771,
+   "cooccurrence": -0.3691,
+   "ns_consistency": 0.225
+  }
+ },
+ "after": {
+  "title": "Cochinillo Asado (Roast Suckling Pig)",
+  "ingredients": [
+   "1 suckling pig, about 8 pounds, split lengthwise",
+   "2 tablespoons lard, softened",
+   "2 teaspoons coarse salt",
+   "1 cup water",
+   "4 cloves garlic, minced",
+   "2 tablespoons chopped fresh parsley",
+   "1 teaspoon freshly ground black pepper"
+  ],
+  "fidelity_percentile": 25.8,
+  "components_z": {
+   "classifier": -0.41,
+   "cooccurrence": 0.46,
+   "ns_consistency": -0.71
+  },
+  "independent_classifier": "USA"
+ },
+ "entities_added": [
+  "Garlic",
+  "Parsley",
+  "Pepper"
+ ],
+ "entities_removed": [],
+ "identity_jaccard": 0.571,
+ "uids": {
+  "parent": "ff360e46140c1169c-2",
+  "revised": "rev1-ec70f7ed2defc3d2-0"
+ }
+}

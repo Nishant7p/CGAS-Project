@@ -1,0 +1,214 @@
+{
+ "generated_utc": "2026-11-23T02:32:47+00:00",
+ "models": {
+  "gemini-3.5-flash-lite": {
+   "name": "Gemini 3.5 Flash-Lite",
+   "family": "Gemini (Google)",
+   "recipes": 1259,
+   "regions": 8,
+   "complete": false
+  },
+  "llama-3.1-8b": {
+   "name": "Llama-3.1-8B",
+   "family": "Llama (Meta)",
+   "recipes": 3403,
+   "regions": 22,
+   "complete": true
+  },
+  "openai-gpt-6-luna": {
+   "name": "GPT-6-Luna",
+   "family": "GPT (OpenAI)",
+   "recipes": 3517,
+   "regions": 22,
+   "complete": true
+  },
+  "qwen3.5-9b": {
+   "name": "Qwen3.5-9B",
+   "family": "Qwen (Alibaba)",
+   "recipes": 3477,
+   "regions": 22,
+   "complete": true
+  }
+ },
+ "total_recipes": 11656,
+ "replication": {
+  "random": {
+   "n": 22,
+   "sign_agreement": 22,
+   "spearman": 0.98
+  },
+  "frequency": {
+   "n": 22,
+   "sign_agreement": 21,
+   "spearman": 0.98
+  },
+  "category": {
+   "n": 22,
+   "sign_agreement": 22,
+   "spearman": 0.942
+  },
+  "frequency_category": {
+   "n": 22,
+   "sign_agreement": 21,
+   "spearman": 0.979
+  }
+ },
+ "llm_audit": {
+  "gemini-3.5-flash-lite": {
+   "regions": 8,
+   "recipes": 1259,
+   "sign_agreement": 0.375,
+   "sign_errors_preregistered": 3,
+   "sign_errors_in_contrasting": 0,
+   "median_prevalence_jsd": 0.184,
+   "median_category_jsd": 0.034,
+   "median_sai": 0.984,
+   "median_fingerprint_spearman": 0.367,
+   "median_diversity_ratio": 0.532,
+   "median_freq_rank_mae": 0.039,
+   "mean_near_copy_rate": 0.167,
+   "median_novelty": 0.653,
+   "equal_n_too_uniform": 3,
+   "equal_n_too_contrasting": 3,
+   "equal_n_typical": 2,
+   "equal_n_median_shift_d": -0.054
+  },
+  "llama-3.1-8b": {
+   "regions": 22,
+   "recipes": 3403,
+   "sign_agreement": 0.818,
+   "sign_errors_preregistered": 2,
+   "sign_errors_in_contrasting": 0,
+   "median_prevalence_jsd": 0.203,
+   "median_category_jsd": 0.041,
+   "median_sai": 1.009,
+   "median_fingerprint_spearman": 0.283,
+   "median_diversity_ratio": 0.477,
+   "median_freq_rank_mae": 0.04,
+   "mean_near_copy_rate": 0.134,
+   "median_novelty": 0.637,
+   "equal_n_too_uniform": 9,
+   "equal_n_too_contrasting": 2,
+   "equal_n_typical": 11,
+   "equal_n_median_shift_d": 0.114
+  },
+  "openai-gpt-6-luna": {
+   "regions": 22,
+   "recipes": 3517,
+   "sign_agreement": 0.5,
+   "sign_errors_preregistered": 8,
+   "sign_errors_in_contrasting": 1,
+   "median_prevalence_jsd": 0.195,
+   "median_category_jsd": 0.048,
+   "median_sai": 1.042,
+   "median_fingerprint_spearman": 0.326,
+   "median_diversity_ratio": 0.459,
+   "median_freq_rank_mae": 0.051,
+   "mean_near_copy_rate": 0.176,
+   "median_novelty": 0.676,
+   "equal_n_too_uniform": 2,
+   "equal_n_too_contrasting": 11,
+   "equal_n_typical": 9,
+   "equal_n_median_shift_d": -0.287
+  },
+  "qwen3.5-9b": {
+   "regions": 22,
+   "recipes": 3477,
+   "sign_agreement": 0.682,
+   "sign_errors_preregistered": 3,
+   "sign_errors_in_contrasting": 0,
+   "median_prevalence_jsd": 0.161,
+   "median_category_jsd": 0.037,
+   "median_sai": 0.975,
+   "median_fingerprint_spearman": 0.299,
+   "median_diversity_ratio": 0.597,
+   "median_freq_rank_mae": 0.031,
+   "mean_near_copy_rate": 0.097,
+   "median_novelty": 0.606,
+   "equal_n_too_uniform": 3,
+   "equal_n_too_contrasting": 3,
+   "equal_n_typical": 16,
+   "equal_n_median_shift_d": -0.012
+  }
+ },
+ "copy_mutate": {
+  "CM-R/random|full": {
+   "sign_match": 0.436,
+   "sign_error": 0.523,
+   "prevalence_jsd": 0.714,
+   "sai": 0.067,
+   "freq_rank_mae": 0.029,
+   "fingerprint_spearman": -0.023,
+   "near_copy_rate": 0.0
+  },
+  "CM-R/random|n=160": {
+   "sign_match": 0.427,
+   "sign_error": 0.441,
+   "prevalence_jsd": 0.732,
+   "sai": 0.072,
+   "freq_rank_mae": 0.039,
+   "fingerprint_spearman": 0.008,
+   "near_copy_rate": 0.0
+  },
+  "CM-R/ranked|full": {
+   "sign_match": 0.473,
+   "sign_error": 0.477,
+   "prevalence_jsd": 0.603,
+   "sai": 0.157,
+   "freq_rank_mae": 0.037,
+   "fingerprint_spearman": 0.083,
+   "near_copy_rate": 0.0
+  },
+  "CM-R/ranked|n=160": {
+   "sign_match": 0.459,
+   "sign_error": 0.395,
+   "prevalence_jsd": 0.624,
+   "sai": 0.172,
+   "freq_rank_mae": 0.046,
+   "fingerprint_spearman": 0.021,
+   "near_copy_rate": 0.0
+  }
+ },
+ "real_n160": {
+  "medians": {
+   "prevalence_jsd": 0.0313,
+   "category_jsd": 0.0024,
+   "sai": 0.9999,
+   "fingerprint_spearman": 0.7544,
+   "freq_rank_mae": 0.0075,
+   "near_copy_rate": 0.125
+  },
+  "sai_band": [
+   0.905,
+   1.098
+  ],
+  "sign_match": {
+   "Africa": 1.0,
+   "Australia & NZ": 0.995,
+   "British Isles": 1.0,
+   "Canada": 0.031,
+   "Caribbean": 1.0,
+   "China": 0.053,
+   "DACH Countries": 1.0,
+   "Eastern Europe": 0.992,
+   "France": 0.142,
+   "Greece": 1.0,
+   "Indian Subcontinent": 0.644,
+   "Italy": 0.998,
+   "Japan": 1.0,
+   "Korea": 0.996,
+   "Mexico": 0.72,
+   "Middle East": 0.968,
+   "Scandinavia": 1.0,
+   "South America": 0.941,
+   "South East Asia": 0.313,
+   "Spain": 1.0,
+   "Thailand": 0.874,
+   "USA": 0.515
+  }
+ },
+ "scorer": {
+  "test_top1": 0.507,
+  "test_top3": 0.741
+ }
+}

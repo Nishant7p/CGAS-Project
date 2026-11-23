@@ -1,0 +1,62 @@
+[
+ {
+  "model_key": "openai-gpt-6-luna",
+  "mode": "pilot",
+  "batch_id": "batch_6b02da0c94fc8190ac7ff31d7092867f",
+  "estimated_usd": 0.0324,
+  "submitted_utc": "2026-11-22T12:03:25+00:00"
+ },
+ {
+  "model_key": "openai-gpt-6-luna",
+  "mode": "pilot",
+  "batch_id": "batch_6b02da0c94fc8190ac7ff31d7092867f",
+  "actual_usd": 0.0118,
+  "estimated_usd": 0.0,
+  "fetched_utc": "2026-11-22T12:12:24+00:00"
+ },
+ {
+  "model_key": "openai-gpt-6-luna",
+  "mode": "full",
+  "batch_id": "batch_6b02e5cf0f4481908df2cbea4f8fb519",
+  "estimated_usd": 0.5192,
+  "submitted_utc": "2026-11-22T12:53:35+00:00"
+ },
+ {
+  "model_key": "openai-gpt-6-luna",
+  "mode": "full",
+  "batch_id": "batch_6b02e5cf0f4481908df2cbea4f8fb519",
+  "actual_usd": 0.1869,
+  "estimated_usd": 0.0,
+  "fetched_utc": "2026-11-22T15:54:32+00:00"
+ },
+ {
+  "model_key": "openai-gpt-6-luna",
+  "mode": "rev1",
+  "batch_id": "batch_6b03573a1d54819094ca03bf0ac564fc",
+  "estimated_usd": 0.3245,
+  "submitted_utc": "2026-11-22T20:57:30+00:00"
+ },
+ {
+  "model_key": "openai-gpt-6-luna",
+  "mode": "rev1",
+  "batch_id": "batch_6b03573a1d54819094ca03bf0ac564fc",
+  "actual_usd": 0.0367,
+  "estimated_usd": 0.0,
+  "fetched_utc": "2026-11-22T21:35:38+00:00"
+ },
+ {
+  "model_key": "openai-gpt-6-luna",
+  "mode": "rev2",
+  "batch_id": "batch_6b036040502481908e8ad9d00950c871",
+  "estimated_usd": 0.3245,
+  "submitted_utc": "2026-11-22T21:36:00+00:00"
+ },
+ {
+  "model_key": "openai-gpt-6-luna",
+  "mode": "rev2",
+  "batch_id": "batch_6b036040502481908e8ad9d00950c871",
+  "actual_usd": 0.0386,
+  "estimated_usd": 0.0,
+  "fetched_utc": "2026-11-22T22:08:07+00:00"
+ }
+]

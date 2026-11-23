@@ -1,0 +1,13 @@
+{% include "demo_script.md.j2" %}
+
+## Fallback table (same values as the "Demo fallback" backup slide)
+{% if demo %}{% set sc = demo.scenarios %}
+| | Genuine | Off-cuisine | Stereotype check |
+|---|---|---|---|
+| Recipe (claimed cuisine) | {{ sc.genuine.title }} ({{ sc.genuine.claimed }}) | {{ sc.off_cuisine.title }} ({{ sc.off_cuisine.claimed }}) | {{ sc.stereotype.title }} ({{ sc.stereotype.claimed }}) |
+| Fidelity percentile | {{ "%.0f"|format(sc.genuine.fidelity_pct) }} | {{ "%.0f"|format(sc.off_cuisine.fidelity_pct) }} | {{ "%.0f"|format(sc.stereotype.fidelity_pct) }} |
+| Flavor sharing Ns (percentile) | {{ "%.1f"|format(sc.genuine.ns) }} ({{ "%.0f"|format(sc.genuine.ns_pct) }}) | {{ "%.1f"|format(sc.off_cuisine.ns) }} ({{ "%.0f"|format(sc.off_cuisine.ns_pct) }}) | {{ "%.1f"|format(sc.stereotype.ns) }} ({{ "%.0f"|format(sc.stereotype.ns_pct) }}) |
+| Most likely cuisine | {{ sc.genuine.top5[0][0] }} ({{ "%.0f"|format(100 * sc.genuine.top5[0][1]) }}%) | {{ sc.off_cuisine.top5[0][0] }} ({{ "%.0f"|format(100 * sc.off_cuisine.top5[0][1]) }}%) | {{ sc.stereotype.top5[0][0] }} ({{ "%.0f"|format(100 * sc.stereotype.top5[0][1]) }}%) |
+| Unusual for the cuisine | {{ sc.genuine.atypical|join(", ") or "none" }} | {{ sc.off_cuisine.atypical|join(", ") or "none" }} | {{ sc.stereotype.atypical|join(", ") or "none" }} |
+| Stereotype flag | {{ "yes" if sc.genuine.stereotype_flag else "no" }} | {{ "yes" if sc.off_cuisine.stereotype_flag else "no" }} | {{ "yes" if sc.stereotype.stereotype_flag else "no" }} |
+{% else %}{{ pending("demo values") }}{% endif %}

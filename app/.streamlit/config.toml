@@ -1,0 +1,27 @@
+# FlavorPrint theme. Streamlit reads a .streamlit/config.toml next to the main script, so this applies whether the
+# app is started from the repo root, from app/ or from the Hugging Face Space folder.
+# Fonts are Streamlit's bundled Source Sans / Source Serif, so the app needs no font download (works offline).
+
+[theme]
+base = "light"
+primaryColor = "#B4441F"
+backgroundColor = "#FBFAF7"
+secondaryBackgroundColor = "#F3F0E9"
+textColor = "#1E1B16"
+borderColor = "#E4DFD4"
+linkColor = "#9A3412"
+font = "sans-serif"
+headingFont = "serif"
+baseFontSize = 17
+metricValueFontSize = "2.1rem"
+baseRadius = "medium"
+chartCategoricalColors = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#56B4E9", "#D55E00", "#F0E442", "#000000"]
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
+
+[server]
+runOnSave = false

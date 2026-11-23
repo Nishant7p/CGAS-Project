@@ -1,0 +1,36 @@
+{% set M = F.method %}{% set R = F.replication %}{% set E = F.equal_n %}{% set SC = F.scorer %}{% set net = F.extras.network %}
+# How the methods work, in plain words
+
+## Ns: how much flavor do a recipe's ingredients share?
+Every ingredient has a set of flavor molecules in FlavorDB. For two ingredients we count the molecules they share. A recipe's **Ns** is the average of that count over all its ingredient pairs: Ns(R) = 2/(n(n−1)) Σ_{i<j} |C_i ∩ C_j| (Ahn et al. 2011; Jain, Rakhi & Bagler 2015, eq. 2). A cuisine's Ns is the mean over its recipes.
+{% if net %}
+*Worked example (slide 6).* Korea's five signature ingredients are {{ join_and(net.nodes) }}. The ten pairs share {{ net.edges | map(attribute=2) | join(", ") }} compounds, so their Ns is {{ f(net.ns, 1) }}. Soybean Sauce has only {{ net.sizes["Soybean Sauce"] }} flavor molecules, so every pair it is in shares very few — which is exactly why Soybean Sauce is Korea's top contributor to its contrasting pairing.
+{% endif %}
+
+## Z: more or less sharing than chance?
+We build a **null cuisine** of {{ n0(M.n_rand) }} random recipes from the same cuisine's ingredients and recipe sizes, and compare: Z = √N_rand · (mean Ns_cuisine − mean Ns_null) / σ_null, where σ_null is the standard deviation of recipe-level Ns in the null. **Z > 0 = uniform pairing** (ingredients share more than chance, e.g. Italy Z = {{ f(R.z.Italy, 1) }}); **Z < 0 = contrasting** (e.g. Korea Z = {{ f(R.z.Korea, 1) }}).
+Important: because σ_null is the spread of single recipes (not of the mean), the cuisine's size never enters; only N_rand does. So **Z = √N_rand × d = {{ f(M.sqrt_n_rand, 1) }} × d**, an effect size, not a significance test. We always also report d and compare at equal size.
+
+## The four null models
+All four keep the cuisine's own ingredient set and recipe-size distribution (Singh & Bagler 2018):
+1. **Random**: ingredients drawn uniformly. Asks: is there any pairing pattern at all?
+2. **Frequency**: drawn in proportion to how often the cuisine uses them. Asks: is the pattern just popularity? (In Fig. 4 this null brings Z close to 0.)
+3. **Category**: each recipe's category mix is kept (e.g. 2 spices, 1 meat), slots filled at random. Asks: is it just the category structure?
+4. **Frequency + category**: both constraints.
+
+## Why we compare at equal size
+The null draws from the sample's own ingredient pool. A small sample loses the rare ingredients, which share few compounds, so its null scores higher and ΔNs falls. USA at {{ E.n_sub }} recipes: ΔNs {{ f(E.usa.delta_ns_own_pool_n160) }} against its own pool, {{ f(E.usa.delta_ns_full_pool_n160) }} against the full pool. The naive sign rule fires on {{ pct(E.fpr) }} of genuine {{ E.n_sub }}-recipe samples. So each LLM cuisine ({{ F.design.recipes_per_region }} recipes per region) is placed in the distribution of {{ n0(E.n_genuine_per_region) }} genuine samples of the same region and size: too uniform above the 97.5% quantile, too contrasting below 2.5%, BH-corrected across regions.
+
+## The other fingerprint layers
+- **Flavor drivers (χ%)**: the % change in the cuisine's mean Ns when one ingredient is removed from its recipes (the definition we calibrated against the published top contributors).
+- **Category fingerprint**: randomise only one category at a time and measure ΔNs (Jain, Rakhi & Bagler 2015); the vector over categories is compared by Spearman ρ.
+- **Signature ingredients and SAI**: signature = top-10 by relative prevalence (P_ic minus its mean in other cuisines; Jain & Bagler 2018). SAI = how often an LLM uses them / how often real recipes do (1 = same).
+- **Co-occurrence networks**: NPMI of ingredient pairs; we compare the top-100 pairs (Jaccard) and disparity-filter backbones.
+
+## How the fidelity scorer works (D3)
+Three parts, each standardised against genuine recipes of the cuisine and averaged with equal weights (chosen on validation):
+1. **Classifier**: a {{ SC.classifier_name }} on ingredients and categories, temperature-calibrated (ECE {{ f(SC.ece_raw) }} → {{ f(SC.ece_calibrated) }}); test macro-F1 {{ f(SC.test_macro_f1) }} over {{ F.regions.n }} classes (chance {{ f(SC.chance, 3) }}), top-3 {{ f(SC.test_top3) }}. Linear so that its weights name the atypical ingredients for feedback.
+2. **Co-occurrence**: the mean shrinkage-smoothed PMI of the recipe's ingredient pairs within the cuisine.
+3. **Ns consistency**: 1 − |2F(Ns) − 1|, i.e. 1 at the cuisine's median Ns and 0 at the tails.
+
+It separates real held-out recipes from other-cuisine / copy-mutate / null recipes with AUC {{ f(SC.auc_test.other_cuisines.composite) }} / {{ f(SC.auc_test.copy_mutate.composite) }} / {{ f(SC.auc_test.random_null.composite) }}. **Best-of-N** keeps the best-scoring admissible recipe out of N; **critique-and-revise** sends the scorer's feedback (atypical ingredients, missing signature ingredients that pair well, Ns too high or low) back to the model and asks for a revision of the same dish. Near-copies (Jaccard ≥ {{ M.near_copy }} to any CulinaryDB recipe) are never selected, and evaluation uses only held-out metrics (an independent gradient-boosting classifier on a disjoint split, JSD, SAI, fingerprint, diversity, novelty).

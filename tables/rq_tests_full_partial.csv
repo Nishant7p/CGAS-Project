@@ -1,0 +1,19 @@
+hypothesis,model,test,statistic,p,effect,n,note,p_adj
+H1,real@160,sign-error rule false-positive rate,,,0.08640909090909091,22000,genuine samples,
+H1,openai-gpt-6-luna,"Fisher exact, errors contrasting > uniform",0.2571428571428571,0.9597523219814241,1/6 vs 7/16,22,,0.9597523219814241
+H1,openai-gpt-6-luna,"sign errors, size-aware p with BH across regions",,,8,22,count of FDR-significant opposite-sign regions,
+H1-exploratory,openai-gpt-6-luna,Wilcoxon d_LLM - d_real > 0 (push toward positive pairing),14.0,0.9999790191650391,-0.4928428228034265,22,exploratory,0.9999790191650391
+H1-equalN,openai-gpt-6-luna,Wilcoxon d_LLM - median d_genuine(same N) > 0,55.0,0.9913995265960693,-0.28708020103476095,22,"2 too uniform, 11 too contrasting (BH)",0.9913995265960693
+H1-equalN,openai-gpt-6-luna,"Fisher: shift toward uniform, contrasting vs uniform regions",7.0,0.10047846889952154,3/6 vs 2/16,22,,0.10047846889952154
+H2b,openai-gpt-6-luna,Wilcoxon log SAI > 0,158.0,0.16044163703918457,1.0420903920125535,22,,0.16044163703918457
+H2b-diversity,openai-gpt-6-luna,Wilcoxon log diversity ratio < 0,0.0,2.384185791015625e-07,0.45904706014437213,22,,2.384185791015625e-07
+H2b,real@160,median SAI of genuine samples (expected 1),,,0.9998874714567776,22000,,
+H2c,openai-gpt-6-luna,Wilcoxon rho_LLM - median rho_real@160 < 0,4.0,1.6689300537109375e-06,-0.4160714285714286,22,14 regions below the resampling distribution (BH),1.6689300537109375e-06
+H4-persona,openai-gpt-6-luna,Wilcoxon persona - plain: abs_d_gap,74.0,0.09173250198364258,-0.15066976158081224,22,,0.09173250198364258
+H4-persona,openai-gpt-6-luna,Wilcoxon persona - plain: prevalence_jsd,0.0,4.76837158203125e-07,-0.07552694998482307,22,,4.76837158203125e-07
+H4-persona,openai-gpt-6-luna,Wilcoxon persona - plain: fingerprint_spearman,88.0,0.2221074104309082,0.10357142857142863,22,,0.2221074104309082
+H4-persona,openai-gpt-6-luna,Wilcoxon persona - plain: abs_log_sai,86.0,0.19821882247924805,-0.0806105710514369,22,,0.19821882247924805
+CM,openai-gpt-6-luna,Wilcoxon LLM - CM-R/ranked: abs_d_gap,103.0,0.46277761459350586,-0.08182705530516463,22,,0.46277761459350586
+CM,openai-gpt-6-luna,Wilcoxon LLM - CM-R/ranked: prevalence_jsd,0.0,4.76837158203125e-07,-0.44133420773297244,22,,4.76837158203125e-07
+CM,openai-gpt-6-luna,Wilcoxon LLM - CM-R/ranked: fingerprint_spearman,18.0,0.00012063980102539062,0.26163196839280434,22,,0.00012063980102539062
+CM,openai-gpt-6-luna,Wilcoxon LLM - CM-R/ranked: abs_log_sai,0.0,4.76837158203125e-07,-1.8396315764957052,22,,4.76837158203125e-07

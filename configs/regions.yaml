@@ -1,0 +1,113 @@
+# The 22 CulinaryDB analysis regions (exact labels from 01_Recipe_Details.csv "Cuisine").
+# phrase: used in the PLAIN prompt  -> "Give me 5 different traditional {phrase} recipes."
+# places: used in the PERSONA prompt -> "You are a home cook who grew up in {place} ..."
+#   Exactly 8 places per region so 16 persona replicates use every place exactly twice (balanced).
+#   Single-country regions use sub-national places; multi-country regions use countries.
+#   Ambiguous region labels get an explicit country list in the phrase so that the prompt matches
+#   CulinaryDB's region definition (e.g. Thailand is its own region, so it is not in South East Asia).
+# version: v1 (2026-11-22). Changing anything here requires a new prompt-set version.
+
+AFR:
+  label: Africa
+  phrase: African
+  places: [Morocco, Ethiopia, Nigeria, Ghana, Senegal, Kenya, South Africa, Tunisia]
+ANZ:
+  label: Australia & NZ
+  phrase: Australian and New Zealand
+  places: ["Sydney, Australia", "Melbourne, Australia", "Queensland, Australia", "Western Australia",
+           "Tasmania, Australia", "Auckland, New Zealand", "Wellington, New Zealand", "Christchurch, New Zealand"]
+BRI:
+  label: British Isles
+  phrase: British and Irish
+  places: ["Yorkshire, England", "London, England", "Cornwall, England", "Lancashire, England",
+           Scotland, Wales, Ireland, Northern Ireland]
+CAN:
+  label: Canada
+  phrase: Canadian
+  places: ["Quebec, Canada", "Ontario, Canada", "Nova Scotia, Canada", "New Brunswick, Canada",
+           "Manitoba, Canada", "Alberta, Canada", "British Columbia, Canada", "Newfoundland, Canada"]
+CBN:
+  label: Caribbean
+  phrase: Caribbean
+  places: [Jamaica, Trinidad and Tobago, Cuba, Puerto Rico, Haiti, the Dominican Republic, Barbados, the Bahamas]
+CHN:
+  label: China
+  phrase: Chinese
+  places: ["Sichuan, China", "Guangdong, China", "Shandong, China", "Jiangsu, China",
+           "Zhejiang, China", "Fujian, China", "Hunan, China", "Anhui, China"]
+DACH:
+  label: DACH Countries
+  phrase: German, Austrian and Swiss
+  places: ["Bavaria, Germany", "Berlin, Germany", "the Rhineland, Germany", "Swabia, Germany",
+           "Vienna, Austria", "Tyrol, Austria", "Zurich, Switzerland", "Bern, Switzerland"]
+EE:
+  label: Eastern Europe
+  phrase: Eastern European
+  places: [Poland, Ukraine, Russia, Belarus, Hungary, the Czech Republic, Slovakia, Romania]
+FRA:
+  label: France
+  phrase: French
+  places: ["Provence, France", "Brittany, France", "Normandy, France", "Alsace, France",
+           "Burgundy, France", "Lyon, France", "Paris, France", "Gascony, France"]
+GRC:
+  label: Greece
+  phrase: Greek
+  places: ["Crete, Greece", "Thessaloniki, Greece", "Athens, Greece", "the Peloponnese, Greece",
+           "Corfu, Greece", "Epirus, Greece", "Thessaly, Greece", "the Cyclades, Greece"]
+INSC:
+  label: Indian Subcontinent
+  phrase: South Asian (Indian, Pakistani, Bangladeshi, Sri Lankan or Nepali)
+  places: ["Punjab, India", "Gujarat, India", "Kerala, India", "Tamil Nadu, India",
+           "West Bengal, India", Pakistan, Bangladesh, Sri Lanka]
+ITA:
+  label: Italy
+  phrase: Italian
+  places: ["Sicily, Italy", "Naples, Italy", "Tuscany, Italy", "Emilia-Romagna, Italy",
+           "Piedmont, Italy", "Rome, Italy", "Venice, Italy", "Puglia, Italy"]
+JPN:
+  label: Japan
+  phrase: Japanese
+  places: ["Tokyo, Japan", "Osaka, Japan", "Kyoto, Japan", "Hokkaido, Japan",
+           "Fukuoka, Japan", "Okinawa, Japan", "Hiroshima, Japan", "Sendai, Japan"]
+KOR:
+  label: Korea
+  phrase: Korean
+  places: ["Seoul, South Korea", "Busan, South Korea", "Jeonju, South Korea", "Jeju, South Korea",
+           "Daegu, South Korea", "Gangwon, South Korea", "Gwangju, South Korea", "Daejeon, South Korea"]
+MEX:
+  label: Mexico
+  phrase: Mexican
+  places: ["Oaxaca, Mexico", "Puebla, Mexico", "Yucatán, Mexico", "Jalisco, Mexico",
+           "Mexico City, Mexico", "Veracruz, Mexico", "Michoacán, Mexico", "Sonora, Mexico"]
+ME:
+  label: Middle East
+  phrase: Middle Eastern
+  places: [Lebanon, Syria, Jordan, Palestine, Israel, Iraq, Iran, Turkey]
+SCND:
+  label: Scandinavia
+  phrase: Scandinavian (Swedish, Norwegian, Danish, Finnish or Icelandic)
+  places: ["Stockholm, Sweden", "Gothenburg, Sweden", "Oslo, Norway", "Bergen, Norway",
+           "Copenhagen, Denmark", "Jutland, Denmark", "Helsinki, Finland", Iceland]
+SAM:
+  label: South America
+  phrase: South American
+  places: [Brazil, Argentina, Peru, Colombia, Chile, Venezuela, Ecuador, Uruguay]
+SEA:
+  label: South East Asia
+  phrase: Southeast Asian (Vietnamese, Filipino, Indonesian, Malaysian, Singaporean, Cambodian, Lao or Burmese)
+  places: [Vietnam, the Philippines, Indonesia, Malaysia, Singapore, Cambodia, Laos, Myanmar]
+ESP:
+  label: Spain
+  phrase: Spanish
+  places: ["Andalusia, Spain", "Catalonia, Spain", "the Basque Country, Spain", "Galicia, Spain",
+           "Valencia, Spain", "Madrid, Spain", "Castile, Spain", "Asturias, Spain"]
+THA:
+  label: Thailand
+  phrase: Thai
+  places: ["Bangkok, Thailand", "Chiang Mai, Thailand", "Isan, Thailand", "Phuket, Thailand",
+           "Ayutthaya, Thailand", "Hat Yai, Thailand", "Udon Thani, Thailand", "Chiang Rai, Thailand"]
+USA:
+  label: USA
+  phrase: American (United States)
+  places: [the American South, "New England, USA", "the Midwest, USA", "Texas, USA",
+           "California, USA", "Louisiana, USA", "the Pacific Northwest, USA", "New York, USA"]

@@ -1,0 +1,17 @@
+# Slide-by-slide speaking script
+
+Generated from the speaker notes in `slides.pptx` (data {{ F.generated_date }}), so the script and the slides always agree. Timings are the suggested speaking time per slide; the live demo (about 3 minutes) comes after the FlavorPrint slide.
+
+{% set ns = namespace(t=0) %}
+{% for s in outline if s.kind == "main" %}
+{% set secs = (s.notes | regex_secs) %}
+{% set ns.t = ns.t + secs %}
+## Slide {{ loop.index }} · {{ s.title or "Title" }}
+*About {{ secs }} s · running total {{ (ns.t // 60) }}:{{ "%02d" | format(ns.t % 60) }}*{% if s.answer %} · Answer line on the slide: "{{ s.answer }}"{% endif %}
+
+{{ s.notes | strip_say }}
+
+{% endfor %}
+**Total speaking time: about {{ ns.t // 60 }} min {{ ns.t % 60 }} s, plus about 3 min of live demo.**
+
+**If the slot is shorter (about 12 minutes):** keep slides 1–2, 4, 6–8, 10–11, 13–14, 16, 19–20 at full length; say slides 3, 5, 9, 12, 15, 17 and 18 in one sentence each, and replace the live demo with the FlavorPrint slide.
