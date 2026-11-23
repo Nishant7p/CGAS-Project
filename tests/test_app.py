@@ -12,7 +12,7 @@ import pytest
 ARTIFACTS = Path(__file__).resolve().parents[1] / "app" / "artifacts" / "core.pkl"
 pytestmark = pytest.mark.skipif(not ARTIFACTS.exists(), reason="app artifacts not built")
 CARD = re.compile(r'data-metric="(\w+)"><div class="fp-lab">[^<]*</div><div class="fp-val[^"]*">([^<]*)<')
-SUBTABS = ["Ingredients", "Flavor sharing", "Flavor network", "Cuisine fidelity", "Stereotype check", "Suggestions"]
+SUBTABS = ["Ingredients", "Flavor sharing", "Flavor network", "Cuisine fidelity", "Stereotype", "Suggestions"]
 
 
 @pytest.fixture(scope="module")
@@ -67,7 +67,8 @@ def test_stereotype_flag_on_signature_heavy_recipe(app):
     app.button_group(key="preset").set_value("chana").run()
     assert not app.exception
     assert app.selectbox(key="claimed").value == "Indian Subcontinent"
-    assert any("Stereotype flag" in w.value for w in app.warning)
+    assert cards(app)["signature"] == "6/10"
+    assert '<div class="fp-callout warn"><b>Stereotype flag.</b>' in text(app)
 
 
 def test_dashboard_renders_with_reference_numbers(app):

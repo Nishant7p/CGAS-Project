@@ -241,7 +241,9 @@ def build_facts() -> dict[str, Any]:
     code_of = {v["label"]: k for k, v in regions_cfg.items()}
     label_of = {k: v["label"] for k, v in regions_cfg.items()}
     targets = _read_json(TARGETS) or {}
-    contrasting = [label_of[c] for c in targets.get("expected_sign", {}).get("contrasting_negative", []) if c in label_of]
+    contrasting = [
+        label_of[c] for c in targets.get("expected_sign", {}).get("contrasting_negative", []) if c in label_of
+    ]
     rep = S.get("replication", {})
     regions = sorted(rep.get("n_recipes", {}) or label_of.values())
     uniform = [r for r in regions if r not in contrasting]
@@ -357,10 +359,16 @@ def build_facts() -> dict[str, Any]:
         "planned_total": len(planned) * F["design"]["recipes_per_model"] if F["design"]["recipes_per_model"] else None,
     }
     if not ds.get("meets_proposal"):
-        todo({"item": "Proposal minimum for D1", "detail": pending(
-            f"{n0(ds.get('total_recipes'))} recipes and {ds.get('n_open_families')} open-weight family so far; "
-            f"needs ≥ {n0(F['design'].get('proposal_min_recipes'))} recipes and "
-            f"≥ {F['design'].get('proposal_min_open_families', '?')} open families")})
+        todo(
+            {
+                "item": "Proposal minimum for D1",
+                "detail": pending(
+                    f"{n0(ds.get('total_recipes'))} recipes and {ds.get('n_open_families')} open-weight family so far; "
+                    f"needs ≥ {n0(F['design'].get('proposal_min_recipes'))} recipes and "
+                    f"≥ {F['design'].get('proposal_min_open_families', '?')} open families"
+                ),
+            }
+        )
     alias_share = [dmodels[k]["alias_full_share"] for k in dmodels if dmodels[k].get("alias_full_share") is not None]
     matched_share = [dmodels[k]["alias_matched_share"] for k in dmodels if dmodels[k].get("alias_matched_share")]
     F["dataset"]["alias_full_min"] = min(alias_share) if alias_share else None
@@ -369,8 +377,12 @@ def build_facts() -> dict[str, Any]:
     F["dataset"]["alias_matched_max"] = max(matched_share) if matched_share else None
     F["dataset"]["curation_pending"] = not CURATION_OVERRIDES.exists()
     if F["dataset"]["curation_pending"]:
-        todo({"item": "Alias curation of unmatched LLM terms", "detail": pending(
-            "proposed aliases awaiting review; LLM numbers use the uncurated aliasing")})
+        todo(
+            {
+                "item": "Alias curation of unmatched LLM terms",
+                "detail": pending("proposed aliases awaiting review; LLM numbers use the uncurated aliasing"),
+            }
+        )
 
     am = _read_json(ALIAS_METRICS) or {}
     test = am.get("test", {})
@@ -392,8 +404,13 @@ def build_facts() -> dict[str, Any]:
     }
     F["replication"] = {
         "nulls": [
-            {"key": k, "name": null_names.get(k, k), "signs": v.get("sign_agreement"), "n": v.get("n"),
-             "rho": v.get("spearman")}
+            {
+                "key": k,
+                "name": null_names.get(k, k),
+                "signs": v.get("sign_agreement"),
+                "n": v.get("n"),
+                "rho": v.get("spearman"),
+            }
             for k, v in by_null.items()
         ],  # fmt: skip
         "random": by_null.get("random", {}),
@@ -502,8 +519,8 @@ def build_facts() -> dict[str, Any]:
             "h2b_div": rq("H2b-diversity", k),
             "h2c": rq("H2c", k),
             "persona": {
-                met: rq("H4-persona", k, f": {met}") for met in ("abs_d_gap", "prevalence_jsd", "fingerprint_spearman",
-                                                               "abs_log_sai")
+                met: rq("H4-persona", k, f": {met}")
+                for met in ("abs_d_gap", "prevalence_jsd", "fingerprint_spearman", "abs_log_sai")
             },  # fmt: skip
             "cm": {
                 met: rq("CM", k, f": {met}")
@@ -547,8 +564,9 @@ def build_facts() -> dict[str, Any]:
     scale_rows = rq_tab[rq_tab["hypothesis"].str.startswith("H4-scale")] if rq_tab is not None else None
     F["scale"] = None if scale_rows is None or not len(scale_rows) else scale_rows.to_dict(orient="records")
     if F["scale"] is None:
-        todo({"item": "RQ4 scale contrast (Qwen3.5-9B vs Qwen3.5-4B)", "detail": pending(
-            "Qwen3.5-4B running on Kaggle")})
+        todo(
+            {"item": "RQ4 scale contrast (Qwen3.5-9B vs Qwen3.5-4B)", "detail": pending("Qwen3.5-4B running on Kaggle")}
+        )
 
     # Region-level consensus of the equal-N verdicts (every analysed model with data for the region agrees).
     consensus = []
@@ -609,7 +627,9 @@ def build_facts() -> dict[str, Any]:
         "cm_worse": {met: count(lambda p, m=met: p["cm_verdict"][m] == "worse") for met in better},
         "n": len(per),
     }
-    F["persona_rho_models"] = [p["name"] for p in per.values() if p["persona_verdict"]["fingerprint_spearman"] == "better"]
+    F["persona_rho_models"] = [
+        p["name"] for p in per.values() if p["persona_verdict"]["fingerprint_spearman"] == "better"
+    ]
     F["cm_gap_models"] = [p["name"] for p in per.values() if p["cm_verdict"]["abs_d_gap"] == "better"]
 
     # ---------------- RQ2a flavor drivers ----------------
@@ -658,12 +678,16 @@ def build_facts() -> dict[str, Any]:
     f1_sorted = sorted(per_region_f1.items(), key=lambda t: t[1])
     F["scorer"] = {
         **sc,
-        "classifier_name": {"linear_svm": "linear SVM", "hist_gbdt": "gradient boosting", "logreg": "logistic regression"}
-        .get(sc.get("classifier", ""), sc.get("classifier", "")),
+        "classifier_name": {
+            "linear_svm": "linear SVM",
+            "hist_gbdt": "gradient boosting",
+            "logreg": "logistic regression",
+        }.get(sc.get("classifier", ""), sc.get("classifier", "")),
         "val_macro_f1_selected": sel.get(chosen, {}).get("val_macro_f1"),
         "val_macro_f1_gbdt": sel.get("hist_gbdt", {}).get("val_macro_f1"),
-        "val_macro_f1_logreg_best": max((v["val_macro_f1"] for k, v in sel.items() if k.startswith("logreg")),
-                                        default=None),
+        "val_macro_f1_logreg_best": max(
+            (v["val_macro_f1"] for k, v in sel.items() if k.startswith("logreg")), default=None
+        ),
         "fit_seconds_selected": sel.get(chosen, {}).get("fit_seconds"),
         "fit_seconds_gbdt": sel.get("hist_gbdt", {}).get("fit_seconds"),
         "temperature": sm.get("classifier", {}).get("temperature"),
@@ -709,9 +733,11 @@ def build_facts() -> dict[str, Any]:
         "gpu_hours_per_model": minutes_per_call * n_bon_prompts / 60 if minutes_per_call and n_bon_prompts else None,
         "run_rates": {models.get(k, {}).get("name", k): v for k, v in run_rates.items()},
         "gpu_hours_min": min(v["per_call"] for v in run_rates.values()) * n_bon_prompts / 60
-        if run_rates and n_bon_prompts else None,
+        if run_rates and n_bon_prompts
+        else None,
         "gpu_hours_max": max(v["per_call"] for v in run_rates.values()) * n_bon_prompts / 60
-        if run_rates and n_bon_prompts else None,
+        if run_rates and n_bon_prompts
+        else None,
     }
 
     bon = st.get("bon_main")
@@ -738,8 +764,19 @@ def build_facts() -> dict[str, Any]:
         order_b = [k for k in order if k in rows] + [k for k in rows if k not in order]
         meta = {}
         try:
-            bp = pd.read_parquet(BON_PARQUET, columns=["model", "code", "method", "N", "n_pool", "n_selected",
-                                                       "indep_classifier_acc", "prevalence_jsd"])
+            bp = pd.read_parquet(
+                BON_PARQUET,
+                columns=[
+                    "model",
+                    "code",
+                    "method",
+                    "N",
+                    "n_pool",
+                    "n_selected",
+                    "indep_classifier_acc",
+                    "prevalence_jsd",
+                ],
+            )
             comp = bp[bp["method"] == "composite"]
             meta = {
                 "pool_max": int(comp["n_pool"].max()),
@@ -753,8 +790,9 @@ def build_facts() -> dict[str, Any]:
             }  # fmt: skip
             if meta["ablation_N"]:
                 at = bp[bp["N"] == meta["ablation_N"]]
-                meta["ablation"] = at.groupby("method")[["indep_classifier_acc", "prevalence_jsd"]].mean().to_dict(
-                    orient="index")
+                meta["ablation"] = (
+                    at.groupby("method")[["indep_classifier_acc", "prevalence_jsd"]].mean().to_dict(orient="index")
+                )
         except (OSError, ValueError, KeyError):
             meta = {}
         F["bon"] = {
@@ -798,8 +836,11 @@ def build_facts() -> dict[str, Any]:
                     n += 1
             return n
 
-        kept = [r["last"].get("identity_jaccard") for r in rrows.values()
-                if r["last"].get("identity_jaccard") is not None and math.isfinite(r["last"]["identity_jaccard"])]
+        kept = [
+            r["last"].get("identity_jaccard")
+            for r in rrows.values()
+            if r["last"].get("identity_jaccard") is not None and math.isfinite(r["last"]["identity_jaccard"])
+        ]
         F["revise"] = {
             "raw": rev,
             "rows": rrows,
@@ -816,15 +857,30 @@ def build_facts() -> dict[str, Any]:
         }  # fmt: skip
         short = [r["name"] for r in rrows.values() if rounds_planned and r["rounds"] < rounds_planned]
         if short:
-            todo({"item": "D3 critique-and-revise, remaining rounds", "detail": pending(
-                f"round {rounds_planned} not run for {join_and(short)}")})
+            todo(
+                {
+                    "item": "D3 critique-and-revise, remaining rounds",
+                    "detail": pending(f"round {rounds_planned} not run for {join_and(short)}"),
+                }
+            )
     else:
-        todo({"item": "D3 critique-and-revise", "detail": pending(
-            "round 1 running (GPT-6-Luna Batch, Qwen3.5-9B on Kaggle); steering.revise_main not yet in summary.json")})
+        todo(
+            {
+                "item": "D3 critique-and-revise",
+                "detail": pending(
+                    "round 1 running (GPT-6-Luna Batch, Qwen3.5-9B on Kaggle); steering.revise_main not yet in summary.json"
+                ),
+            }
+        )
     steered = set((F["bon"] or {}).get("rows", {})) | set((F["revise"] or {}).get("rows", {}))
     F["unsteered_models"] = [models[k]["name"] for k in F["analysed"] if k not in steered]
     if F["unsteered_models"]:
-        todo({"item": "D3 steering coverage", "detail": pending(f"steering not run for {join_and(F['unsteered_models'])}")})
+        todo(
+            {
+                "item": "D3 steering coverage",
+                "detail": pending(f"steering not run for {join_and(F['unsteered_models'])}"),
+            }
+        )
 
     # ---------------- resources ----------------
     F["resources"] = {
@@ -832,9 +888,15 @@ def build_facts() -> dict[str, Any]:
         "budget_usd": res.get("budget_usd"),
         "kaggle_minutes": res.get("kaggle_qwen_full_minutes"),
         "kaggle_hours": res.get("kaggle_qwen_full_minutes") / 60 if res.get("kaggle_qwen_full_minutes") else None,
-        "kaggle_engine": res.get("kaggle_engine") or next(
-            (f"{v['engine']} fallback, vLLM failed" if v.get("vllm_failed") else v["engine"]
-             for k, v in (res.get("kaggle_runs") or {}).items() if k.endswith("-full") and v.get("engine")), None),
+        "kaggle_engine": res.get("kaggle_engine")
+        or next(
+            (
+                f"{v['engine']} fallback, vLLM failed" if v.get("vllm_failed") else v["engine"]
+                for k, v in (res.get("kaggle_runs") or {}).items()
+                if k.endswith("-full") and v.get("engine")
+            ),
+            None,
+        ),
     }
 
     # ---------------- library and app (counted, not typed) ----------------

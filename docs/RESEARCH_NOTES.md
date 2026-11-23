@@ -10,7 +10,7 @@ Started 2026-11-22. Every fact carries the date it was checked. Provider facts c
   - Opportunities: hackathon, project-and-poster presentations at the Symposium on Computational Gastronomy.
 - Schedule (slide 37): Weeks 12–13 "Mini Project", **Week 14 "Mini Project Presentations"**. Weeks 10–11 cover cuisine classification, identity of a cuisine, and transforming a recipe from one cuisine to another. That supports D3. Course outcome CO3 is "design classification and prediction models from culinary data".
 - Proposal call: 1 student ≥ 3 deliverables; 2 students ≥ 4; max 5; each "unique and non-trivial". TA (Madhvi Kumari Sinha) defined a deliverable as "a specific output/result … dataset, analysis, model, visualisation, web application …", each **distinct and non-trivial**.
-- The proposal was submitted 2026-10-02 (just after the 1 Oct deadline), from nishant23355@iiitd.ac.in. The user reported on 2026-11-22 that there is no time pressure.
+- The proposal was submitted 2026-10-02 (just after the 1 Oct deadline), from the designated submitter's IIIT-Delhi account. The user reported on 2026-11-22 that there is no time pressure.
 - Week02 deck, "Mini-Project Ideas" slide, lists "Create a python library for the analysis of cuisine, starting with cuisine data imported in a certain format":
   - recipe size and popularity;
   - category composition;

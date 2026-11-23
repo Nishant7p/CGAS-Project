@@ -48,7 +48,7 @@ EXAMPLES = {
 # Built-in demo cases: key -> (button label, EXAMPLES key, claimed cuisine, what the case shows).
 PRESETS = {
     "kimchi": ("Kimchi jjigae", "Korea", "Korea", "A genuine Korean stew, claimed as Korea."),
-    "spaghetti": ("Spaghetti, claimed Korean", "Italy", "Korea", "An Italian pasta dish claimed as Korean."),
+    "spaghetti": ("Spaghetti as Korean", "Italy", "Korea", "An Italian pasta dish claimed as Korean."),
     "chana": (
         "Chana masala",
         "Indian Subcontinent",
@@ -64,19 +64,22 @@ COMPONENT_NAMES = {
 MATCH_LABELS = {"full": "exact", "partial": "partial", "override": "curated", "none": "no match"}
 
 # One meaning per color in every view.
-INK, BODY, MUTED, LINE, SOFT, PAPER = "#1E1B16", "#3F3A32", "#5C554B", "#E2DCD0", "#F3F0E9", "#FBFAF7"
-ACCENT = "#B4441F"  # this recipe
-REAL = "#C9C2B6"  # real CulinaryDB recipes
-TYPICAL, ATYPICAL, MILD = "#0072B2", "#E69F00", "#9DB8CC"  # Okabe-Ito blue / orange; mild = below 0, not flagged
-OTHER = "#BDB6AA"
+# The talk deck's identity: navy text, teal primary (this recipe, typical, agrees), orange only for "unusual".
+INK, BODY, MUTED, LINE, SOFT, PAPER = "#1B2631", "#2C3E50", "#5D6D7E", "#DCE2E6", "#F0F3F4", "#FAFAF7"
+TEAL, ORANGE = "#0E7C86", "#D55E00"
+ACCENT = TEAL  # this recipe
+REAL = "#C3CCD3"  # real CulinaryDB recipes
+TYPICAL, ATYPICAL, MILD = TEAL, ORANGE, "#AEBBC6"  # mild = below 0 but above the "unusual" cut
+GRID = "#E6EBEE"
+OTHER = "#B8C1C8"
 CATEGORY_COLORS = {  # CulinaryDB ingredient categories; related categories share a hue family
     "Vegetable": "#3A8D3F",
     "Herb": "#8DBA45",
     "Plant": "#5E7D2B",
     "Fruit": "#D6589A",
     "Flower": "#E9A0C5",
-    "Spice": "#D55E00",
-    "Essential Oil": "#E69F00",
+    "Spice": "#B7791F",
+    "Essential Oil": "#D4A72C",
     "Legume": "#009E73",
     "Nuts & Seed": "#8A5A2B",
     "Cereal": "#C9A227",
@@ -93,85 +96,121 @@ CATEGORY_COLORS = {  # CulinaryDB ingredient categories; related categories shar
     "Beverage Alcoholic": "#4B2C82",
 }
 # Sign-agreement heatmap (dashboard).
-AGREE, DIFFER, SIGN_ERROR, NOT_RUN = "#A9CCE8", "#F6D3A1", "#E8833A", "#EFEBE3"
+AGREE, DIFFER, SIGN_ERROR, NOT_RUN = "#BFE0E3", "#F8D9C4", "#EFA06B", "#EEF1F3"
 FONT = '"Source Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif'
 PLOTLY_CONFIG = {"displaylogo": False, "displayModeBar": False}
 
 CSS = """
 <style>
-:root{--fp-ink:#1E1B16;--fp-body:#3F3A32;--fp-muted:#5C554B;--fp-line:#E2DCD0;--fp-soft:#F3F0E9;--fp-card:#FFFFFF;
---fp-accent:#B4441F;--fp-typ:#0072B2;--fp-atyp:#E69F00;--fp-serif:"Source Serif",Georgia,"Times New Roman",serif;
---fp-shadow:0 1px 2px rgba(30,27,22,.05),0 10px 24px -14px rgba(30,27,22,.20);--fp-radius:.85rem;}
-[data-testid="stMainBlockContainer"]{padding-top:2rem;padding-bottom:3rem;max-width:1480px;}
-[data-testid="stCaptionContainer"]{color:#544D44;}
-.st-key-recipe_box{background:var(--fp-card);border-radius:var(--fp-radius);box-shadow:var(--fp-shadow);}
-.fp-hero{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 2.5rem;
-padding:.2rem 0 1.1rem;border-bottom:1px solid var(--fp-line);margin-bottom:.4rem;}
-.fp-title{font-family:var(--fp-serif);font-weight:650;font-size:2.8rem;line-height:1.02;color:var(--fp-ink);
+:root{--fp-ink:#1B2631;--fp-body:#2C3E50;--fp-muted:#5D6D7E;--fp-line:#DCE2E6;--fp-soft:#F0F3F4;--fp-card:#FFFFFF;
+--fp-teal:#0E7C86;--fp-teal-soft:#E4F2F3;--fp-orange:#D55E00;--fp-orange-soft:#FDF0E6;
+--fp-serif:Georgia,"Source Serif","Times New Roman",serif;
+--fp-shadow:0 1px 2px rgba(27,38,49,.06),0 12px 28px -18px rgba(27,38,49,.30);--fp-radius:.8rem;}
+[data-testid="stMainBlockContainer"]{padding-top:1.5rem;padding-bottom:3rem;max-width:1680px;}
+[data-testid="stMain"] h1,[data-testid="stMain"] h2,[data-testid="stMain"] h3,[data-testid="stMain"] h4{
+font-family:var(--fp-serif)!important;color:var(--fp-ink);letter-spacing:-.005em;}
+[data-testid="stCaptionContainer"]{color:#56677A;}
+.st-key-recipe_box,[class*="st-key-dash_"]{background:var(--fp-card);border-radius:var(--fp-radius);
+box-shadow:var(--fp-shadow);}
+.st-key-preset button{padding:.15rem .75rem;min-height:2rem;}
+.st-key-preset button p{font-size:.86rem;}
+[data-testid="stTab"] p{font-size:1.02rem;font-weight:600;}
+[data-testid="stTabPanel"] [role="tablist"]{gap:.2rem;background:var(--fp-soft);border:1px solid var(--fp-line);
+border-radius:.75rem;padding:.22rem;width:fit-content;max-width:100%;margin-bottom:.35rem;gap:.1rem;}
+[data-testid="stTabPanel"] [data-testid="stTab"]{border-radius:.55rem;padding:.3rem .52rem;margin:0;height:auto;}
+[data-testid="stTabPanel"] [data-testid="stTab"] p{font-size:.9rem;font-weight:500;color:var(--fp-body);}
+[data-testid="stTabPanel"] [data-testid="stTab"][aria-selected="true"]{background:var(--fp-card);
+box-shadow:0 1px 3px rgba(27,38,49,.16);}
+[data-testid="stTabPanel"] [data-testid="stTab"][aria-selected="true"] p{color:var(--fp-teal);font-weight:650;}
+[data-testid="stTabPanel"] .react-aria-SelectionIndicator{display:none;}
+.fp-hero{display:grid;grid-template-columns:minmax(17rem,1fr) auto;align-items:center;gap:1rem 2rem;
+background:var(--fp-card);border:1px solid var(--fp-line);border-radius:var(--fp-radius);box-shadow:var(--fp-shadow);
+padding:1.1rem 1.35rem;margin:.1rem 0 1rem;}
+.fp-title{font-family:var(--fp-serif);font-weight:700;font-size:2.55rem;line-height:1;color:var(--fp-ink);
 letter-spacing:-.015em;}
-.fp-title span{color:var(--fp-accent);}
-.fp-lede{margin:.45rem 0 0;color:var(--fp-body);font-size:1.14rem;line-height:1.4;}
-.fp-chips{display:grid;grid-template-columns:repeat(4,auto);gap:.55rem;}
-.fp-chip{display:flex;flex-direction:column;gap:.1rem;background:var(--fp-card);border:1px solid var(--fp-line);
-border-radius:.75rem;padding:.5rem .85rem .55rem;box-shadow:var(--fp-shadow);min-width:7rem;}
-.fp-chip b{font-size:1.3rem;font-weight:700;color:var(--fp-ink);font-variant-numeric:tabular-nums;line-height:1.1;}
-.fp-chip span{font-size:.82rem;color:var(--fp-muted);line-height:1.2;}
-.fp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem;margin:.15rem 0 .65rem;}
+.fp-title span{color:var(--fp-teal);}
+.fp-lede{margin:.45rem 0 0;color:var(--fp-body);font-size:1.06rem;line-height:1.4;}
+.fp-chips{display:grid;grid-template-columns:repeat(4,8.6rem);gap:.6rem;}
+.fp-chip{display:flex;flex-direction:column;justify-content:flex-start;gap:.15rem;background:var(--fp-soft);
+border:1px solid var(--fp-line);border-radius:.65rem;padding:.55rem .8rem;min-height:4.3rem;}
+.fp-chip b{font-size:1.4rem;font-weight:700;color:var(--fp-ink);font-variant-numeric:tabular-nums;line-height:1.05;}
+.fp-chip span{font-size:.8rem;color:var(--fp-muted);line-height:1.2;}
+.fp-verdict{display:grid;grid-template-columns:minmax(0,1fr) 13rem;gap:1rem 1.4rem;align-items:center;
+background:var(--fp-card);border:1px solid var(--fp-line);border-left:7px solid var(--fp-teal);
+border-radius:var(--fp-radius);padding:1.1rem 1.3rem;margin:0 0 .85rem;box-shadow:var(--fp-shadow);}
+.fp-verdict.warn{border-left-color:var(--fp-orange);}
+.fp-vhead{font-family:var(--fp-serif);font-size:1.72rem;font-weight:700;line-height:1.2;color:var(--fp-ink);
+letter-spacing:-.01em;}
+.fp-vsub{color:var(--fp-body);font-size:1rem;margin-top:.45rem;line-height:1.45;}
+.fp-badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem;}
+.fp-badge{font-size:.82rem;font-weight:600;border-radius:999px;padding:.16rem .7rem;border:1px solid;}
+.fp-badge.flag{color:#9C4300;background:var(--fp-orange-soft);border-color:#F2C29E;}
+.fp-badge.note{color:var(--fp-body);background:var(--fp-soft);border-color:var(--fp-line);}
+.fp-vscore{border-left:1px solid var(--fp-line);padding-left:1.3rem;}
+.fp-val.big{font-size:3.6rem;min-height:0;color:var(--fp-teal);line-height:1;margin-top:.25rem;}
+.fp-verdict.warn .fp-val.big{color:var(--fp-orange);}
+.fp-gauge{position:relative;height:10px;border-radius:5px;margin:.75rem 0 .35rem;
+background:linear-gradient(90deg,#E9EDEF 0 25%,#CFD8DE 25% 75%,#E9EDEF 75% 100%);}
+.fp-gmark{position:absolute;top:50%;width:19px;height:19px;border-radius:50%;background:var(--fp-teal);
+border:3px solid #fff;box-shadow:0 0 0 1px var(--fp-teal);transform:translate(-50%,-50%);}
+.fp-verdict.warn .fp-gmark{background:var(--fp-orange);box-shadow:0 0 0 1px var(--fp-orange);}
+.fp-gscale{display:flex;justify-content:space-between;font-size:.74rem;color:var(--fp-muted);}
+.fp-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin:0 0 .9rem;}
 .fp-cards.two{grid-template-columns:repeat(2,minmax(0,1fr));}
-.fp-card{background:var(--fp-card);border:1px solid var(--fp-line);border-radius:var(--fp-radius);
-padding:.85rem 1rem .8rem;min-width:0;box-shadow:var(--fp-shadow);}
-.fp-card.warn{background:#FFF9F2;border-color:#EFCB9E;}
-.fp-lab{font-size:.9rem;color:var(--fp-muted);line-height:1.2;font-weight:500;}
-.fp-val{font-size:2.4rem;font-weight:700;line-height:1.08;color:var(--fp-ink);margin-top:.2rem;letter-spacing:-.01em;
-font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}
-.fp-val.long{font-size:1.3rem;line-height:1.2;padding:.3rem 0 .15rem;overflow-wrap:normal;word-break:normal;}
-.fp-ctx{font-size:.84rem;color:var(--fp-muted);line-height:1.35;margin-top:.35rem;}
-.fp-track{position:relative;height:7px;border-radius:4px;margin:.6rem 0 .2rem;
-background:linear-gradient(90deg,#F0ECE4 0 25%,#DFD8CB 25% 75%,#F0ECE4 75% 100%);}
-.fp-dot{position:absolute;top:50%;width:15px;height:15px;border-radius:50%;background:var(--fp-accent);
-border:2px solid #fff;box-shadow:0 0 0 1px var(--fp-accent);transform:translate(-50%,-50%);}
-.fp-verdict{background:var(--fp-card);border:1px solid var(--fp-line);border-left:6px solid var(--fp-typ);
-border-radius:var(--fp-radius);padding:.95rem 1.2rem 1rem;margin-bottom:.8rem;box-shadow:var(--fp-shadow);}
-.fp-verdict.warn{border-left-color:var(--fp-atyp);}
-.fp-verdict.mid{border-left-color:#9C8F7A;}
-.fp-vhead{font-family:var(--fp-serif);font-size:1.62rem;font-weight:650;color:var(--fp-ink);line-height:1.2;}
-.fp-vsub{color:var(--fp-body);font-size:1rem;margin-top:.35rem;line-height:1.45;}
-.fp-badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;}
-.fp-badge{font-size:.84rem;font-weight:600;border-radius:999px;padding:.16rem .7rem;border:1px solid;}
-.fp-badge.flag{color:#7E3508;background:#FDEBD9;border-color:#F0BC86;}
-.fp-badge.note{color:#4F483E;background:var(--fp-soft);border-color:var(--fp-line);}
-.fp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--fp-line);
+.fp-cards.two .fp-lab{white-space:normal;}
+.fp-card{display:flex;flex-direction:column;background:var(--fp-card);border:1px solid var(--fp-line);
+border-radius:var(--fp-radius);padding:.85rem 1rem .8rem;min-width:0;box-shadow:var(--fp-shadow);}
+.fp-card.warn{border-color:#F2C6A4;background:#FFFAF6;}
+.fp-card.warn .fp-val{color:var(--fp-orange);}
+.fp-lab{font-size:.88rem;font-weight:600;color:var(--fp-muted);line-height:1.25;white-space:nowrap;overflow:hidden;
+text-overflow:ellipsis;}
+.fp-val{display:flex;align-items:flex-end;min-height:3.15rem;font-size:2.35rem;font-weight:700;line-height:1.05;
+color:var(--fp-ink);margin-top:.25rem;letter-spacing:-.01em;font-variant-numeric:tabular-nums;}
+.fp-val.long{font-size:1.3rem;line-height:1.2;overflow-wrap:normal;word-break:normal;}
+.fp-track{position:relative;height:7px;border-radius:4px;margin:.65rem 0 .1rem;
+background:linear-gradient(90deg,#E9EDEF 0 25%,#CFD8DE 25% 75%,#E9EDEF 75% 100%);}
+.fp-track.blank{visibility:hidden;}
+.fp-dot{position:absolute;top:50%;width:15px;height:15px;border-radius:50%;background:var(--fp-teal);
+border:2px solid #fff;box-shadow:0 0 0 1px var(--fp-teal);transform:translate(-50%,-50%);}
+.fp-card.warn .fp-dot{background:var(--fp-orange);box-shadow:0 0 0 1px var(--fp-orange);}
+.fp-ctx{font-size:.84rem;color:var(--fp-muted);line-height:1.35;margin-top:.4rem;}
+.fp-callout{border:1px solid var(--fp-line);border-left:5px solid var(--fp-teal);background:var(--fp-card);
+border-radius:.7rem;padding:.75rem 1rem;color:var(--fp-body);font-size:.98rem;line-height:1.5;margin:.5rem 0 .9rem;
+box-shadow:var(--fp-shadow);}
+.fp-callout b{color:var(--fp-ink);}
+.fp-callout.warn{border-left-color:var(--fp-orange);background:#FFFAF6;}
+.fp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--fp-line);margin-bottom:.7rem;
 border-radius:var(--fp-radius);background:var(--fp-card);box-shadow:var(--fp-shadow);}
 table.fp-table{width:100%;border-collapse:collapse;font-size:.98rem;}
 .fp-table th{font-weight:600;color:var(--fp-muted);text-align:left;padding:.55rem .8rem;font-size:.86rem;
-border-bottom:1px solid var(--fp-line);background:#F6F3ED;white-space:nowrap;}
-.fp-table td{padding:.5rem .8rem;border-bottom:1px solid #EFEBE3;vertical-align:top;color:var(--fp-ink);}
+border-bottom:1px solid var(--fp-line);background:var(--fp-soft);white-space:nowrap;}
+.fp-table td{padding:.5rem .8rem;border-bottom:1px solid #E9EDF0;vertical-align:top;color:var(--fp-ink);}
 .fp-table tr:last-child td{border-bottom:none;}
 .fp-table .num{text-align:right;font-variant-numeric:tabular-nums;}
 .fp-table td.idx{color:var(--fp-muted);width:2rem;}
-.fp-table tr.miss td{background:#FFF3EA;}
-.fp-table tr.miss td.ent{color:#7E3508;font-weight:600;}
+.fp-table tr.miss td{background:#FFF7F1;}
+.fp-table tr.miss td.ent{color:#A54800;font-weight:600;}
 .fp-note{display:block;font-size:.82rem;color:var(--fp-muted);font-weight:400;}
 .fp-cat{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap;}
 .fp-cat i{width:.7rem;height:.7rem;border-radius:50%;display:inline-block;flex:none;}
 .fp-tag{font-size:.8rem;font-weight:600;border-radius:999px;padding:.12rem .55rem;white-space:nowrap;}
-.fp-tag.exact{background:#E3EFF8;color:#0B4F7C;}
-.fp-tag.partial,.fp-tag.curated{background:#FFF0C8;color:#6E4B00;}
-.fp-tag.none{background:#FCDDC7;color:#7E3508;}
+.fp-tag.exact{background:var(--fp-teal-soft);color:#0A5C63;}
+.fp-tag.partial,.fp-tag.curated{background:var(--fp-soft);color:var(--fp-body);border:1px solid var(--fp-line);}
+.fp-tag.none{background:var(--fp-orange-soft);color:#9C4300;}
 .fp-q{font-weight:650;font-size:1.1rem;color:var(--fp-ink);margin:.55rem 0 .2rem;line-height:1.3;}
 .fp-lead{font-size:1.08rem;color:var(--fp-body);line-height:1.5;margin:.35rem 0 .45rem;}
 .fp-lead b{color:var(--fp-ink);}
 .fp-sig{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 .7rem;}
-.fp-sig span{font-size:.92rem;padding:.22rem .75rem;border-radius:999px;border:1px dashed #C9BFAE;color:var(--fp-muted);}
-.fp-sig span.on{border:1px solid var(--fp-accent);background:#FBEAE3;color:#7C2D12;font-weight:600;}
+.fp-sig span{font-size:.92rem;padding:.22rem .75rem;border-radius:999px;border:1px dashed #BCC7CF;color:var(--fp-muted);}
+.fp-sig span.on{border:1px solid var(--fp-teal);background:var(--fp-teal-soft);color:#0A5C63;font-weight:600;}
 .fp-panel{background:var(--fp-card);border:1px solid var(--fp-line);border-radius:var(--fp-radius);padding:.9rem 1.1rem;
 height:100%;box-shadow:var(--fp-shadow);}
-.fp-panel h4{font-family:var(--fp-serif);font-size:1.18rem;font-weight:650;margin:0 0 .2rem;padding:0;
+.fp-panel h4{font-family:var(--fp-serif);font-size:1.18rem;font-weight:700;margin:0 0 .2rem;padding:0;
 color:var(--fp-ink);}
 .fp-panel p{font-size:.9rem;color:var(--fp-muted);margin:0 0 .35rem;line-height:1.4;}
 .fp-list{list-style:none;margin:.2rem 0 0;padding:0;}
 .fp-list li{display:flex;justify-content:space-between;align-items:center;gap:.7rem;padding:.48rem 0;margin:0;
-border-bottom:1px solid #EFEBE3;font-size:1rem;}
+border-bottom:1px solid #E9EDF0;font-size:1rem;}
 .fp-list li:last-child{border-bottom:none;}
 .fp-list .v{font-size:.88rem;color:var(--fp-muted);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .fp-empty{font-size:.95rem;color:var(--fp-muted);padding:.4rem 0;}
@@ -179,18 +218,21 @@ border-bottom:1px solid #EFEBE3;font-size:1rem;}
 .fp-legend span{display:inline-flex;align-items:center;gap:.4rem;}
 .fp-legend i{width:.9rem;height:.9rem;border-radius:.22rem;display:inline-block;}
 .fp-legend i.line{height:0;border-top:2px dashed var(--fp-ink);border-radius:0;width:1.15rem;}
-.fp-legend i.dot{height:0;border-top:2px dotted #8C857A;border-radius:0;width:1.15rem;}
+.fp-legend i.dot{height:0;border-top:2px dotted #8A97A3;border-radius:0;width:1.15rem;}
 .fp-foot{font-size:.84rem;color:var(--fp-muted);border-top:1px solid var(--fp-line);margin-top:1.8rem;padding-top:.8rem;}
-@media (max-width:1100px){.fp-chips{grid-template-columns:repeat(2,auto);}}
+@media (max-width:1000px){.fp-hero{grid-template-columns:1fr;}.fp-chips{grid-template-columns:repeat(4,minmax(0,1fr));}
+.fp-verdict{grid-template-columns:1fr;}.fp-vscore{border-left:none;padding-left:0;border-top:1px solid var(--fp-line);
+padding-top:.8rem;}.fp-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media (max-width:640px){
-[data-testid="stMainBlockContainer"]{padding:1.3rem 1rem 2rem;}
+[data-testid="stMainBlockContainer"]{padding:1.2rem 1rem 2rem;}
 .fp-title{font-size:2.1rem;}
 .fp-lede{font-size:1rem;}
-.fp-chips{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;}
-.fp-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;}
-.fp-val{font-size:1.7rem;}
-.fp-val.long{font-size:1.2rem;}
-.fp-vhead{font-size:1.25rem;}
+.fp-chips{grid-template-columns:repeat(2,minmax(0,1fr));}
+.fp-cards{gap:.55rem;}
+.fp-val{font-size:1.7rem;min-height:2.5rem;}
+.fp-val.long{font-size:1.15rem;}
+.fp-val.big{font-size:2.8rem;}
+.fp-vhead{font-size:1.4rem;}
 .fp-table{font-size:.88rem;}
 }
 </style>
@@ -352,13 +394,15 @@ def cat_html(category: str) -> str:
 
 
 def card_html(key: str, label: str, value: str, context: str, pct: float | None = None, warn: bool = False) -> str:
-    track = ""
-    if pct is not None and np.isfinite(pct):
-        track = f'<div class="fp-track"><div class="fp-dot" style="left:{min(max(pct, 1.5), 98.5):.1f}%"></div></div>'
+    """A metric card. The 0-100 track stays as an invisible spacer when there is no percentile, so that the captions
+    of a row of cards line up."""
+    has = pct is not None and np.isfinite(pct)
+    dot = f'<div class="fp-dot" style="left:{min(max(pct, 1.5), 98.5):.1f}%"></div>' if has else ""
     long = " long" if len(value) > 11 else ""
     return (
         f'<div class="fp-card{" warn" if warn else ""}" data-metric="{key}"><div class="fp-lab">{label}</div>'
-        f'<div class="fp-val{long}">{esc(value)}</div>{track}<div class="fp-ctx">{context}</div></div>'
+        f'<div class="fp-val{long}">{esc(value)}</div><div class="fp-track{"" if has else " blank"}">{dot}</div>'
+        f'<div class="fp-ctx">{context}</div></div>'
     )
 
 
@@ -388,20 +432,22 @@ def hero_html(core: dict, summary: dict) -> str:
 
 
 def verdict_html(res: dict, lines: list[str], region: str, title: str, n_test: int) -> str:
+    """The verdict band: the headline (teal bar when the classifier agrees with the claim, orange when it does not),
+    the classifier's view and flags, and the fidelity percentile on a 0-100 gauge (25-75: middle half of genuine
+    recipes)."""
     top, p_top = res["top5"][0]
     name = esc(title.strip()) if title.strip() else "This recipe"
     fid, R = res["fidelity_pct"], esc(region)
     if top == region and fid >= 25:
         tone, head = "good", f"{name} reads as {R}, the cuisine it claims."
     elif top == region:
-        tone, head = "mid", f"{name} reads as {R}, but scores below most genuine {R} recipes."
+        tone, head = "good", f"{name} reads as {R}, but scores below most genuine {R} recipes."
     else:
         tone, head = "warn", f"{name} is claimed as {R} but reads as {esc(top)}."
-    sub = f"Fidelity percentile <b>{fid:.0f}</b> among {n_test} genuine {R} recipes held out from training. "
     if top == region:
-        sub += f"The cuisine classifier gives {R} {share_text(p_top)}."
+        sub = f"The cuisine classifier gives {R} {share_text(p_top)}."
     else:
-        sub += f"The cuisine classifier gives {R} {share_text(res['p_claimed'])} and {esc(top)} {share_text(p_top)}."
+        sub = f"The cuisine classifier gives {R} {share_text(res['p_claimed'])} and {esc(top)} {share_text(p_top)}."
     fb = res["feedback"]
     badges = []
     if res["stereotype_flag"]:
@@ -414,45 +460,57 @@ def verdict_html(res: dict, lines: list[str], region: str, title: str, n_test: i
     n_miss = int((res["table"]["Match"] == "no match").sum())
     if n_miss:
         badges.append(f'<span class="fp-badge note">{n_miss} of {len(lines)} lines not in CulinaryDB</span>')
+    score = (
+        f'<div class="fp-vscore" data-metric="fidelity"><div class="fp-lab">Fidelity percentile</div>'
+        f'<div class="fp-val big">{fid:.0f}</div>'
+        f'<div class="fp-gauge"><div class="fp-gmark" style="left:{min(max(fid, 1.5), 98.5):.1f}%"></div></div>'
+        '<div class="fp-gscale"><span>0</span><span>typical 25–75</span><span>100</span></div>'
+        f'<div class="fp-ctx">vs {n_test} genuine {R} recipes held out from training</div></div>'
+    )
     return (
-        f'<div class="fp-verdict {tone}"><div class="fp-vhead">{head}</div><div class="fp-vsub">{sub}</div>'
-        f'<div class="fp-badges">{"".join(badges)}</div></div>'
+        f'<div class="fp-verdict {tone}"><div><div class="fp-vhead">{head}</div><div class="fp-vsub">{sub}</div>'
+        f'<div class="fp-badges">{"".join(badges)}</div></div>{score}</div>'
     )
 
 
-def cards_html(res: dict, lines: list[str], region: str, n_test: int) -> str:
+def cards_html(res: dict, lines: list[str], region: str) -> str:
     top, p_top = res["top5"][0]
     R = esc(region)
     n_miss = int((res["table"]["Match"] == "no match").sum())
     matched = len(lines) - n_miss
     claim = "matches the claim" if top == region else f"claimed {R}: {share_text(res['p_claimed'])}"
     unmatched = f"{n_miss} unmatched line{'s' if n_miss > 1 else ''} excluded from all scores"
+    used, share, flag = len(res["signature_used"]), 100 * res["signature_share_at_most"], res["stereotype_flag"]
     cards = [
-        card_html(
-            "fidelity",
-            "Fidelity percentile",
-            f"{res['fidelity_pct']:.0f}",
-            f"vs {n_test} genuine {R} recipes held out from training (50 = typical)",
-            res["fidelity_pct"],
-            warn=res["fidelity_pct"] < 10,
-        ),
+        card_html("top", "Most likely cuisine", top, f"{share_text(p_top)} probability; {claim}", warn=top != region),
         card_html(
             "ns",
             "Flavor sharing Ns",
             f"{res['ns']:.1f}",
-            f"compounds shared per ingredient pair; percentile {res['ns_pct']:.0f} in {R}",
+            f"compounds per ingredient pair; percentile {res['ns_pct']:.0f} in {R}",
             res["ns_pct"],
         ),
-        card_html("top", "Most likely cuisine", top, f"{share_text(p_top)} probability; {claim}", warn=top != region),
+        card_html(
+            "signature",
+            "Signature ingredients",
+            f"{used}/10",
+            f"{share:.0f}% of real {R} recipes use as many or fewer" + ("; stereotype flag" if flag else ""),
+            share,
+            warn=flag,
+        ),
         card_html(
             "matched",
             "Ingredients matched",
             f"{matched}/{len(lines)}",
             unmatched if n_miss else "every line mapped to CulinaryDB",
-            warn=n_miss > 0,
         ),
     ]
     return f'<div class="fp-cards">{"".join(cards)}</div>'
+
+
+def callout(kind: str, title: str, body: str) -> str:
+    """A note in the app's own style: kind 'info' (teal bar), 'ok' (teal) or 'warn' (orange)."""
+    return f'<div class="fp-callout {kind}"><b>{title}</b> {body}</div>'
 
 
 def mapping_html(table: pd.DataFrame) -> str:
@@ -471,7 +529,7 @@ def mapping_html(table: pd.DataFrame) -> str:
         )
     head = (
         "<tr><th>#</th><th>Your line</th><th>CulinaryDB ingredient</th><th>Category</th><th>Match</th>"
-        '<th class="num">Flavor compounds</th></tr>'
+        '<th class="num" title="flavor compounds in the FlavorDB profile">Compounds</th></tr>'
     )
     body = "".join(rows)
     return f'<div class="fp-scroll"><table class="fp-table"><thead>{head}</thead><tbody>{body}</tbody></table></div>'
@@ -499,7 +557,7 @@ def legend_html(items: list[tuple[str, str]]) -> str:
 # axis updates cost ~40 ms per figure, which made every click visibly slower.
 def axis(title: str = "", **kw) -> dict:
     out = {
-        "gridcolor": "#ECE7DE",
+        "gridcolor": GRID,
         "zeroline": False,
         "linecolor": LINE,
         "automargin": True,
@@ -652,7 +710,7 @@ def network_figure(recipe: np.ndarray, core: dict) -> go.Figure:
             traces.append(
                 go.Scatter(
                     x=xs, y=ys, mode="lines", hoverinfo="skip", showlegend=False,
-                    line={"width": 0.8 + 2.2 * b, "color": f"rgba(96,86,72,{0.16 + 0.17 * b:.2f})"},
+                    line={"width": 0.8 + 2.2 * b, "color": f"rgba(52,73,94,{0.14 + 0.16 * b:.2f})"},
                 )
             )  # fmt: skip
     traces.append(
@@ -728,7 +786,7 @@ def contributions_figure(contrib: pd.Series, cut: float, core: dict) -> go.Figur
     lo, hi = min(min(vals), cut), max(max(vals), 0.0)
     pad = 0.4 * (hi - lo or 1.0)  # room for the value labels at the bar ends
     zero = vline(0.0, MUTED, width=1.2)[0]
-    s, a = vline(cut, "#9A6100", "unusual below", 1.6, "dash", right=False)
+    s, a = vline(cut, ORANGE, "unusual below", 1.6, "dash", right=False)
     s["layer"] = "below"  # under the value labels that sit beside the zero line
     return hbar_figure(
         [names[r] for r, _ in items],
@@ -837,7 +895,7 @@ def view_ingredients(res: dict) -> None:
         "Each line is mapped to one CulinaryDB ingredient with the CulinaryDB aliasing protocol (Singh & Bagler 2018): "
         "quantities and preparation words are dropped, then the longest matching name or synonym wins. *partial* "
         "means part of a multi-word synonym matched. Unmatched lines are left out of every score, and an ingredient "
-        "listed twice counts once. *Flavor compounds* is the size of the ingredient's FlavorDB profile."
+        "listed twice counts once. *Compounds* is the size of the ingredient's FlavorDB flavor profile."
     )
 
 
@@ -865,14 +923,13 @@ def view_sharing(res: dict, region: str, reg: dict, figs: dict) -> None:
             "Colors are CulinaryDB categories, as in the network."
         )
     z = reg["z_real"]
-    st.info(
-        f"**Cuisine level.** Real {region} recipes share {'more' if z > 0 else 'fewer'} flavor compounds than random "
-        f"recipes of the same sizes built from the same ingredients: Z = {z:+.0f} against the random null "
-        f"(N_rand = 100,000), i.e. **{'uniform' if z > 0 else 'contrasting'} food pairing**, the same sign as Singh "
-        "& Bagler (2018). A single recipe has no Z, so FlavorPrint places its Ns within the cuisine's recipe-level "
-        "distribution instead.",
-        icon=":material/hub:",
+    body = (
+        f"Real {R} recipes share {'more' if z > 0 else 'fewer'} flavor compounds than random recipes of the same "
+        f"sizes built from the same ingredients: Z = {z:+.0f} against the random null (N<sub>rand</sub> = 100,000), "
+        f"i.e. <b>{'uniform' if z > 0 else 'contrasting'} food pairing</b>, the same sign as Singh &amp; Bagler "
+        "(2018). A single recipe has no Z, so FlavorPrint places its Ns within the cuisine's recipe-level distribution."
     )
+    st.markdown(callout("info", "Cuisine level.", body), unsafe_allow_html=True)
 
 
 def view_network(res: dict, core: dict, figs: dict) -> None:
@@ -950,18 +1007,18 @@ def view_stereotype(res: dict, region: str, reg: dict, core: dict, summary: dict
     question(f"How many of {R}'s signature ingredients does the recipe use?")
     st.markdown(f'<div class="fp-sig">{chips}</div>', unsafe_allow_html=True)
     if res["stereotype_flag"]:
-        st.warning(
-            f"**Stereotype flag.** The recipe uses {used} of {region}'s 10 signature ingredients; {share:.1f}% of "
-            f"real {region} recipes use this many or fewer. A recipe can read as authentic and still be a caricature "
-            "that piles on the cuisine's most distinctive ingredients.",
-            icon=":material/flag:",
+        body = (
+            f"The recipe uses {used} of {R}'s 10 signature ingredients; {share:.1f}% of real {R} recipes use this many "
+            "or fewer. A recipe can read as authentic and still be a caricature that piles on the cuisine's most "
+            "distinctive ingredients."
         )
+        st.markdown(callout("warn", "Stereotype flag.", body), unsafe_allow_html=True)
     else:
-        st.success(
-            f"**No stereotype flag.** The recipe uses {used} of 10; {share:.1f}% of real {region} recipes use this "
-            "many or fewer (the flag needs 97.5% or more).",
-            icon=":material/check_circle:",
+        body = (
+            f"The recipe uses {used} of 10; {share:.1f}% of real {R} recipes use this many or fewer (the flag needs "
+            "97.5% or more)."
         )
+        st.markdown(callout("ok", "No stereotype flag.", body), unsafe_allow_html=True)
     c1, c2 = st.columns([3, 2], gap="large")
     with c1:
         show(figs["signature"], "signature")
@@ -1038,7 +1095,7 @@ def view_suggestions(res: dict, region: str, core: dict, figs: dict) -> None:
 
 def page_audit(core: dict, summary: dict) -> None:
     regions = sorted(core["regions"])
-    left, right = st.columns([5, 8], gap="large")
+    left, right = st.columns([2, 3], gap="medium")
     with left:
         recipe_input(regions)
     lines = clean_lines(st.session_state.get("recipe_text", ""))
@@ -1061,9 +1118,9 @@ def page_audit(core: dict, summary: dict) -> None:
         n_test = len(reg["composite_sorted"])
         figs = audit_figures(tuple(int(r) for r in res["recipe"]), region, res, core)
         st.markdown(verdict_html(res, lines, region, title, n_test), unsafe_allow_html=True)
-        st.markdown(cards_html(res, lines, region, n_test), unsafe_allow_html=True)
+        st.markdown(cards_html(res, lines, region), unsafe_allow_html=True)
         tabs = st.tabs(
-            ["Ingredients", "Flavor sharing", "Flavor network", "Cuisine fidelity", "Stereotype check", "Suggestions"]
+            ["Ingredients", "Flavor sharing", "Flavor network", "Cuisine fidelity", "Stereotype", "Suggestions"]
         )
         with tabs[0]:
             view_ingredients(res)
@@ -1119,7 +1176,7 @@ def sign_heatmap(pooled: pd.DataFrame, models: list[str], labels: dict[str, str]
         "line": {"color": INK, "width": 1.5, "dash": "dot"},
     }  # fmt: skip
     return styled(
-        fig, 34 + 23 * len(regions), x=axis(side="top", showgrid=False, tickangle=0, tickfont={"size": 14, "color": INK}),
+        fig, 34 + 22 * len(regions), x=axis(side="top", showgrid=False, tickangle=0, tickfont={"size": 14, "color": INK}),
         y=axis(autorange="reversed", showgrid=False, tickfont={"size": 13.5, "color": INK}),
         margin={"l": 4, "r": 4, "t": 34, "b": 4}, shapes=[sep],
     )  # fmt: skip
@@ -1144,7 +1201,7 @@ def comparison_figure(summary: dict, models: list[str], labels: dict[str, str], 
         r, c = k // 2 + 1, k % 2 + 1
         xs = [la.get(m, {}).get(key) for m in models]
         if key == "median_sai" and band:
-            fig.add_vrect(x0=band[0], x1=band[1], fillcolor="#E4DED3", opacity=0.7, line_width=0, row=r, col=c)
+            fig.add_vrect(x0=band[0], x1=band[1], fillcolor="#E1E7EA", opacity=0.8, line_width=0, row=r, col=c)
         fig.add_trace(
             go.Bar(
                 x=xs, y=ylab, orientation="h", marker={"color": [palette.get(m, MUTED) for m in models]},
@@ -1156,10 +1213,10 @@ def comparison_figure(summary: dict, models: list[str], labels: dict[str, str], 
         if real_v is not None:
             fig.add_vline(x=real_v, line={"color": INK, "width": 1.6, "dash": "dash"}, row=r, col=c)
         if cm_v is not None:
-            fig.add_vline(x=cm_v, line={"color": "#8C857A", "width": 1.8, "dash": "dot"}, row=r, col=c)
+            fig.add_vline(x=cm_v, line={"color": "#8A97A3", "width": 1.8, "dash": "dot"}, row=r, col=c)
         fig.update_xaxes(range=list(rng), row=r, col=c)
     styled(fig, 440, bargap=0.28, margin={"l": 4, "r": 30, "t": 30, "b": 8})
-    fig.update_xaxes(gridcolor="#ECE7DE", zerolinecolor="#D3CBBE", automargin=True, tickfont={"size": 13.5})
+    fig.update_xaxes(gridcolor=GRID, zeroline=False, automargin=True, tickfont={"size": 13.5})
     fig.update_yaxes(autorange="reversed", showgrid=False, automargin=True, tickfont={"size": 14, "color": INK})
     fig.update_annotations(font={"size": 14, "color": INK})
     return fig
@@ -1294,12 +1351,12 @@ def page_dashboard(core: dict, summary: dict) -> None:
             )
         )  # fmt: skip
     st.markdown(f'<div class="fp-cards">{"".join(cards)}</div>', unsafe_allow_html=True)
-    c1, c2 = st.columns([11, 10], gap="large")
-    with c1:
+    c1, c2 = st.columns(2, gap="medium")
+    with c1, st.container(border=True, key="dash_heat"):
         question("Does each LLM reproduce each cuisine's food-pairing sign?")
         st.markdown(
             legend_html(
-                [(AGREE, "same sign as real"), (DIFFER, "opposite, CI includes 0"), (SIGN_ERROR, "opposite, CI excludes 0"), (NOT_RUN, "no recipes")]
+                [(AGREE, "same sign"), (DIFFER, "opposite, CI incl. 0"), (SIGN_ERROR, "opposite, CI excl. 0"), (NOT_RUN, "no recipes")]
             ),
             unsafe_allow_html=True,
         )  # fmt: skip
@@ -1310,11 +1367,10 @@ def page_dashboard(core: dict, summary: dict) -> None:
             if per_model.loc[m, "regions"] < 22
         )
         explain(
-            "Regions are ordered by the real cuisine's Z (in brackets): uniform pairing above the dotted line, "
-            "contrasting below. Each cell is the LLM cuisine's Z; the darkest are pre-registered sign errors (the "
-            f"95% CI of ΔNs excludes 0 on the opposite side).{coverage}"
+            "Regions ordered by the real cuisine's Z (in brackets): uniform above the dotted line, contrasting "
+            f"below. Cells show each LLM cuisine's Z; the darkest are pre-registered sign errors.{coverage}"
         )
-    with c2:
+    with c2, st.container(border=True, key="dash_compare"):
         question("How do the models compare with real recipes and a copy-mutate baseline?")
         st.markdown(
             legend_html(
@@ -1329,54 +1385,56 @@ def page_dashboard(core: dict, summary: dict) -> None:
             "cuisines (what sampling alone gives); dotted: the copy-mutate evolution model (Assignment 3 baseline). "
             "The shaded SAI band is the range of real samples."
         )
-    question("Scorecard: every metric, per model and reference")
-    fmt2 = st.column_config.NumberColumn(format="%.2f")
-    st.dataframe(
-        view["table"],
-        width="stretch",
-        hide_index=True,
-        column_config={
-            "Source": st.column_config.TextColumn("Source", width="medium"),
-            "Regions": st.column_config.NumberColumn(format="%d"),
-            "Recipes": st.column_config.NumberColumn(format="localized"),
-            "Sign agreement": st.column_config.ProgressColumn("Sign agreement", format="%.0f%%", min_value=0, max_value=100),
-            "Sign errors": st.column_config.NumberColumn(format="%d", help="Pre-registered: regions whose ΔNs CI excludes 0 with the opposite sign to the real cuisine"),
-            "Prevalence JSD": fmt2, "Category JSD": fmt2, "SAI": fmt2, "Fingerprint ρ": fmt2,
-            "Diversity ratio": fmt2, "Near-copy rate": fmt2,
-        },
-    )  # fmt: skip
-    explain(
-        "JSD: Jensen-Shannon divergence of ingredient or category usage from the real cuisine (0 = identical). SAI: "
-        "over-use of the cuisine's 10 signature ingredients (1 = as in real recipes). Fingerprint ρ: Spearman "
-        "correlation of the per-category ΔNs fingerprint with the real one (Jain, Rakhi & Bagler 2015). Diversity "
-        "ratio: distinct ingredients relative to real recipes at the same N. Near-copy rate: share of recipes with "
-        "Jaccard ≥ 0.8 to a real recipe. Values are medians over regions (sign agreement and near-copy: means)."
-    )
-    question("Region detail")
-    regions = sorted(view["pooled"]["region"].unique())
-    region = st.selectbox(
-        "Region", regions, index=regions.index("Korea") if "Korea" in regions else 0, key="dash_region"
-    )
-    d1, d2 = st.columns([1, 1], gap="large")
-    with d1:
-        show(region_figure(region, view), "region_z")
-    with d2:
-        drv = load_dashboard("llm_drivers")
-        if drv is not None and (drv["region"] == region).any():
-            g = drv[drv["region"] == region].set_index("model")
-            rows = [{"Source": "Real (CulinaryDB)", "Top-5 flavor drivers (χ%)": ", ".join(g["real_top5_names"].iloc[0]), "Overlap with real": None}]  # fmt: skip
-            rows += [
-                {"Source": labels[m], "Top-5 flavor drivers (χ%)": ", ".join(g.loc[m, "top5_names"]), "Overlap with real": float(g.loc[m, "jaccard5"])}
-                for m in models if m in g.index
-            ]  # fmt: skip
-            st.dataframe(
-                pd.DataFrame(rows), width="stretch", hide_index=True,
-                column_config={"Overlap with real": st.column_config.NumberColumn(format="%.2f", help="Jaccard overlap of the top-5 sets")},
-            )  # fmt: skip
+    with st.container(border=True, key="dash_table"):
+        question("Scorecard: every metric, per model and reference")
+        fmt2 = st.column_config.NumberColumn(format="%.2f")
+        st.dataframe(
+            view["table"],
+            width="stretch",
+            hide_index=True,
+            column_config={
+                "Source": st.column_config.TextColumn("Source", width="medium"),
+                "Regions": st.column_config.NumberColumn(format="%d"),
+                "Recipes": st.column_config.NumberColumn(format="localized"),
+                "Sign agreement": st.column_config.ProgressColumn("Sign agreement", format="%.0f%%", min_value=0, max_value=100),
+                "Sign errors": st.column_config.NumberColumn(format="%d", help="Pre-registered: regions whose ΔNs CI excludes 0 with the opposite sign to the real cuisine"),
+                "Prevalence JSD": fmt2, "Category JSD": fmt2, "SAI": fmt2, "Fingerprint ρ": fmt2,
+                "Diversity ratio": fmt2, "Near-copy rate": fmt2,
+            },
+        )  # fmt: skip
         explain(
-            f"Left: {region}'s food-pairing Z for the real cuisine and each LLM cuisine. Right: the ingredients that "
-            "drive food pairing most (χ%: % change in mean Ns when the ingredient is removed, Singh & Bagler 2018)."
+            "JSD: Jensen-Shannon divergence of ingredient or category usage from the real cuisine (0 = identical). SAI: "
+            "over-use of the cuisine's 10 signature ingredients (1 = as in real recipes). Fingerprint ρ: Spearman "
+            "correlation of the per-category ΔNs fingerprint with the real one (Jain, Rakhi & Bagler 2015). Diversity "
+            "ratio: distinct ingredients relative to real recipes at the same N. Near-copy rate: share of recipes with "
+            "Jaccard ≥ 0.8 to a real recipe. Values are medians over regions (sign agreement and near-copy: means)."
         )
+    with st.container(border=True, key="dash_regionbox"):
+        question("Region detail")
+        regions = sorted(view["pooled"]["region"].unique())
+        region = st.selectbox(
+            "Region", regions, index=regions.index("Korea") if "Korea" in regions else 0, key="dash_region"
+        )
+        d1, d2 = st.columns([1, 1], gap="large")
+        with d1:
+            show(region_figure(region, view), "region_z")
+        with d2:
+            drv = load_dashboard("llm_drivers")
+            if drv is not None and (drv["region"] == region).any():
+                g = drv[drv["region"] == region].set_index("model")
+                rows = [{"Source": "Real (CulinaryDB)", "Top-5 flavor drivers (χ%)": ", ".join(g["real_top5_names"].iloc[0]), "Overlap with real": None}]  # fmt: skip
+                rows += [
+                    {"Source": labels[m], "Top-5 flavor drivers (χ%)": ", ".join(g.loc[m, "top5_names"]), "Overlap with real": float(g.loc[m, "jaccard5"])}
+                    for m in models if m in g.index
+                ]  # fmt: skip
+                st.dataframe(
+                    pd.DataFrame(rows), width="stretch", hide_index=True,
+                    column_config={"Overlap with real": st.column_config.NumberColumn(format="%.2f", help="Jaccard overlap of the top-5 sets")},
+                )  # fmt: skip
+            explain(
+                f"Left: {region}'s food-pairing Z for the real cuisine and each LLM cuisine. Right: the ingredients that "
+                "drive food pairing most (χ%: % change in mean Ns when the ingredient is removed, Singh & Bagler 2018)."
+            )
 
 
 # ---------------------------------------------------------------------------------------------------- about

@@ -276,7 +276,7 @@ streamlit run streamlit_app.py
 ```
 
 ## What to click in the demo
-**Kimchi jjigae → Audit recipe** (reads as Korea), then the **Flavor network** tab, then **Spaghetti, claimed Korean**
+**Kimchi jjigae → Audit recipe** (reads as Korea), then the **Flavor network** tab, then **Spaghetti as Korean**
 (reads as Italy), then the **Suggestions** tab, **Chana masala** (stereotype flag), and the **22-cuisine dashboard**.
 The full two-minute script is in `04_Demo/DEMO.md`.
 """
@@ -303,28 +303,28 @@ right: recipe size, signature ingredients and often the pairing direction and ke
 fingerprint: distinctive ingredient combinations and variety. A fidelity scorer built from the fingerprint steers them
 closer. Everything is packaged as a dataset, an audit, a steering method, a library and an app.
 
-## Live demo (slide 12, about 2 minutes)
-1. **Audit a recipe** tab, example **Kimchi jjigae**, cuisine Korea, **Audit recipe**. Point at the headline ("reads as
-   Korea"), the fidelity percentile and the ingredient table (each line mapped to CulinaryDB and FlavorDB).
+## Live demo (slide 13, about 2 minutes)
+1. **Audit a recipe** tab, example **Kimchi jjigae**, cuisine Korea, **Audit recipe**. Point at the verdict ("reads as
+   Korea"), the fidelity gauge and the ingredient table (each line mapped to CulinaryDB and FlavorDB).
 2. **Flavor network** sub-tab: linked ingredients share flavor molecules.
-3. Example **Spaghetti, claimed Korean**, then **Audit recipe**. The headline turns to "reads as Italy" and the
+3. Example **Spaghetti as Korean**, then **Audit recipe**. The headline turns to "reads as Italy" and the
    fidelity drops to the bottom percentiles.
 4. **Suggestions** sub-tab: the atypical ingredients for Korea and what the fingerprint suggests instead. This is
-   the same feedback our critique-and-revise steering gives the AI (slide 11).
+   the same feedback our critique-and-revise steering gives the AI (slide 12).
 5. **22-cuisine dashboard** tab: every model on every cuisine. Then return to the slides.
-If the app fails to start, stay on slide 12: its screenshot shows the same app.
+If the app fails to start, stay on slide 13: its screenshot shows the same app.
 
 ## What to show for each deliverable (if asked)
 | Deliverable | Open | Say |
 |---|---|---|
 | D1 LLMCuisine-22 | `05_Dataset_LLMCuisine-22/` (CSV files in CulinaryDB format, `DATASHEET.md`) | "11,656 AI recipes in CulinaryDB's own format, with every model call logged." |
 | D2 Audit | `02_Report/Group44_BIO544_report.pdf`, `06_Analysis_results/figures_png/` | "Same measures as for real cuisines, compared with genuine samples of equal size." |
-| D3 Steering | slide 11; `09_Steering_D3/before_after_example.json` | "Feedback from the fingerprint makes recipes more recognisable while keeping the dish." |
-| D4 FlavorAudit | backup slide 15; the notebook above, or `flavoraudit --help` in the terminal | "Every method as a tested, installable library." |
+| D3 Steering | slide 12; `09_Steering_D3/before_after_example.json` | "Feedback from the fingerprint makes recipes more recognisable while keeping the dish." |
+| D4 FlavorAudit | backup slide 16; the notebook above, or `flavoraudit --help` in the terminal | "Every method as a tested, installable library." |
 | D5 FlavorPrint | the live demo | "Anyone can audit a recipe in the browser." |
 
 ## Questions
-Backup slides 15-24 cover the library code, the pairing-direction matrix, flavor drivers, variety, equal-size
+Slide 15 has every link (dataset, report, code, app). Backup slides 16-25 cover the library code, the pairing-direction matrix, flavor drivers, variety, equal-size
 comparison, copy-mutate, the persona prompt, the scorecard, best-of-N and networks. Prepared answers, the methods in plain words and the full
 script split between the two speakers are in `01_Presentation/Group44_Presenter_Guide.pdf`.
 """

@@ -73,8 +73,10 @@ def drivers_text(F) -> str:
     if not DR:
         return "**Flavor drivers (RQ2a):** " + pending("drivers not yet in results/summary.json")
     vals = "; ".join(f"{DR['models'][k]['name']} {f(DR['models'][k].get('median_jaccard5'))}" for k in DR["order"])
-    txt = (f"**Flavor drivers (RQ2a):** overlap of the top-5 χ% contributors with the real cuisine (median "
-           f"Jaccard@5): {vals}; genuine samples {f(DR['real'].get('median_jaccard5'))}.")
+    txt = (
+        f"**Flavor drivers (RQ2a):** overlap of the top-5 χ% contributors with the real cuisine (median "
+        f"Jaccard@5): {vals}; genuine samples {f(DR['real'].get('median_jaccard5'))}."
+    )
     if DR["korea_real_top5"]:
         top = DR["korea_real_top5"][0]
         if DR["korea_match"]:
@@ -114,7 +116,9 @@ def s_title(deck: Deck, F) -> None:
     deck.text(s, 0.9, 6.7, 11.9, 0.4, [Para(
         f"Every number is regenerated from results/summary.json by presentation/build.py  ·  data snapshot "
         f"{F['generated_date']}", 11, color=T.muted)], fit=False)  # fmt: skip
-    deck.notes(s, f"""
+    deck.notes(
+        s,
+        f"""
 WHAT TO SAY (about 40 s)
 Good morning. We are Group 44. Our question is simple: when a large language model writes a "traditional" recipe for
 a cuisine, does that recipe carry the cuisine's measurable culinary fingerprint? We use this lab's own framework:
@@ -124,9 +128,10 @@ We built five deliverables: a dataset of LLM recipes (D1), the audit itself (D2)
 (D3), the FlavorAudit library (D4) and the FlavorPrint app (D5).
 
 HOW TO READ THE DECK
-Every number on these slides is generated from results/summary.json (snapshot {F['generated_date']}). Runs that are
+Every number on these slides is generated from results/summary.json (snapshot {F["generated_date"]}). Runs that are
 still in progress are shown as a neutral status line, never as a predicted value. The deck ends on the Conclusions slide; backup slides follow it.
-""")
+""",
+    )
 
 
 def s_motivation(deck: Deck, F) -> None:
@@ -163,7 +168,9 @@ def s_motivation(deck: Deck, F) -> None:
         "Hypotheses, metrics and tests were fixed in the implementation plan before any full-scale LLM data were "
         "analysed; one amendment (the equal-size comparison, slide 6) was logged before the analysis.", 14,
         color=T.muted, italic=True, space_before=0)])  # fmt: skip
-    deck.notes(s, f"""
+    deck.notes(
+        s,
+        f"""
 WHAT TO SAY (about 50 s)
 LLMs are increasingly where people get recipes, and they confidently label them "traditional". Earlier audits of LLM
 recipes look at text, for example novelty of wording. Nobody, as far as our literature search found, has checked LLM
@@ -172,13 +179,14 @@ quantitative and has null models, so "authentic" becomes a falsifiable statement
 
 We have four research questions. RQ1: does each LLM cuisine keep the region's food-pairing sign and strength? Our
 pre-registered hypothesis H1 was that LLMs push cuisines toward uniform (positive) pairing, so errors would cluster in
-the {F['regions']['n_contrasting']} contrasting regions. RQ2: composition, stereotypes and the category fingerprint.
+the {F["regions"]["n_contrasting"]} contrasting regions. RQ2: composition, stereotypes and the category fingerprint.
 RQ3: can we steer generation with the fingerprints? RQ4: prompt framing, proprietary versus open models, and scale.
 
 IF ASKED: "Were the hypotheses fixed in advance?" Yes, in the plan's section 1 before any full-run data were analysed.
 The only change is the equal-N amendment (slide 6), recorded in the decision log with its reason before the full LLM
 analysis. See qa_prep.md.
-""")
+""",
+    )
 
 
 def s_data(deck: Deck, F) -> None:
@@ -235,33 +243,41 @@ def s_data(deck: Deck, F) -> None:
     else:
         note.append(Para("Proposal minimum for D1: **met**.", 13, space_before=6))
     if ds["curation_pending"]:
-        note.append(Para(
-            f"LLM lines fully aliased: {pct_rng(ds['alias_full_min'], ds['alias_full_max'])}; unmatched terms (e.g. "
-            "“gochugaru”) go to human curation " + pending("curation/alias_overrides.csv"), 13, space_before=6))
+        note.append(
+            Para(
+                f"LLM lines fully aliased: {pct_rng(ds['alias_full_min'], ds['alias_full_max'])}; unmatched terms (e.g. "
+                "“gochugaru”) go to human curation " + pending("curation/alias_overrides.csv"),
+                13,
+                space_before=6,
+            )
+        )
     y_note = 1.98 + deck.last_table_h + 0.12
     deck.text(s, 5.95, y_note, 6.85, 6.95 - y_note, note, min_scale=0.75)
     pend = [F["models"][k] for k in F["incomplete_models"]]
-    deck.notes(s, f"""
+    deck.notes(
+        s,
+        f"""
 WHAT TO SAY (about 60 s)
 We asked every model for five traditional recipes per call, in two framings: a plain request and a home-cook persona
-that grew up in a specific place of the region. {F['regions']['n']} regions × {D['n_conditions']} prompts ×
-{D['calls_per_cell']} calls × {D['recipes_per_call']} recipes gives {n0(D['recipes_per_model'])} recipes per model,
-i.e. {D['recipes_per_region']} per region, the same for every model. Prompts were frozen after a pilot and are
+that grew up in a specific place of the region. {F["regions"]["n"]} regions × {D["n_conditions"]} prompts ×
+{D["calls_per_cell"]} calls × {D["recipes_per_call"]} recipes gives {n0(D["recipes_per_model"])} recipes per model,
+i.e. {D["recipes_per_region"]} per region, the same for every model. Prompts were frozen after a pilot and are
 identical across models. Nothing in the prompt mentions flavor or pairing.
 
 The ingredient lines are mapped to CulinaryDB entities with our reconstruction of CulinaryDB's own aliasing protocol.
-We validated it on CulinaryDB's raw lines, which carry the expert mapping: {pct(al['acc_lines'])} of held-out unique
-lines and {pct(al['acc_rows'])} of occurrences agree. That matters, because LLM and human recipes must be mapped the
+We validated it on CulinaryDB's raw lines, which carry the expert mapping: {pct(al["acc_lines"])} of held-out unique
+lines and {pct(al["acc_rows"])} of occurrences agree. That matters, because LLM and human recipes must be mapped the
 same way for the comparison to be fair.
 
-STATUS (read the table): complete runs: {join_and(F['complete_names'])}.
-Still pending: {join_and([p['name'] + ' ' + p['status'] for p in pend]) if pend else 'nothing'}.
-So far {n0(ds['total_recipes'])} recipes; the proposal's minimum is {n0(D['proposal_min_recipes'])} recipes with two
+STATUS (read the table): complete runs: {join_and(F["complete_names"])}.
+Still pending: {join_and([p["name"] + " " + p["status"] for p in pend]) if pend else "nothing"}.
+So far {n0(ds["total_recipes"])} recipes; the proposal's minimum is {n0(D["proposal_min_recipes"])} recipes with two
 open-weight families, which the Llama run completes.
 
 IF ASKED "why these models?": free open-weight models on Kaggle GPUs plus two cheap proprietary APIs; total OpenAI
-spend ${f(F['resources']['openai_usd'])}. See qa_prep.md.
-""")
+spend ${f(F["resources"]["openai_usd"])}. See qa_prep.md.
+""",
+    )
 
 
 def s_method(deck: Deck, F, formulas: dict[str, Path]) -> None:
@@ -307,23 +323,33 @@ def s_method(deck: Deck, F, formulas: dict[str, Path]) -> None:
             h_img = 0.62 if fkey != "z" else 0.66
             deck.picture(s, formulas[fkey], x + 0.12, ty, cw - 0.24, h_img, align="left")
             ty += h_img + 0.06
-        deck.text(s, x + 0.12, ty, cw - 0.24, y + ch - ty - 0.05,
-                  [Para(b, 13, space_before=0 if j == 0 else 4) for j, b in enumerate(body)], min_scale=0.75)
-    deck.notes(s, f"""
+        deck.text(
+            s,
+            x + 0.12,
+            ty,
+            cw - 0.24,
+            y + ch - ty - 0.05,
+            [Para(b, 13, space_before=0 if j == 0 else 4) for j, b in enumerate(body)],
+            min_scale=0.75,
+        )
+    deck.notes(
+        s,
+        f"""
 WHAT TO SAY (about 60 s)
 Everything here is your lab's definition, implemented exactly and cited in the code.
 1) Ns of a recipe is the mean number of shared flavor compounds over its ingredient pairs; a cuisine's Ns is the mean
    over recipes.
 2) Z compares the cuisine with null cuisines that keep its own ingredient set and recipe-size distribution. Important:
-   with N_rand = {n0(nr)}, Z equals √N_rand ≈ {f(F['method']['sqrt_n_rand'], 1)} times the standardised effect d =
+   with N_rand = {n0(nr)}, Z equals √N_rand ≈ {f(F["method"]["sqrt_n_rand"], 1)} times the standardised effect d =
    ΔNs/σ_rand. Cuisine size does not enter Z, so we always report d and compare models at equal size.
 3) The culinary fingerprint is ΔNs when only one category is randomised at a time (Jain 2015).
 4) Prevalence, relative prevalence and the signature set follow Jain & Bagler 2018; the Stereotype Amplification
    Index asks whether signature ingredients are used more often than in real recipes (1 = as real).
 5) Baselines: genuine equal-size samples of real cuisines are the noise floor; the copy-mutate model is a baseline,
    not our contribution (Kinouchi 2008; Jain & Bagler 2018; Tuwani 2019; also our Assignment 3).
-6) Region is the statistical unit; BH-FDR across the {F['regions']['n']} regions.
-""")
+6) Region is the statistical unit; BH-FDR across the {F["regions"]["n"]} regions.
+""",
+    )
 
 
 def s_replication(deck: Deck, F) -> None:
@@ -352,23 +378,26 @@ def s_replication(deck: Deck, F) -> None:
                    f"vs {R['korea_z_published']} published), most likely because the 2018 FlavorDB is no longer "
                    "online."), 14, color=T.muted, space_before=10),
     ], min_scale=0.75)  # fmt: skip
-    deck.notes(s, minus(f"""
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 50 s)
 Before touching any LLM recipe we had to reproduce your Fig. 4; that was a pre-registered gate.
 HOW TO READ F2b: one row per region, filled markers are ours, open markers are the published values (read from the
 CulinaryDB site figures). Blue dots are Z against the random null; the grey band marks the
-{F['regions']['n_contrasting']} contrasting cuisines.
-RESULT: {rnd.get('sign_agreement')}/{rnd.get('n')} signs against the random null; Spearman ρ = {f(rnd.get('spearman'), 3)}
+{F["regions"]["n_contrasting"]} contrasting cuisines.
+RESULT: {rnd.get("sign_agreement")}/{rnd.get("n")} signs against the random null; Spearman ρ = {f(rnd.get("spearman"), 3)}
 with the published values; the table gives the other three nulls. As in the paper, the frequency-preserving nulls
 bring Z close to zero (popularity explains much of the pattern) while the category null does not.
-Korea's top contributor is Soybean Sauce, as published ({f(R['korea_top1_ours'])}% in our run vs
-{R['korea_top1_published']}% published); rankings replicate, magnitudes differ because the exact removal procedure is
+Korea's top contributor is Soybean Sauce, as published ({f(R["korea_top1_ours"])}% in our run vs
+{R["korea_top1_published"]}% published); rankings replicate, magnitudes differ because the exact removal procedure is
 not specified in the paper, so we calibrated it (details in docs/replication_report.md).
 
-IF ASKED "why is Korea at {f(R['korea_z'], 1)} and not {R['korea_z_published']}?": the 2018 FlavorDB snapshot is no
+IF ASKED "why is Korea at {f(R["korea_z"], 1)} and not {R["korea_z_published"]}?": the 2018 FlavorDB snapshot is no
 longer online; today's FlavorDB has updated molecule lists. Signs and ranks are preserved; a molecule-dropout
 robustness analysis is planned. Remember Z = √N_rand · d, so a difference of {f(abs(R["korea_z"] - R["korea_z_published"]), 1)} in Z is a difference of {f(abs(R["korea_z"] - R["korea_z_published"]) / F["method"]["sqrt_n_rand"], 3)} in d.
-"""))
+"""),
+    )
 
 
 def s_sample_size(deck: Deck, F) -> None:
@@ -398,33 +427,36 @@ def s_sample_size(deck: Deck, F) -> None:
         f"{n0(u.get('pool_n160'))}-ingredient pool, but {f(u.get('delta_ns_full_pool_n160'))} against the full pool "
         "(Backup B1)."), 13, space_before=0)], min_scale=0.75)  # fmt: skip
     weak = join_and(E["uniform_weakened"])
-    deck.notes(s, minus(f"""
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 75 s) — this is our main methodological finding, take your time.
 While calibrating the LLM comparison on genuine data we found that the own-pool random null is sample-size
 dependent. The null draws from the sample's own ingredient pool. A small sample loses the cuisine's long tail of
 rare ingredients, which share few compounds; the pool becomes richer in common, high-sharing ingredients, so the
 null's mean Ns rises while the real recipes' mean Ns does not. ΔNs therefore falls as N shrinks.
 
-HOW TO READ F2c: each row is a cuisine cut to {E['matched_n']} recipes (just below the smallest cuisine,
-{F['replication']['smallest_region']}). Dot = median effect size d over 200 random samples, line = 95% range,
+HOW TO READ F2c: each row is a cuisine cut to {E["matched_n"]} recipes (just below the smallest cuisine,
+{F["replication"]["smallest_region"]}). Dot = median effect size d over 200 random samples, line = 95% range,
 diamond = full cuisine; vermillion = published contrasting, blue = published uniform. The text on the right is the
 share of samples with d > 0.
 
-RESULT: all {E['contrasting_robust']} published contrasting cuisines are negative in every matched-size sample, so
-the contrasting pattern of Fig. 4 is robust. {E['uniform_robust']} of {F['regions']['n_uniform']} uniform cuisines stay
+RESULT: all {E["contrasting_robust"]} published contrasting cuisines are negative in every matched-size sample, so
+the contrasting pattern of Fig. 4 is robust. {E["uniform_robust"]} of {F["regions"]["n_uniform"]} uniform cuisines stay
 positive in at least 95% of samples, {weak} weaken, and {flipped} flip: their published positive sign relies on
 their larger ingredient pool.
 
 CONSEQUENCE FOR LLMs: our pre-registered sign-error rule compared a 160-recipe LLM cuisine with the full real cuisine.
-On genuine 160-recipe samples that rule fires {pct(E['fpr'])} of the time overall, and
-{', '.join(f'{r} {100 * v:.0f}%' for r, v in E['fpr_top'])} for the worst regions. So we added an equal-N comparison
+On genuine 160-recipe samples that rule fires {pct(E["fpr"])} of the time overall, and
+{", ".join(f"{r} {100 * v:.0f}%" for r, v in E["fpr_top"])} for the worst regions. So we added an equal-N comparison
 (logged in the decision log before the full LLM analysis): an LLM cuisine is compared with
-{n0(E['n_genuine_per_region'])} genuine samples of the same region at the same N. The old rule is still reported.
+{n0(E["n_genuine_per_region"])} genuine samples of the same region at the same N. The old rule is still reported.
 
-IF ASKED "are the contrasting cuisines just small?": {F['replication']['contrasting_in_smallest7']} of the
-{F['regions']['n_contrasting']} contrasting cuisines are among CulinaryDB's 7 smallest, which would bias toward
+IF ASKED "are the contrasting cuisines just small?": {F["replication"]["contrasting_in_smallest7"]} of the
+{F["regions"]["n_contrasting"]} contrasting cuisines are among CulinaryDB's 7 smallest, which would bias toward
 "contrasting" — but at equal size they all stay contrasting, so the pattern is real.
-"""))
+"""),
+    )
 
 
 def s_pairing(deck: Deck, F) -> None:
@@ -433,19 +465,27 @@ def s_pairing(deck: Deck, F) -> None:
     E = F["equal_n"]
     keys = list(L)
     if keys:
+
         def top(col):
             return max(keys, key=lambda k: (L[k][col] or 0) / max(L[k]["regions"], 1))
 
         typ, uni, con = top("equal_n_typical"), top("equal_n_too_uniform"), top("equal_n_too_contrasting")
-        h1 = "not supported for any model" if V["h1eq_supported"] == 0 else f"supported for {V['h1eq_supported']}/{V['n']}"
+        h1 = (
+            "not supported for any model"
+            if V["h1eq_supported"] == 0
+            else f"supported for {V['h1eq_supported']}/{V['n']}"
+        )
         parts = [f"{L[typ]['name']} is typical in {L[typ]['equal_n_typical']}/{L[typ]['regions']} regions"]
         if uni not in (typ,) and L[uni]["equal_n_too_uniform"]:
             parts.append(f"{L[uni]['name']} too uniform in {L[uni]['equal_n_too_uniform']}/{L[uni]['regions']}")
         if con not in (typ, uni) and L[con]["equal_n_too_contrasting"]:
             parts.append(f"{L[con]['name']} too contrasting in {L[con]['equal_n_too_contrasting']}/"
                          f"{L[con]['regions']}")  # fmt: skip
-        answer = (f"No common drift to uniform pairing (H1 {h1}); the errors are model-specific. At equal size, "
-                  + join_and(parts) + ".")
+        answer = (
+            f"No common drift to uniform pairing (H1 {h1}); the errors are model-specific. At equal size, "
+            + join_and(parts)
+            + "."
+        )
     else:
         answer = pending("LLM audit not yet in results/summary.json")
     header(deck, s, "Do LLM cuisines reproduce each region's food-pairing sign?", answer)
@@ -474,30 +514,37 @@ def s_pairing(deck: Deck, F) -> None:
              "(slide 6), so the equal-N verdicts are the primary test.", 13, color=T.muted, space_before=8),
     ]  # fmt: skip
     deck.text(s, 6.5, y, 6.3, 6.97 - y, paras, min_scale=0.7)
-    shifts = "; ".join(f"{L[k]['name']} {sf(L[k]['equal_n_median_shift_d'])} ({padj(L[k]['h1eq_wilcoxon'])})"
-                       for k in keys)
-    fishers = "; ".join(f"{L[k]['name']} {L[k]['h1eq_fisher']['effect']} ({padj(L[k]['h1eq_fisher'])})"
-                        for k in keys if L[k]["h1eq_fisher"])
-    deck.notes(s, minus(f"""
+    shifts = "; ".join(
+        f"{L[k]['name']} {sf(L[k]['equal_n_median_shift_d'])} ({padj(L[k]['h1eq_wilcoxon'])})" for k in keys
+    )
+    fishers = "; ".join(
+        f"{L[k]['name']} {L[k]['h1eq_fisher']['effect']} ({padj(L[k]['h1eq_fisher'])})"
+        for k in keys
+        if L[k]["h1eq_fisher"]
+    )
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 75 s)
 HOW TO READ F3: one row per region, black diamond = real cuisine's Z against the random null, coloured markers = each
-LLM cuisine. The x-axis is symmetric-log. Grey band = the {F['regions']['n_contrasting']} contrasting regions. Note
-that F3 compares a {E['n_sub']}-recipe LLM cuisine with the full real cuisine, which slide 6 showed is biased toward
+LLM cuisine. The x-axis is symmetric-log. Grey band = the {F["regions"]["n_contrasting"]} contrasting regions. Note
+that F3 compares a {E["n_sub"]}-recipe LLM cuisine with the full real cuisine, which slide 6 showed is biased toward
 "contrasting", so read it as descriptive.
 
 PRIMARY TEST (equal N): we place each LLM cuisine's effect size d in the distribution of d over genuine samples of
 the same region and size. Median shift of d (LLM minus genuine median) and Wilcoxon test of a shift toward uniform
-(H1): {shifts}. H1 is {('not supported for any model' if V['h1eq_supported'] == 0 else 'supported for ' + str(V['h1eq_supported']))}.
+(H1): {shifts}. H1 is {("not supported for any model" if V["h1eq_supported"] == 0 else "supported for " + str(V["h1eq_supported"]))}.
 Direction × region type (Fisher, shift toward uniform in contrasting vs uniform regions): {fishers}.
-The baseline for sign agreement is not 1: genuine {E['n_sub']}-recipe samples agree with the full-cuisine sign
-{f(E['genuine_sign_agreement'])} of the time on average.
+The baseline for sign agreement is not 1: genuine {E["n_sub"]}-recipe samples agree with the full-cuisine sign
+{f(E["genuine_sign_agreement"])} of the time on average.
 
 THE STORY: there is no general drift toward uniform pairing. The errors are model-specific and region-specific;
 the consistent ones are listed on the slide ({cons_txt}).
 
-CAVEAT: {('Gemini covers ' + str(L['gemini-3.5-flash-lite']['regions']) + ' regions so far; ') if 'gemini-3.5-flash-lite' in L else ''}
-pending runs: {join_and(F['pending_models']) or 'none'}.
-"""))
+CAVEAT: {("Gemini covers " + str(L["gemini-3.5-flash-lite"]["regions"]) + " regions so far; ") if "gemini-3.5-flash-lite" in L else ""}
+pending runs: {join_and(F["pending_models"]) or "none"}.
+"""),
+    )
 
 
 def s_composition(deck: Deck, F) -> None:
@@ -506,9 +553,11 @@ def s_composition(deck: Deck, F) -> None:
     rs = F["ranges"]
     if L:
         amp = "no model" if V["h2b_sai_supported"] == 0 else f"{V['h2b_sai_supported']}/{V['n']} models"
-        answer = (f"No systematic amplification (median SAI {rng_text(*rs['median_sai'])}; H2b supported for {amp}), "
-                  f"but they narrow the cuisine: {pct_rng(*rs['median_diversity_ratio'])} of the distinct ingredients "
-                  "of a genuine sample of the same size.")
+        answer = (
+            f"No systematic amplification (median SAI {rng_text(*rs['median_sai'])}; H2b supported for {amp}), "
+            f"but they narrow the cuisine: {pct_rng(*rs['median_diversity_ratio'])} of the distinct ingredients "
+            "of a genuine sample of the same size."
+        )
     else:
         answer = pending("LLM audit not yet in results/summary.json")
     header(deck, s, "Do LLMs amplify the stereotypes of each cuisine?", answer)
@@ -537,21 +586,24 @@ def s_composition(deck: Deck, F) -> None:
              "ingredients.", 15, space_before=8),
         Para(drivers_text(F), 14, space_before=8),
     ], min_scale=0.7)  # fmt: skip
-    deck.notes(s, minus(f"""
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 60 s)
-HOW TO READ F8: one row per region; the grey bar is the 95% range of SAI over genuine {E['n_sub']}-recipe samples
+HOW TO READ F8: one row per region; the grey bar is the 95% range of SAI over genuine {E["n_sub"]}-recipe samples
 ({f(band[0], 3)} to {f(band[1], 3)}); markers are the LLMs (log scale; 1 = signature ingredients used exactly as
 often as in real recipes).
-RESULT: H2b predicted SAI > 1 (stereotype amplification). The median SAI is {rng_text(*rs['median_sai'])} across
-models and the one-sided Wilcoxon test is not significant for {'any' if V['h2b_sai_supported'] == 0 else 'all'} model(s).
+RESULT: H2b predicted SAI > 1 (stereotype amplification). The median SAI is {rng_text(*rs["median_sai"])} across
+models and the one-sided Wilcoxon test is not significant for {"any" if V["h2b_sai_supported"] == 0 else "all"} model(s).
 Per region there are large deviations in both directions, so the models are not uniformly "over-signatured".
 What they do is narrow the cuisine: the diversity ratio (distinct ingredients relative to a genuine sample of the same
-size) is {rng_text(*rs['median_diversity_ratio'])}, significant in {V['h2b_div_supported']}/{V['n']} models; and
-the ingredient-prevalence JSD is {rng_text(*rs['median_prevalence_jsd'], 3)} against
+size) is {rng_text(*rs["median_diversity_ratio"])}, significant in {V["h2b_div_supported"]}/{V["n"]} models; and
+the ingredient-prevalence JSD is {rng_text(*rs["median_prevalence_jsd"], 3)} against
 {f(ref, 3)} for genuine samples, i.e. {ratio} the sampling noise.
 ONE-LINER: LLMs don't caricature a cuisine with more signature ingredients; they cook a smaller, more repetitive
 version of it.
-"""))
+"""),
+    )
 
 
 def s_fingerprint(deck: Deck, F) -> None:
@@ -560,10 +612,12 @@ def s_fingerprint(deck: Deck, F) -> None:
     rs = F["ranges"]
     cmr = C["ranked_n"]
     if L:
-        answer = (f"The category fingerprint is weakened in {V['h2c_supported']}/{V['n']} models (ρ "
-                  f"{rng_text(*rs['median_fingerprint_spearman'])} vs {f(E['ref'].get('fingerprint_spearman'))} for "
-                  "genuine samples), yet LLMs beat copy-mutate on composition and fingerprints, not on food-pairing "
-                  "strength.")
+        answer = (
+            f"The category fingerprint is weakened in {V['h2c_supported']}/{V['n']} models (ρ "
+            f"{rng_text(*rs['median_fingerprint_spearman'])} vs {f(E['ref'].get('fingerprint_spearman'))} for "
+            "genuine samples), yet LLMs beat copy-mutate on composition and fingerprints, not on food-pairing "
+            "strength."
+        )
     else:
         answer = pending("LLM audit not yet in results/summary.json")
     header(deck, s, "Do LLMs keep the category fingerprint, and beat a copy-mutate model?", answer)
@@ -579,34 +633,57 @@ def s_fingerprint(deck: Deck, F) -> None:
              color=T.muted, space_before=6),
     ], min_scale=0.7)  # fmt: skip
     x, w = 9.1, 3.7
-    deck.tile(s, x, 1.98, w, 1.45, rng_text(*rs["median_fingerprint_spearman"]),
-              f"median fingerprint ρ of the LLMs (genuine samples {f(E['ref'].get('fingerprint_spearman'))}; "
-              f"copy-mutate {f(cmr.get('fingerprint_spearman'))})", color=T.accent, big_size=28, cap_size=13)
+    deck.tile(
+        s,
+        x,
+        1.98,
+        w,
+        1.45,
+        rng_text(*rs["median_fingerprint_spearman"]),
+        f"median fingerprint ρ of the LLMs (genuine samples {f(E['ref'].get('fingerprint_spearman'))}; "
+        f"copy-mutate {f(cmr.get('fingerprint_spearman'))})",
+        color=T.accent,
+        big_size=28,
+        cap_size=13,
+    )
     deck.tile(s, x, 3.55, w, 1.45, f(cmr.get("prevalence_jsd")),
               f"copy-mutate prevalence JSD (LLMs {rng_text(*rs['median_prevalence_jsd'])}; genuine "
               f"{f(E['ref'].get('prevalence_jsd'), 3)}); its SAI is {f(cmr.get('sai'))}", color=T.ink, big_size=28,
               cap_size=13)  # fmt: skip
-    deck.tile(s, x, 5.12, w, 1.45, pct(cmr.get("sign_match"), 0),
-              f"of regions where copy-mutate gets the pairing sign right; it does reproduce the popularity curve "
-              f"(rank-frequency MAE {f(cmr.get('freq_rank_mae'), 3)})", color=T.blue, big_size=28, cap_size=13)
-    deck.notes(s, minus(f"""
+    deck.tile(
+        s,
+        x,
+        5.12,
+        w,
+        1.45,
+        pct(cmr.get("sign_match"), 0),
+        f"of regions where copy-mutate gets the pairing sign right; it does reproduce the popularity curve "
+        f"(rank-frequency MAE {f(cmr.get('freq_rank_mae'), 3)})",
+        color=T.blue,
+        big_size=28,
+        cap_size=13,
+    )
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 70 s)
-HOW TO READ F13: four panels, one box per source, one point per region: genuine {E['n_sub']}-recipe samples (dark
-grey), the LLMs, and the copy-mutate model (light grey, {C['key']}). Lower is better for JSD and MAE, higher is better
+HOW TO READ F13: four panels, one box per source, one point per region: genuine {E["n_sub"]}-recipe samples (dark
+grey), the LLMs, and the copy-mutate model (light grey, {C["key"]}). Lower is better for JSD and MAE, higher is better
 for fingerprint ρ, 1 is ideal for the diversity ratio.
 H2c — the category fingerprint: genuine resamples of the same region correlate with the full cuisine's fingerprint at
-ρ ≈ {f(E['ref'].get('fingerprint_spearman'))} (not 1, because of sampling noise). LLM fingerprints correlate at
-{rng_text(*rs['median_fingerprint_spearman'])}; the one-sided Wilcoxon test is significant in
-{V['h2c_supported']}/{V['n']} models. Regions below the resampling range: {'; '.join(below)}.
+ρ ≈ {f(E["ref"].get("fingerprint_spearman"))} (not 1, because of sampling noise). LLM fingerprints correlate at
+{rng_text(*rs["median_fingerprint_spearman"])}; the one-sided Wilcoxon test is significant in
+{V["h2c_supported"]}/{V["n"]} models. Regions below the resampling range: {"; ".join(below)}.
 COPY-MUTATE is our baseline, not a contribution: it is Tuwani et al. 2019 Algorithm 1 with Jain & Bagler's ranked
 fitness, i.e. the lab's own model and our Assignment 3. It reproduces the rank-frequency curve (MAE
-{f(cmr.get('freq_rank_mae'), 3)}) but not composition (JSD {f(cmr.get('prevalence_jsd'))}), signatures (SAI
-{f(cmr.get('sai'))}) or fingerprints (ρ {f(cmr.get('fingerprint_spearman'))}), and its pairing sign is a coin flip
-({pct(cmr.get('sign_match'), 0)} of regions).
+{f(cmr.get("freq_rank_mae"), 3)}) but not composition (JSD {f(cmr.get("prevalence_jsd"))}), signatures (SAI
+{f(cmr.get("sai"))}) or fingerprints (ρ {f(cmr.get("fingerprint_spearman"))}), and its pairing sign is a coin flip
+({pct(cmr.get("sign_match"), 0)} of regions).
 LLMs beat it on prevalence, fingerprint and SAI in every model, but on the food-pairing gap only
-{join_and(F['cm_gap_models']) or 'no model'} is significantly better: knowing which ingredients belong to a cuisine
+{join_and(F["cm_gap_models"]) or "no model"} is significantly better: knowing which ingredients belong to a cuisine
 does not automatically give its pairing structure.
-"""))
+"""),
+    )
 
 
 def s_persona(deck: Deck, F) -> None:
@@ -615,9 +692,11 @@ def s_persona(deck: Deck, F) -> None:
     n = V["n"]
     if L:
         rho = join_and(F["persona_rho_models"]) if F["persona_rho_models"] else "no model"
-        answer = (f"Partly. The persona brings ingredient prevalence closer to real in {V['persona_jsd_better']}/{n} "
-                  f"models and improves the fingerprint only for {rho}; food pairing is unchanged "
-                  f"({V['persona_gap_better']}/{n}).")
+        answer = (
+            f"Partly. The persona brings ingredient prevalence closer to real in {V['persona_jsd_better']}/{n} "
+            f"models and improves the fingerprint only for {rho}; food pairing is unchanged "
+            f"({V['persona_gap_better']}/{n})."
+        )
     else:
         answer = pending("LLM audit not yet in results/summary.json")
     header(deck, s, "Does a home-cook persona make the recipes more faithful?", answer)
@@ -629,7 +708,8 @@ def s_persona(deck: Deck, F) -> None:
 
     P = F["proprietary"]
     prop_txt = "; ".join(
-        f"{F['metric_names'][m]} {sf(P[m]['effect_num'], 3)} ({padj(P[m])})" for m in ("abs_d_gap", "prevalence_jsd")
+        f"{F['metric_names'][m]} {sf(P[m]['effect_num'], 3)} ({padj(P[m])})"
+        for m in ("abs_d_gap", "prevalence_jsd")
         if m in P
     )
     scale = F["scale"]
@@ -643,22 +723,26 @@ def s_persona(deck: Deck, F) -> None:
     ], min_scale=0.7)  # fmt: skip
     lines = "\n".join(
         f"  {L[k]['name']}: JSD {cell(k, 'prevalence_jsd')}; ρ {cell(k, 'fingerprint_spearman')}; "
-        f"gap {cell(k, 'abs_d_gap')}; |log SAI| {cell(k, 'abs_log_sai')}" for k in L
+        f"gap {cell(k, 'abs_d_gap')}; |log SAI| {cell(k, 'abs_log_sai')}"
+        for k in L
     )
-    deck.notes(s, minus(f"""
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 50 s)
 HOW TO READ F14: each point is a region; the value is persona minus plain for that model (each condition has
-{F['design']['recipes_per_region'] // 2 if F['design']['recipes_per_region'] else '?'} recipes per region); the bar is the median.
+{F["design"]["recipes_per_region"] // 2 if F["design"]["recipes_per_region"] else "?"} recipes per region); the bar is the median.
 Below zero is better for JSD and SAI deviation, above zero is better for fingerprint ρ and diversity.
 RESULT (persona − plain, Wilcoxon over regions, BH-adjusted):
 {lines}
 In words: asking the model to answer as a home cook from a specific place makes the ingredient mix more realistic and
 more varied (right panel), but it does not fix food pairing. H4 predicted a slight improvement: that is what we see,
 for composition only.
-PROPRIETARY VS OPEN (H4): proprietary models (Gemini, GPT-6-Luna) vs open ({join_and(F['open_models'])}): {prop_txt}.
+PROPRIETARY VS OPEN (H4): proprietary models (Gemini, GPT-6-Luna) vs open ({join_and(F["open_models"])}): {prop_txt}.
 Positive = proprietary further from real. Provisional: only one open-weight model is analysed so far.
-SCALE: {('available' if scale else 'pending — needs the Qwen3.5-4B run')}.
-"""))
+SCALE: {("available" if scale else "pending — needs the Qwen3.5-4B run")}.
+"""),
+    )
 
 
 def s_bon(deck: Deck, F) -> None:
@@ -669,10 +753,12 @@ def s_bon(deck: Deck, F) -> None:
         cand = [r for k, r in rows.items() if F["models"].get(k, {}).get("complete")] or list(rows.values())
         best = max(cand, key=lambda r: r["last"]["indep_classifier_acc"] - r["first"]["indep_classifier_acc"])
         up = "for every model" if B["all_acc_up"] else "for some models"
-        answer = (f"Best-of-N makes recipes more recognisable ({best['name']}: an independent classifier assigns "
-                  f"{pct(best['first']['indep_classifier_acc'], 0)} → {pct(best['last']['indep_classifier_acc'], 0)} "
-                  f"to the claimed cuisine, N = {best['N_min']} → {best['N_max']}; rising {up}) but less diverse; "
-                  "cuisine-level pairing and fingerprints do not improve.")
+        answer = (
+            f"Best-of-N makes recipes more recognisable ({best['name']}: an independent classifier assigns "
+            f"{pct(best['first']['indep_classifier_acc'], 0)} → {pct(best['last']['indep_classifier_acc'], 0)} "
+            f"to the claimed cuisine, N = {best['N_min']} → {best['N_max']}; rising {up}) but less diverse; "
+            "cuisine-level pairing and fingerprints do not improve."
+        )
     else:
         answer = pending("best-of-N results not yet in results/summary.json")
     header(deck, s, "Can the fidelity scorer steer an LLM by picking its best recipes?", answer)
@@ -710,32 +796,36 @@ def s_bon(deck: Deck, F) -> None:
                 f"\n  {r['name']}: classifier share {f(a['indep_classifier_acc'])} → {f(b['indep_classifier_acc'])}; "
                 f"diversity {f(a['diversity_ratio'])} → {f(b['diversity_ratio'])}; JSD {f(a['prevalence_jsd'], 3)} → "
                 f"{f(b['prevalence_jsd'], 3)}; fingerprint ρ {f(a['fingerprint_spearman'])} → "
-                f"{f(b['fingerprint_spearman'])}; sign agreement {f(a['sign_match'])} → {f(b['sign_match'])}")
-    deck.notes(s, minus(f"""
+                f"{f(b['fingerprint_spearman'])}; sign agreement {f(a['sign_match'])} → {f(b['sign_match'])}"
+            )
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 70 s)
-THE SCORER (D3): three components, each standardised against genuine recipes of the cuisine: a {SC.get('classifier_name')}
+THE SCORER (D3): three components, each standardised against genuine recipes of the cuisine: a {SC.get("classifier_name")}
 cuisine classifier (linear so that per-ingredient contributions can drive feedback and the app's suggestions), the
 mean shrinkage-smoothed PMI of the recipe's ingredient pairs within the cuisine, and how typical its Ns is. Test
-macro-F1 {f(SC.get('test_macro_f1'))} over {F['regions']['n']} classes (chance {f(SC.get('chance'), 3)}), top-3
-{f(SC.get('test_top3'))}; composite AUC against other cuisines / copy-mutate / null recipes: {comp}.
+macro-F1 {f(SC.get("test_macro_f1"))} over {F["regions"]["n"]} classes (chance {f(SC.get("chance"), 3)}), top-3
+{f(SC.get("test_top3"))}; composite AUC against other cuisines / copy-mutate / null recipes: {comp}.
 
 BEST-OF-N: from each model's existing recipes per region we repeatedly take N candidates and keep the best-scoring
 admissible one (not a near-copy of a CulinaryDB recipe, not a duplicate). N = 1 is the unsteered control under the
 same guards. We evaluate only with held-out metrics, never the scorer.
 HOW TO READ F15: x = N, one line per model, mean over regions with 95% bootstrap CIs.
-RESULTS (N = {(B or {}).get('rows', {}) and min(r['N_min'] for r in B['rows'].values())} → {(B or {}).get('rows', {}) and max(r['N_max'] for r in B['rows'].values())}):{bon_lines}
+RESULTS (N = {(B or {}).get("rows", {}) and min(r["N_min"] for r in B["rows"].values())} → {(B or {}).get("rows", {}) and max(r["N_max"] for r in B["rows"].values())}):{bon_lines}
 Honest reading: reranking makes recipes more recognisable to an independent classifier, but it narrows them (lower
 diversity) and, per F15, pushes SAI up and recipes closer to existing CulinaryDB recipes (higher max-Jaccard), while
-cuisine-level pairing sign, fingerprint and prevalence JSD do not improve at {meta.get('selected_max', '?')} recipes per
+cuisine-level pairing sign, fingerprint and prevalence JSD do not improve at {meta.get("selected_max", "?")} recipes per
 region. That is a trade-off, not a free win, and it is why critique-and-revise (which edits a recipe instead of
 selecting one) is the next slide.
 
-DEVIATION TO DISCLOSE: the plan pre-registered a {n0(SD['pool_target'])}-candidate pool per region. Generating it needs
-{n0(SD['extra_calls_per_model'])} extra calls per model; at the measured Kaggle rate ({f(SD['minutes_per_call'], 2)} min
-per call on the T4 transformers fallback; Kaggle full runs give {f(SD['gpu_hours_min'], 0)}–{f(SD['gpu_hours_max'], 0)}
+DEVIATION TO DISCLOSE: the plan pre-registered a {n0(SD["pool_target"])}-candidate pool per region. Generating it needs
+{n0(SD["extra_calls_per_model"])} extra calls per model; at the measured Kaggle rate ({f(SD["minutes_per_call"], 2)} min
+per call on the T4 transformers fallback; Kaggle full runs give {f(SD["gpu_hours_min"], 0)}–{f(SD["gpu_hours_max"], 0)}
 GPU-hours per model) that is too much for the free GPU quota, so we reranked
 the existing samples instead and documented the deviation.
-"""))
+"""),
+    )
 
 
 def s_revise(deck: Deck, F) -> None:
@@ -743,13 +833,18 @@ def s_revise(deck: Deck, F) -> None:
     RV = F["revise"]
     if RV:
         rows = RV["rows"]
-        parts = [f"{r['name']} {f(r['first']['indep_classifier_acc'])} → {f(r['last']['indep_classifier_acc'])} in "
-                 f"{r['rounds']} round{'s' if r['rounds'] > 1 else ''}" for r in rows.values()]
+        parts = [
+            f"{r['name']} {f(r['first']['indep_classifier_acc'])} → {f(r['last']['indep_classifier_acc'])} in "
+            f"{r['rounds']} round{'s' if r['rounds'] > 1 else ''}"
+            for r in rows.values()
+        ]
         n = RV["n_models"]
         jsd = RV["improved"]["prevalence_jsd"]
-        answer = (f"Yes, modestly: the independent classifier share rises ({'; '.join(parts)}) and prevalence JSD falls "
-                  f"in {jsd}/{n} models, while revised recipes keep a Jaccard overlap of "
-                  f"{rng_text(RV['kept_min'], RV['kept_max'])} with the original dish.")
+        answer = (
+            f"Yes, modestly: the independent classifier share rises ({'; '.join(parts)}) and prevalence JSD falls "
+            f"in {jsd}/{n} models, while revised recipes keep a Jaccard overlap of "
+            f"{rng_text(RV['kept_min'], RV['kept_max'])} with the original dish."
+        )
     else:
         answer = pending("critique-and-revise results not yet in results/summary.json")
     header(deck, s, "Does fingerprint feedback improve a recipe while keeping the dish?", answer)
@@ -773,12 +868,16 @@ def s_revise(deck: Deck, F) -> None:
         for k in RV["order"]:
             r = RV["rows"][k]
             a, b = r["first"], r["last"]
-            lines += minus(f"\n  {r['name']} (round 0 → {r['rounds']}): classifier {f(a['indep_classifier_acc'])} → "
-                           f"{f(b['indep_classifier_acc'])}; JSD {f(a['prevalence_jsd'], 3)} → {f(b['prevalence_jsd'], 3)}; "
-                           f"fingerprint ρ {f(a['fingerprint_spearman'])} → {f(b['fingerprint_spearman'])}; sign agreement "
-                           f"{f(a['sign_match'])} → {f(b['sign_match'])}; ingredient Jaccard with the original "
-                           f"{f(b.get('identity_jaccard'))}")
-    deck.notes(s, minus(f"""
+            lines += minus(
+                f"\n  {r['name']} (round 0 → {r['rounds']}): classifier {f(a['indep_classifier_acc'])} → "
+                f"{f(b['indep_classifier_acc'])}; JSD {f(a['prevalence_jsd'], 3)} → {f(b['prevalence_jsd'], 3)}; "
+                f"fingerprint ρ {f(a['fingerprint_spearman'])} → {f(b['fingerprint_spearman'])}; sign agreement "
+                f"{f(a['sign_match'])} → {f(b['sign_match'])}; ingredient Jaccard with the original "
+                f"{f(b.get('identity_jaccard'))}"
+            )
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 60 s)
 Best-of-N can only choose among recipes the model already wrote. Critique-and-revise instead tells the model what is
 off, using the scorer's interpretable parts: the linear classifier's most atypical ingredients, the signature
@@ -790,15 +889,20 @@ RESULTS:{lines}
 Honest reading: feedback moves recipes toward the cuisine on the held-out metrics while keeping most of each dish,
 so it does better than reranking, which gained recognisability but lost diversity. These are means over regions
 without confidence intervals yet, at small cuisine sizes, so treat them as promising, not conclusive.
-{'Pending: ' + ' '.join(p['detail'] for p in pend_rounds) if pend_rounds else ''}
-"""))
+{"Pending: " + " ".join(p["detail"] for p in pend_rounds) if pend_rounds else ""}
+"""),
+    )
 
 
 def s_tools(deck: Deck, F) -> None:
     s = deck.new("main", "tools")
     LB = F["library"]
-    header(deck, s, "How can anyone audit their own recipes?",
-           "With FlavorAudit, a tested Python library (D4), and FlavorPrint, a web app built on it (D5).")
+    header(
+        deck,
+        s,
+        "How can anyone audit their own recipes?",
+        "With FlavorAudit, a tested Python library (D4), and FlavorPrint, a web app built on it (D5).",
+    )
     for x in (0.55, 6.8):
         deck.rect(s, x, 1.98, 6.0, 4.97, T.panel)
     mods = " · ".join(LB["modules"])
@@ -845,9 +949,11 @@ def s_tools(deck: Deck, F) -> None:
              space_before=12),
     ]  # fmt: skip
     deck.text(s, 6.95, 2.05, 5.7, 4.85, paras, min_scale=0.7)
-    deck.notes(s, f"""
+    deck.notes(
+        s,
+        f"""
 WHAT TO SAY (about 40 s, then switch to the demo — see demo_script.md)
-D4 is FlavorAudit: the whole framework as a library with {LB['n_modules']} modules and {LB['n_tests']} tests, including a
+D4 is FlavorAudit: the whole framework as a library with {LB["n_modules"]} modules and {LB["n_tests"]} tests, including a
 slow regression test that reproduces the Fig. 4 signs from scratch. It has no dependency on our research code and
 never bundles CulinaryDB/FlavorDB data inside the MIT package: the data are downloaded on first use under their
 CC BY-NC-SA licence. The snippet replicates Korea's Z in a few lines; the CLI audits any CSV of recipes.
@@ -859,7 +965,8 @@ with its three components, the most likely cuisines and concrete suggestions.
 STATUS: runs locally; the Hugging Face Space and the PyPI release are prepared but publishing waits for the team's
 go-ahead.
 DEMO: switch to the browser now (3 minutes). If the demo fails, use Backup "Demo fallback".
-""")
+""",
+    )
 
 
 def s_conclusions(deck: Deck, F) -> None:
@@ -909,12 +1016,14 @@ def s_conclusions(deck: Deck, F) -> None:
     deck.text(s, 0.55, 6.45, 12.25, 0.52, [Para("Thank you. Questions?   (backup slides and qa_prep.md cover the "
                                                 "likely ones)", 18, bold=True, color="#FFFFFF", align="center",
                                                 space_before=0)], anchor="middle", fit=False)  # fmt: skip
-    deck.notes(s, minus(f"""
+    deck.notes(
+        s,
+        minus(f"""
 WHAT TO SAY (about 60 s)
 Answer to the title question: partly.
 FINAL (complete data): the replication, and the sample-size finding with its consequence that LLM cuisines must be
 compared with genuine samples of their own size.
-PROVISIONAL (more LLM data pending: {join_and(F['pending_models']) or 'none'}): no drift toward uniform pairing; errors
+PROVISIONAL (more LLM data pending: {join_and(F["pending_models"]) or "none"}): no drift toward uniform pairing; errors
 are model- and region-specific; no stereotype amplification but narrower cuisines; fingerprints weakened; LLMs beat
 copy-mutate except on pairing strength; persona helps composition; best-of-N trades diversity for recognisability.
 WHAT IS NEW vs BASELINE: new = the LLMCuisine-22 dataset, the first flavor-compound audit of LLM recipes, the
@@ -923,15 +1032,20 @@ Reused (not contributions) = the nulls, Z and χ (Ahn 2011; Jain 2015; Singh & B
 (Kinouchi 2008; Jain & Bagler 2018; Tuwani 2019; our A2/A3).
 Keep this slide up during questions. Backups: B1 sample-size mechanism, B2 all pre-registered tests, B3 scorecard,
 B4 effect sizes, B5 steering ablation, B6 demo fallback, B7 credits and licences. qa_prep.md has prepared answers.
-"""))
+"""),
+    )
 
 
 def s_limitations(deck: Deck, F) -> None:
     s = deck.new("main", "limitations")
     E, ds, SD = F["equal_n"], F["dataset"], F["steer_design"]
     meta = (F["bon"] or {}).get("meta", {})
-    header(deck, s, "What could change these conclusions?",
-           "Data versions, an incomplete model roster and small LLM cuisines. Each is flagged, tested or pending.")
+    header(
+        deck,
+        s,
+        "What could change these conclusions?",
+        "Data versions, an incomplete model roster and small LLM cuisines. Each is flagged, tested or pending.",
+    )
     pend = "; ".join(f"{F['models'][k]['name']} {F['models'][k]['status']}" for k in F["incomplete_models"]
                      if F["models"][k]["tier"] == "core")  # fmt: skip
     left = [
@@ -966,19 +1080,26 @@ def s_limitations(deck: Deck, F) -> None:
     ]  # fmt: skip
     deck.text(s, 0.55, 1.98, 6.0, 4.97, left, min_scale=0.72)
     deck.text(s, 6.8, 1.98, 6.0, 4.97, right, min_scale=0.72)
-    deck.notes(s, f"""
+    deck.notes(
+        s,
+        f"""
 WHAT TO SAY (about 45 s)
 Be upfront: these are the points a careful reviewer would raise, and each one is either measured, tested or explicitly
 pending. The most important: (1) FlavorDB drift, which we handle by replicating signs and ranks and by planned
 perturbation analyses; (2) small LLM cuisines, which is exactly why we built the equal-N reference; (3) the incomplete
-roster: {pend or 'none'}; (4) steering was run on the existing recipes, a documented, compute-driven deviation.
-""")
+roster: {pend or "none"}; (4) steering was run on the existing recipes, a documented, compute-driven deviation.
+""",
+    )
 
 
 def b_credits(deck: Deck, F) -> None:
     s = deck.new("backup", "credits")
-    header(deck, s, "Data, licences and references", "Everything we used is credited; derived data stay "
-                                                       "share-alike, code is MIT.")
+    header(
+        deck,
+        s,
+        "Data, licences and references",
+        "Everything we used is credited; derived data stay share-alike, code is MIT.",
+    )
     chips = [("D1", "LLMCuisine-22"), ("D2", "Audit"), ("D3", "Steering"), ("D4", "FlavorAudit"), ("D5", "FlavorPrint")]
     for i, (d, name) in enumerate(chips):
         cx = 0.9 + i * 2.39
@@ -1019,14 +1140,17 @@ def b_mechanism(deck: Deck, F) -> None:
              "against the full cuisine's pool. Dashed: full cuisine. The blue line is flat, so the drift comes from "
              "the null's pool, not from the recipes.", 15, space_before=0),
     ], min_scale=0.75)  # fmt: skip
-    deck.notes(s, minus(f"""
+    deck.notes(
+        s,
+        minus(f"""
 Use when asked "why does N matter?". Mechanism: the random null draws ingredients uniformly from the pool that the
 sample itself contains. In a small sample, rare ingredients (which typically have small flavor profiles and share few
 compounds) are missing, so the pool is dominated by frequent, high-sharing ingredients; the null's mean Ns rises,
 real mean Ns does not, and ΔNs falls. Against the fixed full-cuisine pool the drift disappears (blue).
-USA at {E['n_sub']} recipes: own pool of {n0(u.get('pool_n160'))} ingredients, ΔNs {f(u.get('delta_ns_own_pool_n160'))};
-full pool: {f(u.get('delta_ns_full_pool_n160'))}.
-"""))
+USA at {E["n_sub"]} recipes: own pool of {n0(u.get("pool_n160"))} ingredients, ΔNs {f(u.get("delta_ns_own_pool_n160"))};
+full pool: {f(u.get("delta_ns_full_pool_n160"))}.
+"""),
+    )
 
 
 def b_tests(deck: Deck, F) -> None:
@@ -1059,7 +1183,11 @@ def b_tests(deck: Deck, F) -> None:
             if not r:
                 row.append(pending("n/a"))
                 continue
-            eff = r["effect"] if kind == "effect" else (f(r["effect_num"], 2) if kind == "level" else sf(r["effect_num"], 2))
+            eff = (
+                r["effect"]
+                if kind == "effect"
+                else (f(r["effect_num"], 2) if kind == "level" else sf(r["effect_num"], 2))
+            )
             row.append(minus(f"{eff}  ({pv(r['p_adj'])})"))
             if met:
                 v = direction(r["effect_num"], r["p_adj"], F["metric_better"][met])
@@ -1073,29 +1201,43 @@ def b_tests(deck: Deck, F) -> None:
     widths = [4.45] + [(12.25 - 4.45) / max(len(keys), 1)] * len(keys)
     deck.table(s, 0.55, 1.98, widths, rows, size=12, row_h=0.37, aligns=["l"] + ["c"] * len(keys), fills=fills,
                zebra=False)  # fmt: skip
-    deck.notes(s, """
+    deck.notes(
+        s,
+        """
 All pre-registered tests from tables/rq_tests_full.csv. Region is the unit; Wilcoxon signed-rank over regions; Fisher
 exact on region type × outcome; Benjamini–Hochberg across tests within each family. Effects: medians of differences
 (LLM minus genuine or minus copy-mutate, persona minus plain), or counts for Fisher tests.
-""")
+""",
+    )
 
 
 def b_scorecard(deck: Deck, F) -> None:
     s = deck.new("backup", "scorecard")
-    header(deck, s, "How does every source score on every metric?",
-           "Genuine 160-recipe samples set the ceiling; copy-mutate the floor; the LLMs sit in between.")
+    header(
+        deck,
+        s,
+        "How does every source score on every metric?",
+        "Genuine 160-recipe samples set the ceiling; copy-mutate the floor; the LLMs sit in between.",
+    )
     deck.picture(s, F["figures"]["F12"], 0.55, 2.0, 12.25, 4.95, align="center")
-    deck.notes(s, f"""
-F12: median over the regions each source covers (Gemini: {F['llm'].get('gemini-3.5-flash-lite', {}).get('regions', '?')}
+    deck.notes(
+        s,
+        f"""
+F12: median over the regions each source covers (Gemini: {F["llm"].get("gemini-3.5-flash-lite", {}).get("regions", "?")}
 regions so far); colour = better → brighter within each column. Real@160 = genuine samples of the
 same size as the LLM cuisines, the realistic ceiling. Copy-mutate = Tuwani 2019 with ranked fitness.
-""")
+""",
+    )
 
 
 def b_effects(deck: Deck, F) -> None:
     s = deck.new("backup", "effects")
-    header(deck, s, "How large is each model's food-pairing effect?",
-           "Effect sizes d = ΔNs / SD(null) with 95% bootstrap CIs; the black tick is the full real cuisine.")
+    header(
+        deck,
+        s,
+        "How large is each model's food-pairing effect?",
+        "Effect sizes d = ΔNs / SD(null) with 95% bootstrap CIs; the black tick is the full real cuisine.",
+    )
     deck.picture(s, F["figures"]["F4"], 0.55, 2.0, 12.25, 4.95, align="center")
     deck.notes(s, "F4: per model and region, the LLM cuisine's d with its bootstrap CI; black tick = full real "
                   "cuisine. Remember small samples are biased toward negative d (slide 6), so the equal-N verdicts are "
@@ -1108,15 +1250,31 @@ def b_ablation(deck: Deck, F) -> None:
     meta = (F["bon"] or {}).get("meta", {})
     ab = meta.get("ablation", {})
     if ab.get("composite") and len(ab) > 1:
-        drops = {m: ab["composite"]["indep_classifier_acc"] - v["indep_classifier_acc"] for m, v in ab.items()
-                 if m != "composite"}
+        drops = {
+            m: ab["composite"]["indep_classifier_acc"] - v["indep_classifier_acc"]
+            for m, v in ab.items()
+            if m != "composite"
+        }
         worst = max(drops, key=drops.get)
-        nice = lambda m: m.replace("without_", "").replace("_", " ").replace("ns ", "Ns ").replace("cooccurrence", "co-occurrence")  # noqa: E731
-        answer = (f"Ablation at N = {meta.get('ablation_N', '?')} (mean over models and regions): classifier share "
-                  f"{f(ab['composite']['indep_classifier_acc'])} with all three components, "
-                  + "; ".join(f"{f(v['indep_classifier_acc'])} without {nice(m)} (JSD {f(v['prevalence_jsd'], 3)})"
-                              for m, v in ab.items() if m != "composite")
-                  + f". Dropping the {nice(worst)} costs most.")
+
+        def nice(m):
+            return (
+                m.replace("without_", "")
+                .replace("_", " ")
+                .replace("ns ", "Ns ")
+                .replace("cooccurrence", "co-occurrence")
+            )  # noqa: E731
+
+        answer = (
+            f"Ablation at N = {meta.get('ablation_N', '?')} (mean over models and regions): classifier share "
+            f"{f(ab['composite']['indep_classifier_acc'])} with all three components, "
+            + "; ".join(
+                f"{f(v['indep_classifier_acc'])} without {nice(m)} (JSD {f(v['prevalence_jsd'], 3)})"
+                for m, v in ab.items()
+                if m != "composite"
+            )
+            + f". Dropping the {nice(worst)} costs most."
+        )
     else:
         answer = pending("ablation rows not available")
     header(deck, s, "Which scorer component drives the best-of-N gain?", answer)
@@ -1148,8 +1306,12 @@ def b_ablation(deck: Deck, F) -> None:
 
 def b_demo(deck: Deck, F, demo: dict | None) -> None:
     s = deck.new("backup", "demo fallback")
-    header(deck, s, "Demo fallback: what FlavorPrint shows",
-           "Computed by running the app's own audit function on its built-in examples (presentation/demo_probe.py).")
+    header(
+        deck,
+        s,
+        "Demo fallback: what FlavorPrint shows",
+        "Computed by running the app's own audit function on its built-in examples (presentation/demo_probe.py).",
+    )
     if not demo:
         deck.text(s, 0.55, 2.0, 12.25, 4.9, [Para(pending("app artifacts not available at build time"), 18)])
         return

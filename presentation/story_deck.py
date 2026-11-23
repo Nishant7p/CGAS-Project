@@ -285,6 +285,24 @@ def build() -> Path:
         d.text(s, h_, 6.85, y - 0.02, 5.9, 0.4, 18, NAVY, bold=True)
         d.text(s, b_, 6.85, y + 0.38, 5.9, 0.8, 15, GREY)
 
+    # 3 what we built: the five deliverables ---------------------------------------------------------------------
+    s = d.content("What we built: five deliverables", "As part of the project we built five things, all on GitHub",
+                  "", "Overview")  # fmt: skip
+    for k, (code, name, blurb) in enumerate(TS.D_BLURBS):
+        y = 2.1 + k * 0.97
+        url = TS.D_LINKS[code]
+        link(d.box(s, 0.6, y, 12.15, 0.85, CARD if k % 2 == 0 else WHITE), url)
+        d.number_badge(s, 0.8, y + 0.15, code, [TEAL, ORANGE, NAVY, "7D3C98", "B9770E"][k], 0.56)
+        link(d.text(s, name, 1.6, y + 0.24, 3.3, 0.45, 18, NAVY, bold=True), url)
+        link(d.text(s, blurb, 5.0, y + 0.08, 6.25, 0.7, 14, GREY, anchor=MSO_ANCHOR.MIDDLE), url)
+        pill = d.box(s, 11.45, y + 0.21, 1.1, 0.43, TEAL, radius=0.5)
+        pill.text_frame.paragraphs[0].alignment = PP_ALIGN.CENTER
+        r_ = pill.text_frame.paragraphs[0].add_run()
+        r_.text = "Open ›"
+        r_.font.size, r_.font.bold, r_.font.name = Pt(13), True, SANS
+        r_.font.color.rgb = rgb(WHITE)
+        link(pill, url)
+
     # 3 data --------------------------------------------------------------------------------------------------------
     s = d.content("What did we compare?", f"{N_REAL:,} real recipes against {D['total_recipes']:,} recipes written by "
                   f"{D['n_models']} AI models", "This is deliverable D1, LLMCuisine-22. Every model got the same frozen "
@@ -461,6 +479,7 @@ def build() -> Path:
                   "our steering gives the AI. 5) Chana masala: the stereotype flag. 6) 22-cuisine dashboard. Then back to "
                   "the slides. If the app does not load, talk over this screenshot.", "Web app · D5")  # fmt: skip
     d.tag(s, "▶  LIVE DEMO", 10.75, 0.3, 2.0)
+    link(s.shapes[-1], TS.APP_LOCAL)
     shot = next((p for p in (SHOTS / "00_hero_audit.png", SHOTS / "01_audit_overview.png")
                  if p.exists()), None)  # fmt: skip
     if shot and shot.name.startswith("00_hero"):  # drop the half-visible caption line at the bottom edge
@@ -473,8 +492,10 @@ def build() -> Path:
             im.crop((left, 0, right, im.height)).save(IMG / "hero.png")
         shot = IMG / "hero.png"
     if shot:
-        x, y, w, h = d.picture(s, shot, 0.6, 2.05, 8.3, 4.85, align="left")
+        x, y, w, h = d.picture(s, shot, 0.6, 2.05, 6.75, 4.85, align="left")
+        link(s.shapes[-1], TS.APP_LOCAL)  # click the screenshot to open the running app
         frame = d.box(s, x - 0.03, y - 0.03, w + 0.06, h + 0.06, BG, line="C9D3DA", radius=0.01)
+        link(frame, TS.APP_LOCAL)
         frame.fill.background()
     feats = [("Ingredient mapping", "each line linked to CulinaryDB"),
              ("Pairing & flavor network", "how the ingredients share flavor"),
@@ -483,27 +504,9 @@ def build() -> Path:
              ("22-cuisine dashboard", "every model on every cuisine")]  # fmt: skip
     for k, (h_, b_) in enumerate(feats):
         y = 2.15 + k * 0.97
-        d.number_badge(s, 7.45, y, k + 1, TEAL, 0.5)
-        d.text(s, h_, 8.15, y - 0.03, 4.6, 0.4, 18, NAVY, bold=True)
-        d.text(s, b_, 8.15, y + 0.38, 4.6, 0.4, 14.5, GREY)
-
-    # 13 deliverables -----------------------------------------------------------------------------------------------
-    s = d.content("Everything we promised, delivered", f"Five deliverables, all on GitHub: {GITHUB.removeprefix('https://')}",
-                  "This maps the proposal to what we hand in. The library is FlavorAudit: pip-installable, tested and "
-                  "documented, with three example notebooks. [SHOW, optional] open "
-                  "07_FlavorAudit_library/example_notebooks/02_audit_recipes.ipynb or run 'flavoraudit --help'. The "
-                  "report, poster and these slides are in folders 01 to 03.", "Summary")  # fmt: skip
-    rows = [("D1", "LLMCuisine-22 dataset", f"{D['total_recipes']:,} AI recipes in CulinaryDB format, logs, datasheet"),
-            ("D2", "Fingerprint audit", "pairing, drivers, fingerprints, networks, variety, copy-mutate baseline"),
-            ("D3", "Fingerprint-guided steering", "fidelity scorer, best-of-N, critique-and-revise"),
-            ("D4", "FlavorAudit library", "pip install flavoraudit · tests · docs · 3 notebooks"),
-            ("D5", "FlavorPrint web app", "audit any recipe, 22-cuisine dashboard (live demo)")]  # fmt: skip
-    for k, (code, name, what) in enumerate(rows):
-        y = 2.15 + k * 0.92
-        d.box(s, 0.6, y, 12.15, 0.8, CARD if k % 2 == 0 else WHITE)
-        d.number_badge(s, 0.8, y + 0.12, code, [TEAL, ORANGE, NAVY, "7D3C98", "B9770E"][k], 0.56)
-        d.text(s, name, 1.6, y + 0.2, 3.9, 0.45, 18, NAVY, bold=True)
-        d.text(s, what, 5.5, y + 0.22, 7.1, 0.45, 16, GREY)
+        d.number_badge(s, 7.7, y, k + 1, TEAL, 0.5)
+        d.text(s, h_, 8.4, y - 0.03, 4.4, 0.4, 18, NAVY, bold=True)
+        d.text(s, b_, 8.4, y + 0.38, 4.4, 0.4, 14.5, GREY)
 
     # 14 conclusion ---------------------------------------------------------------------------------------------------
     s = d.dark("One-line summary: AI chefs know the skeleton of a cuisine but not its full fingerprint, and the "
@@ -533,6 +536,20 @@ def build() -> Path:
     r.font.color.rgb = rgb(WHITE)
     link(d.text(s, f"Code, data and app: {GITHUB.removeprefix('https://')}", 0.9, 7.05, 11.6, 0.35, 12.5, TEAL_LIGHT,
                 align=PP_ALIGN.CENTER))  # fmt: skip
+
+    # links: everything we can open ------------------------------------------------------------------------------
+    s = d.content("Links: everything we can show", f"Click any row  ·  {GITHUB.removeprefix('https://')}",
+                  "Jump here to open anything the examiners ask about. GitHub links need the repository pushed; the app "
+                  "link needs the app running on this laptop.", "Links")  # fmt: skip
+    half = (len(TS.LINKS) + 1) // 2
+    for k, (label_, url) in enumerate(TS.LINKS):
+        col, row_i = divmod(k, half)
+        x, y = 0.6 + col * 6.15, 1.98 + row_i * 0.47
+        link(d.box(s, x, y, 5.95, 0.41, CARD if row_i % 2 == 0 else WHITE, radius=0.08), url)
+        link(d.text(s, label_, x + 0.18, y + 0.08, 3.4, 0.28, 13, NAVY, bold=True), url)
+        tail = ("localhost:8501" if url.startswith("http://localhost") else "github.com" if url == GITHUB
+                else url.rstrip("/").split("/")[-1] + ("/" if "/tree/" in url else ""))  # fmt: skip
+        link(d.text(s, tail + "  ›", x + 3.4, y + 0.1, 2.42, 0.26, 10, TEAL, align=PP_ALIGN.RIGHT), url)
 
     # backups ---------------------------------------------------------------------------------------------------
     s = d.content("Backup: FlavorAudit in code", "Everything above as a pip-installable package",
@@ -579,13 +596,17 @@ def build() -> Path:
     # speaker notes for the talk slides come from the shared script (who speaks, what to say, demo steps)
     for sd in TS.SLIDES:
         txt = f"[{sd['speaker']} · {sd['time']}]\n{sd['say']}"
-        if sd["n"] == 12:
+        if sd["n"] == TS.DEMO_SLIDE:
             txt += "\n\nDEMO STEPS:\n" + "\n".join(f"{k}. {c}: {say}" for k, (c, _pt, say) in enumerate(TS.DEMO, 1))
         if sd.get("point"):
             txt += f"\n\nTip: {sd['point']}"
         if sd.get("handover"):
             txt += f"\n\nHand over: {sd['handover']}"
         d.prs.slides[sd["n"] - 1].notes_slide.notes_text_frame.text = txt
+        if sd["title"] in TS.FOOTER_LINKS:
+            label_, url = TS.FOOTER_LINKS[sd["title"]]
+            sl = d.prs.slides[sd["n"] - 1]
+            link(d.text(sl, label_, 7.9, 7.05, 4.3, 0.28, 11, TEAL, bold=True, align=PP_ALIGN.RIGHT), url)
 
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / "Group44_BIO544_presentation.pptx"

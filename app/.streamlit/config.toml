@@ -1,15 +1,16 @@
-# FlavorPrint theme. Streamlit reads a .streamlit/config.toml next to the main script, so this applies whether the
-# app is started from the repo root, from app/ or from the Hugging Face Space folder.
-# Fonts are Streamlit's bundled Source Sans / Source Serif, so the app needs no font download (works offline).
+# FlavorPrint theme, matched to the talk deck: warm off-white, deep navy text, teal primary, orange accent (set in
+# the app's CSS). Streamlit reads a .streamlit/config.toml next to the main script, so this applies whether the app
+# is started from the repo root, from app/ or from the Hugging Face Space folder. Body text uses Streamlit's bundled
+# Source Sans; headings use Georgia via the app's CSS, falling back to the bundled Source Serif.
 
 [theme]
 base = "light"
-primaryColor = "#B4441F"
-backgroundColor = "#FBFAF7"
-secondaryBackgroundColor = "#F3F0E9"
-textColor = "#1E1B16"
-borderColor = "#E4DFD4"
-linkColor = "#9A3412"
+primaryColor = "#0E7C86"
+backgroundColor = "#FAFAF7"
+secondaryBackgroundColor = "#F0F3F4"
+textColor = "#1B2631"
+borderColor = "#DCE2E6"
+linkColor = "#0E7C86"
 font = "sans-serif"
 headingFont = "serif"
 baseFontSize = 17

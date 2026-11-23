@@ -3,7 +3,7 @@
 **Auditing and steering LLM-generated recipes across 22 world cuisines**
 
 BIO544 Computational Gastronomy · IIIT-Delhi · Monsoon 2026 · Instructor: Prof. Ganesh Bagler
-Group 44: Nishant (2023355) and Partner (2023477)
+Group 44: 2023355 and 2023477
 
 ## Start here
 
@@ -69,7 +69,7 @@ pip install -r app/requirements.txt -e .
 streamlit run app/streamlit_app.py
 ```
 
-Open http://localhost:8501, pick an example (Kimchi jjigae, “Spaghetti, claimed Korean”, Chana masala) and press
+Open http://localhost:8501, pick an example (Kimchi jjigae, Spaghetti as Korean, Chana masala) and press
 **Audit recipe**. The app runs from the prepared artifacts in `app/artifacts/`; no database download is needed.
 With [uv](https://docs.astral.sh/uv/): `uv sync --all-groups --extra ml && uv run streamlit run app/streamlit_app.py`.
 

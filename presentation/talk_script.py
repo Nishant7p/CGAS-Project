@@ -15,8 +15,8 @@ import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
 GITHUB = "https://github.com/Nishant7p/CGAS-Project"
-SPEAKER_A = "Nishant (2023355)"
-SPEAKER_B = "Partner (2023477)"
+SPEAKER_A = "2023355"
+SPEAKER_B = "2023477"
 
 S = json.loads((REPO / "results/summary.json").read_text())
 EX = json.loads((REPO / "results/steering_example.json").read_text())
@@ -85,9 +85,8 @@ def Who(name: str) -> str:
 # ------------------------------------------------------------------------------------------------- the talk (14 slides)
 SLIDES = [
     dict(n=1, title="Title", speaker=A, time="0:30",
-         say="Good morning, we are Group 44. Our question is simple: when an AI writes a “traditional” recipe, does it "
-             "really cook like that cuisine? We checked it with the methods from this course, and we built five things on "
-             "the way: a dataset, an audit, a way to steer the AI, a Python library and a web app."),
+         say="Good morning, we are Group 44. Our question is simple: when an AI writes a “traditional” recipe, does "
+             "it really cook like that cuisine? We checked it with the methods from this course."),
     dict(n=2, title="Do AI chefs cook like the cuisine they claim?", speaker=A, time="0:50",
          say="People ask chatbots for authentic recipes every day, but an AI learns from text, not from tasting food. "
              "Every cuisine has a fingerprint: the way it combines ingredients and flavors, and this lab has shown how to "
@@ -161,20 +160,72 @@ SLIDES = [
              "scale study, more models and human taste tests. Thank you, we are happy to take questions."),
 ]  # fmt: skip
 
+# Deliverables in one or two sentences each (the overview slide in the introduction).
+D_BLURBS = [
+    ("D1", "LLMCuisine-22 dataset", f"{D['total_recipes']:,} recipes written by {D['n_models']} AI models for all 22 world "
+     "cuisines, in CulinaryDB's own format, with every AI call saved."),
+    ("D2", "Fingerprint audit", "We measure AI cuisines with the same flavor tools as real cuisines: food pairing, "
+     "key ingredients, the culinary fingerprint and ingredient pairs."),
+    ("D3", "Fingerprint-guided steering", "A fidelity scorer built from the fingerprint, used to pick the best AI "
+     "recipes and to give the AI feedback so that it cooks more authentically."),
+    ("D4", "FlavorAudit library", "All our methods as a tested, documented Python package that anyone can install and "
+     "reuse."),
+    ("D5", "FlavorPrint web app", "Paste any recipe, pick its cuisine, and see its fingerprint, fidelity score and "
+     "suggestions in the browser."),
+]  # fmt: skip
+
+# Talk order: the deliverables overview follows the question; the end-of-talk recap is not needed after it.
+SLIDES = [s for s in SLIDES if s["title"] != "Everything we promised, delivered"]
+SLIDES.insert(
+    [s["title"] for s in SLIDES].index("Do AI chefs cook like the cuisine they claim?") + 1,
+    dict(title="What we built: five deliverables", time="0:50",
+         say="As part of this project we built five things. One: LLMCuisine-22, a dataset of "
+             f"{D['total_recipes']:,} AI-written recipes for all 22 cuisines, with every AI call saved. Two: an audit "
+             "that measures AI cuisines with the same flavor tools as real ones. Three: a steering method that uses the "
+             "fingerprint to make AI recipes more authentic. Four: FlavorAudit, a Python library with all our methods. "
+             "And five: FlavorPrint, a web app where anyone can check a recipe; we will show it live later.",
+         point="All five are on GitHub; the link is on the first and last slides."),
+)  # fmt: skip
+for _k, _s in enumerate(SLIDES, 1):
+    _s["n"] = _k
+
+# Who presents what: Speaker A gives the introduction (title, question, the five deliverables, the data), the live demo
+# and the conclusion; Speaker B presents the method, the results and the steering.
+SPEAKER_A_TITLES = {
+    "Title",
+    "Do AI chefs cook like the cuisine they claim?",
+    "What we built: five deliverables",
+    "What did we compare?",
+    "How did we do it?",
+    "FlavorPrint: audit any recipe in the browser (LIVE DEMO)",
+    "Conclusion",
+}
+HANDOVER = {
+    "How did we do it?": "Now my teammate will explain how we measure food pairing and what we found.",
+    "Does fingerprint feedback make AI recipes more authentic?": "Now my teammate will show our app live.",
+}  # fmt: skip
+for _s in SLIDES:
+    _s["speaker"] = A if _s["title"] in SPEAKER_A_TITLES else B
+    _s.pop("handover", None)
+    if _s["title"] in HANDOVER:
+        _s["handover"] = HANDOVER[_s["title"]]
+DEMO_SLIDE = next(s["n"] for s in SLIDES if "LIVE DEMO" in s["title"])
+STEER_SLIDE = next(s["n"] for s in SLIDES if s["title"].startswith("Does fingerprint feedback"))
+
 # ------------------------------------------------------------------------------------------------------- live demo
 DEMO = [
     ("Kimchi jjigae (already selected) → Audit recipe",
-     "Headline: “reads as Korea”. Fidelity percentile and the four cards.",
+     "The verdict “reads as Korea” and the fidelity gauge on the right.",
      "“This genuine Korean stew scores above about two-thirds of real Korean recipes.”"),
     ("Ingredients tab", "The mapping table; the gochugaru line is “not found”.",
      "“Every line is mapped to a CulinaryDB ingredient; unknown ones are left out, not guessed.”"),
     ("Flavor network tab", "Thick edges = many shared flavor molecules.",
      "“Ns is simply the average edge in this network.”"),
-    ("Example: Spaghetti, claimed Korean → Audit recipe", "Headline: “claimed as Korea but reads as Italy”; fidelity "
+    ("Example: Spaghetti as Korean → Audit recipe", "Headline: “claimed as Korea but reads as Italy”; fidelity "
      "drops to the bottom.", "“An Italian dish claimed as Korean is caught immediately.”"),
     ("Suggestions tab", "Unusual ingredients (hard wheat, tomato) and what fits Korean cooking.",
      "“This is exactly the feedback our steering sends to the AI.”"),
-    ("Example: Chana masala → Stereotype check tab", "Orange stereotype flag.",
+    ("Example: Chana masala → Stereotype tab", "The orange Signature ingredients card and the stereotype note.",
      "“A recipe can be authentic and still a caricature: it uses many signature ingredients at once.”"),
     ("22-cuisine dashboard tab", "Replication card and the model × cuisine heatmap.",
      "“Every model on every cuisine, at a glance.” Then go back to the slides."),
@@ -186,7 +237,7 @@ DELIVERABLES = [
      f"{D['total_recipes']:,} AI recipes in CulinaryDB's own format, with every model call logged."),
     ("D2", "Fingerprint audit", "deliverables/Group44_BIO544_report.pdf and figures/",
      "The same measurements as for real cuisines, compared with real samples of equal size."),
-    ("D3", "Fingerprint-guided steering", "slide 11; results/steering_example.json; steering/",
+    ("D3", "Fingerprint-guided steering", f"slide {STEER_SLIDE}; results/steering_example.json; steering/",
      "Feedback from the fingerprint makes recipes more recognisable while keeping the dish."),
     ("D4", "FlavorAudit library", "src/flavoraudit/, notebooks/02_audit_recipes.ipynb, or flavoraudit --help",
      "Every method as a tested Python package anyone can install."),
@@ -306,3 +357,50 @@ NUMBERS = [
     ("Best-of-8", ", ".join(f"{NAMES[m].split()[0]} {pct(BON1[m])} → {pct(BON8[m])}" for m in (LUNA, GEM, QWEN))),
     ("Spend", f"${SPENT:.2f} (OpenAI); everything else free"),
 ]  # fmt: skip
+
+
+# ----------------------------------------------------------------------------------------------------------- links
+# Everything we can open during the talk. GitHub links work once the repository is pushed (branch main); the app link
+# works while the app runs on the presenting laptop.
+def gh(path: str = "", folder: bool = False) -> str:
+    return GITHUB if not path else f"{GITHUB}/{'tree' if folder else 'blob'}/main/{path}"
+
+
+APP_LOCAL = "http://localhost:8501"
+LINKS = [
+    ("GitHub repository (start here)", gh()),
+    ("D1 · LLMCuisine-22 dataset", gh("data/release/LLMCuisine-22", folder=True)),
+    ("D1 · Dataset datasheet", gh("data/release/LLMCuisine-22/DATASHEET.md")),
+    ("D2 · Research report (PDF)", gh("deliverables/Group44_BIO544_report.pdf")),
+    ("D2 · All figures", gh("figures", folder=True)),
+    ("D2 · All results (summary.json)", gh("results/summary.json")),
+    ("D2 · Audit code", gh("analysis/audit", folder=True)),
+    ("D3 · Steering code", gh("steering", folder=True)),
+    ("D3 · Before/after example", gh("results/steering_example.json")),
+    ("D4 · FlavorAudit library code", gh("src/flavoraudit", folder=True)),
+    ("D4 · Example notebooks", gh("notebooks", folder=True)),
+    ("D5 · FlavorPrint app code", gh("app", folder=True)),
+    ("D5 · FlavorPrint app (live on this laptop)", APP_LOCAL),
+    ("Slides (PDF)", gh("deliverables/Group44_BIO544_slides.pdf")),
+    ("Poster (PDF)", gh("deliverables/Group44_BIO544_poster.pdf")),
+    ("Presenter guide (PDF)", gh("deliverables/Group44_Presenter_Guide.pdf")),
+    ("Pre-registration and decision log", gh("docs/IMPLEMENTATION_PLAN.md")),
+    ("Replication details", gh("docs/replication_report.md")),
+    ("Prompts used (frozen set v1)", gh("generation/prompt_sets/v1.jsonl")),
+]
+D_LINKS = {"D1": gh("data/release/LLMCuisine-22", folder=True), "D2": gh("deliverables/Group44_BIO544_report.pdf"),
+           "D3": gh("steering", folder=True), "D4": gh("src/flavoraudit", folder=True), "D5": gh("app", folder=True)}  # fmt: skip
+# A small evidence link in the footer of each talk slide (by title)
+FOOTER_LINKS = {
+    "Do AI chefs cook like the cuisine they claim?": ("Open the GitHub repository ›", gh()),
+    "What did we compare?": ("Open the dataset ›", gh("data/release/LLMCuisine-22", folder=True)),
+    "How did we do it?": ("Open the code ›", gh()),
+    "How do we measure food pairing?": ("Method in the report ›", gh("deliverables/Group44_BIO544_report.pdf")),
+    "Step 1: can we reproduce the published result?": ("Replication details ›", gh("docs/replication_report.md")),
+    "Results at a glance: AI vs real cuisines": ("All results ›", gh("results/summary.json")),
+    "Do AI cuisines keep the culinary fingerprint?": ("All figures ›", gh("figures", folder=True)),
+    "Do AI chefs combine the right ingredients?": ("All figures ›", gh("figures", folder=True)),
+    "From audit to fix: a fidelity scorer": ("Scorer and steering code ›", gh("steering", folder=True)),
+    "Does fingerprint feedback make AI recipes more authentic?": ("Before/after example ›", gh("results/steering_example.json")),
+    "FlavorPrint: audit any recipe in the browser (LIVE DEMO)": ("Open the app ›", APP_LOCAL),
+}  # fmt: skip

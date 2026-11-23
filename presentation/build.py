@@ -109,8 +109,12 @@ def render_prep(F: dict, demo: dict | None, outline: list[dict], example: dict |
 
 
 def export_prep_pdf(paths: list[Path], F: dict) -> str:
-    pandoc = shutil.which("pandoc") or ("/opt/homebrew/bin/pandoc" if Path("/opt/homebrew/bin/pandoc").exists() else None)
-    tect = shutil.which("tectonic") or ("/opt/homebrew/bin/tectonic" if Path("/opt/homebrew/bin/tectonic").exists() else None)
+    pandoc = shutil.which("pandoc") or (
+        "/opt/homebrew/bin/pandoc" if Path("/opt/homebrew/bin/pandoc").exists() else None
+    )
+    tect = shutil.which("tectonic") or (
+        "/opt/homebrew/bin/tectonic" if Path("/opt/homebrew/bin/tectonic").exists() else None
+    )
     if not (pandoc and tect):
         return "not exported (pandoc or tectonic missing)"
     body = "\n\n\\newpage\n\n".join(p.read_text() for p in paths)
@@ -124,7 +128,11 @@ def export_prep_pdf(paths: list[Path], F: dict) -> str:
            "-M", f"subtitle=Group 44 · BIO544 Computational Gastronomy · data {F['generated_date']}"]  # fmt: skip
     res = subprocess.run(cmd, capture_output=True, text=True, timeout=900, cwd=BUILD)
     (BUILD / "prep_pack.log").write_text(res.stdout + "\n" + res.stderr)
-    return pdf.name if res.returncode == 0 and pdf.exists() else f"export failed (see _build/prep_pack.log): {res.stderr[-300:]}"
+    return (
+        pdf.name
+        if res.returncode == 0 and pdf.exists()
+        else f"export failed (see _build/prep_pack.log): {res.stderr[-300:]}"
+    )
 
 
 def render_markdown(F: dict, demo: dict | None) -> list[Path]:
@@ -161,7 +169,7 @@ def tex(value) -> str:
         if p.startswith("**"):
             out.append(r"\textbf{" + esc + "}")
         elif p.startswith("[pending:"):
-            inner = "".join(_TEX_SPECIAL.get(ch, ch) for ch in p[len("[pending:"):-1].strip())
+            inner = "".join(_TEX_SPECIAL.get(ch, ch) for ch in p[len("[pending:") : -1].strip())
             out.append(r"\pend{" + inner + "}")
         else:
             out.append(esc)
@@ -205,7 +213,9 @@ def build_poster(F: dict) -> tuple[Path | None, str]:
 
 
 def export_pdf(pptx: Path) -> str:
-    exe = shutil.which("soffice") or ("/opt/homebrew/bin/soffice" if Path("/opt/homebrew/bin/soffice").exists() else None)
+    exe = shutil.which("soffice") or (
+        "/opt/homebrew/bin/soffice" if Path("/opt/homebrew/bin/soffice").exists() else None
+    )
     if exe is None:
         return "not exported (LibreOffice soffice not found)"
     res = subprocess.run([exe, "--headless", "--convert-to", "pdf", "--outdir", str(pptx.parent), str(pptx)],

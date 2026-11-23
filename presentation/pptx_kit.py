@@ -89,7 +89,7 @@ def segments(text: str) -> list[tuple[str, str]]:
         if part.startswith("**") and part.endswith("**"):
             out.append(("bold", part[2:-2]))
         elif part.startswith("[pending:"):
-            out.append(("pending", part[len("[pending:"):-1].strip()))
+            out.append(("pending", part[len("[pending:") : -1].strip()))
         elif part.startswith("`") and part.endswith("`"):
             out.append(("code", part[1:-1]))
         else:

@@ -39,8 +39,6 @@ def speaker_color(name: str) -> str:
 def build_tex() -> str:
     A, B = tex(T.SPEAKER_A), tex(T.SPEAKER_B)
     gh = T.GITHUB
-    total_a = sum(_secs(s["time"]) for s in T.SLIDES if s["speaker"] == T.SPEAKER_A)
-    total_b = sum(_secs(s["time"]) for s in T.SLIDES if s["speaker"] == T.SPEAKER_B)
     p = []
     p.append(r"""\documentclass[11pt,a4paper]{article}
 \usepackage[margin=2cm,top=1.8cm,bottom=2cm]{geometry}
@@ -128,8 +126,8 @@ boxes are """
     # ---- part 2
     p.append(r"\section{Who says what (about 12 minutes)}")
     p.append(
-        rf"{A}: about {total_a // 60} min {total_a % 60:02d} s (including the 2-minute demo). "
-        rf"{B}: about {total_b // 60} min {total_b % 60:02d} s. Speak slowly; the numbers are on the slides."
+        r"Each box shows who speaks and roughly how long. Speak slowly; the numbers are on the slides, so you do not "
+        r"need to memorise them."
     )
     rows = "".join(rf"{s['n']} & {tex(s['title'])} & \textcolor{{{speaker_color(s['speaker'])}}}{{\textbf{{"
                    rf"{tex(s['speaker'].split(' (')[0])}}}}} & {s['time']} \\" for s in T.SLIDES)  # fmt: skip
@@ -180,7 +178,16 @@ boxes are """
     )
     # ---- part 8
     p.append(r"\section{Links and running the app}")
-    p.append(rf"\textbf{{GitHub:}} \url{{{gh}}} (README, code, dataset, report, slides, poster).\par")
+    p.append(
+        r"Every link below is also on slide 15 of the deck (click a row to open it). GitHub links work once the "
+        r"repository is pushed; the app link works while the app runs on your laptop."
+    )
+    rows = "".join(rf"{tex(lab)} & \url{{{url}}} \\" for lab, url in T.LINKS)
+    p.append(
+        r"\begin{tabularx}{\linewidth}{@{}>{\bfseries\raggedright\arraybackslash}p{5.3cm} >{\raggedright\arraybackslash\small}X@{}}\toprule "
+        + rows
+        + r"\bottomrule\end{tabularx}"
+    )
     p.append(
         r"\textbf{Run the app on our laptop:} double-click \texttt{04\_Demo/run\_demo.command} in the final folder, "
         r"or:\par\texttt{cd ai-chefs-fingerprints \&\& .venv/bin/streamlit run app/streamlit\_app.py}\par"
@@ -189,7 +196,8 @@ boxes are """
              r"\texttt{git clone " + gh + r".git \&\& cd CGAS-Project}\par"
              r"\texttt{pip install -e . streamlit plotly}\par\texttt{streamlit run app/streamlit\_app.py}\par")  # fmt: skip
     p.append(r"\end{document}")
-    return "\n\n".join(p)  # blank lines = paragraph breaks between blocks
+    out = "\n\n".join(p)  # blank lines = paragraph breaks between blocks
+    return out.replace("slide 12", f"slide {T.DEMO_SLIDE}")  # the demo slide number comes from the script
 
 
 def _secs(t: str) -> int:

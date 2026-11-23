@@ -11,6 +11,15 @@ D5 ✔ (local; HF Space folder ready, unpublished).
 
 ---
 
+## Update 2026-11-24, later (final talk structure)
+- **Talk (14 slides):**
+  - 2023355 presents slides 1–5 (title, question, a new five-deliverables overview on slide 3, data, pipeline), the live demo (13) and the conclusion (14);
+  - 2023477 presents slides 6–12, 7 slides each;
+  - the end-of-talk recap slide was dropped;
+  - only roll numbers are used.
+- **App:** redesigned to match the deck (verdict with a fidelity gauge, new cards, segmented tabs, one chart style). Two labels changed: the example "Spaghetti as Korean" and the tab "Stereotype".
+- **Privacy:** an email address was removed from `docs/RESEARCH_NOTES.md` before the GitHub push.
+
 ## Update 2026-11-24 (GitHub and presenter guide)
 - **Presenter guide:** `presentation/guide.py` builds `deliverables/Group44_Presenter_Guide.pdf` (10 pages). It holds the script split between the two speakers, the demo, how to show each deliverable, simple explanations, Q&A and a numbers cheat sheet. The content comes from `presentation/talk_script.py`, which also feeds the slide speaker notes.
 - **Slides:** the GitHub link is on slides 1, 13 and 14; it is clickable on 1 and 14.
