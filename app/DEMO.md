@@ -35,6 +35,8 @@ All numbers below are what the app shows with the artifacts in `app/artifacts/`.
 
 ### Optional extras for questions
 
+- **Same recipe, different claim:** on the spaghetti example, change **Claimed cuisine** to Italy. The example highlight clears and the verdict turns teal (“reads as Italy, the cuisine it claims”): the score is always relative to the claimed cuisine.
+
 - **Paste your own recipe:** click **Clear**, type one ingredient per line, pick a **Claimed cuisine**, then click
   **Audit recipe**.
 - **Dashboard → Region detail:** pick any region (default Korea) to see each model's Z and its top-5 flavor drivers

@@ -111,8 +111,9 @@ DEMO STEPS:
 3. Flavor network tab: “Ns is simply the average edge in this network.”
 4. Example: Spaghetti as Korean → Audit recipe: “An Italian dish claimed as Korean is caught immediately.”
 5. Suggestions tab: “This is exactly the feedback our steering sends to the AI.”
-6. Example: Chana masala → Stereotype tab: “A recipe can be authentic and still a caricature: it uses many signature ingredients at once.”
-7. 22-cuisine dashboard tab: “Every model on every cuisine, at a glance.” Then go back to the slides.
+6. Optional: change Claimed cuisine to Italy: “The score is always relative to the cuisine you claim.”
+7. Example: Chana masala → Stereotype tab: “A recipe can be authentic and still a caricature: it uses many signature ingredients at once.”
+8. 22-cuisine dashboard tab: “Every model on every cuisine, at a glance.” Then go back to the slides.
 
 Tip: If the app does not open, talk over the screenshot on the slide.
 

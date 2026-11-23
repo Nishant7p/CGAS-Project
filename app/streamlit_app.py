@@ -878,14 +878,23 @@ def recipe_input(regions: list[str]) -> None:
             "Built-in examples", list(PRESETS), key="preset", format_func=lambda k: PRESETS[k][0],
             on_change=_apply_preset,
         )  # fmt: skip
-        note = PRESETS[st.session_state.preset][3] if st.session_state.get("preset") in PRESETS else "Your own recipe."
+        # The note always describes the inputs on screen: an example's description only while it is untouched
+        # (any edit below clears the example), otherwise the current claim.
+        if st.session_state.get("preset") in PRESETS:
+            note = PRESETS[st.session_state.preset][3]
+        elif st.session_state.get("recipe_text", "").strip():
+            note = f"Your recipe, claimed as {st.session_state.get('claimed', 'Korea')}."
+        else:
+            note = "Paste a recipe (one ingredient per line) or pick an example."
         st.caption(note)
-        st.text_input("Recipe title (optional)", key="recipe_title")
+        st.text_input("Recipe title (optional)", key="recipe_title", on_change=_edited)
         st.text_area(
             "Ingredients, one per line", key="recipe_text", height=262, on_change=_edited,
             placeholder="2 cups napa cabbage kimchi\n200 g pork belly\n1 tbsp soy sauce\n...",
         )  # fmt: skip
-        st.selectbox("Claimed cuisine", regions, key="claimed", help="One of the 22 CulinaryDB regions.")
+        st.selectbox(
+            "Claimed cuisine", regions, key="claimed", help="One of the 22 CulinaryDB regions.", on_change=_edited
+        )
         b1, b2 = st.columns([3, 1])
         b1.button("Audit recipe", type="primary", icon=":material/play_arrow:", width="stretch")
         b2.button("Clear", type="tertiary", on_click=_clear, width="stretch")

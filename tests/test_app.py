@@ -82,3 +82,18 @@ def test_too_few_ingredients_is_handled(app):
     app.text_area(key="recipe_text").set_value("1 unicorn horn").run()
     assert not app.exception
     assert any("Fewer than two lines" in w.value for w in app.warning)
+
+
+def test_changing_the_claim_clears_the_example(app):
+    """Regression: after an example, editing the claimed cuisine (or title) must clear the example highlight, so the
+    note and the verdict always describe the inputs on screen."""
+    app.button_group(key="preset").set_value("spaghetti").run()
+    app.selectbox(key="claimed").set_value("Italy").run()
+    assert not app.exception
+    assert app.button_group(key="preset").value is None
+    assert any(c.value.startswith("Your recipe, claimed as Italy") for c in app.caption)
+    assert cards(app)["top"] == "Italy"
+    assert "reads as Italy, the cuisine it claims" in text(app)
+    app.button_group(key="preset").set_value("kimchi").run()
+    app.text_input(key="recipe_title").set_value("My stew").run()
+    assert app.button_group(key="preset").value is None

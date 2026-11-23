@@ -225,6 +225,7 @@ DEMO = [
      "drops to the bottom.", "“An Italian dish claimed as Korean is caught immediately.”"),
     ("Suggestions tab", "Unusual ingredients (hard wheat, tomato) and what fits Korean cooking.",
      "“This is exactly the feedback our steering sends to the AI.”"),
+    ("Optional: change Claimed cuisine to Italy", "The example highlight clears; the verdict turns teal: it now reads as Italy, the cuisine it claims.", "“The score is always relative to the cuisine you claim.”"),
     ("Example: Chana masala → Stereotype tab", "The orange Signature ingredients card and the stereotype note.",
      "“A recipe can be authentic and still a caricature: it uses many signature ingredients at once.”"),
     ("22-cuisine dashboard tab", "Replication card and the model × cuisine heatmap.",
